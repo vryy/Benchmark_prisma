@@ -1,0 +1,139 @@
+import os
+import time as time_module
+import subprocess
+
+def run(origin_path, params):
+   if params['cache'] == 0:
+      walk_and_run(origin_path, pytest_py = params['pytest_py'], tags = params['tags'], verbose = params['verbose'])
+   else:
+      pass
+
+""" Walk the folder and look for test and run them
+"""
+def walk_and_run(origin_path, pytest_py = "python2", tags = [], verbose = 0):
+   fname = []
+   num_tests = 0
+   num_passed_tests = 0
+   start0 = time_module.time()
+   run_tests = {}
+   for root, d_names, f_names in os.walk(origin_path):
+      for f in f_names:
+         if f.startswith("pytest_") and f.endswith(".py"):
+            success, elapsed_time = run_file(root, f, pytest_py=pytest_py, tags=tags, verbose=verbose)
+            if success:
+               num_passed_tests += 1
+               fn = os.path.join(root, f)
+               run_tests[fn] = elapsed_time
+            if elapsed_time > 0.0:
+               num_tests += 1
+   end0 = time_module.time()
+   print("Test completed, %d/%d passed. Total time = %f s." % (num_passed_tests, num_tests, end0 - start0))
+   print("Tests take more than one second to run:")
+   for fn, elapsed_time in run_tests.items():
+      if elapsed_time > 1.0:
+         print("  " + fn + ": %f s" % (elapsed_time))
+   if len(tags) == 0:
+      # save the list of tests
+      ifile = open(origin_path+"/updated_list_of_test.txt", 'w')
+      for fn, elapsed_time in run_tests.items():
+         ifile.write(fn + '\n')
+      ifile.close()
+
+""" Run tests saved in cached list
+"""
+def run_cache(origin_path, pytest_py = "python2", tags = [], verbose = 0):
+   ifile = open(origin_path+"/updated_list_of_test.txt", 'r')
+   for line in ifile.readlines():
+      pass
+   ifile.close()
+
+""" Run a test file
+"""
+def run_file(root, f, pytest_py = "python2", tags=[], verbose=0):
+   run_with_tag = (len(tags) > 0)
+
+   # obtain the tags of the test
+   proc = subprocess.Popen([pytest_py, f, "print_tag"], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+   tmp_stdout, tmp_stderr = proc.communicate()
+   tags_of_test = []
+   if proc.returncode == 0:
+      tmp = tmp_stdout.decode('ascii').splitlines()
+      for t in tmp:
+         if ("Tag(s):" in t) or ("Tags" in t):
+            words = t.replace(",", " ").split() # tags should be separated by comma
+            for i in range(1, len(words)):
+               tags_of_test.append(words[i])
+
+   if run_with_tag:
+      run_mode = 0
+      if ("untested" in tags_of_test) or ("Untested" in tags_of_test):
+         run_mode = -1
+      for tag in tags_of_test:
+         if tag in tags:
+            run_mode = 2
+   else:
+      run_mode = 1
+      if ("untested" in tags_of_test) or ("Untested" in tags_of_test):
+         run_mode = -1
+
+   success = False
+   elapsed_time = 0.0
+   if run_mode != 0:
+      if run_mode > 0:
+         start = time_module.time()
+         proc = subprocess.Popen([pytest_py, f, "test"], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
+         tmp_stdout, tmp_stderr = proc.communicate()
+         if verbose:
+            for line in tmp_stdout.splitlines():
+               formatted_line = line.strip()  # Remove trailing newline/whitespace
+               print(f"[OUTPUT] {formatted_line}")
+         end = time_module.time()
+         elapsed_time = end - start
+         if proc.returncode == 0:
+            # print(fn + " passed, elapsed time = %f s" % (elapsed_time))
+            print(f + " -> passed")
+            success = True
+         else:
+            print(f + " -> failed")
+            for line in tmp_stderr.splitlines():
+               formatted_line = line.strip()  # Remove trailing newline/whitespace
+               print(f"[ERROR] {formatted_line}")
+         print("  test folder: %s" % (root))
+         print("  tags:", end='')
+         for tag in tags_of_test:
+            print(" " + str(tag), end='')
+         print('')
+         print("  elapsed time: %f s" % (elapsed_time))
+         print('')
+      elif run_mode == -1: # ignore the untested ones -> just print the action
+         if not run_with_tag:
+            print(f + " -> not run (marked as untested)")
+            print("  test folder: %s" % (root))
+            print("  tags:", end='')
+            for tag in tags_of_test:
+               print(" " + str(tag), end='')
+            print('')
+
+   return success, elapsed_time
+
+""" Print the tags associated with a test file
+"""
+def print_tags(origin_path, pytest_py = "python2"):
+   for root, d_names, f_names in os.walk(origin_path):
+      for f in f_names:
+         if f.startswith("pytest_") and f.endswith(".py"):
+            # obtain the tags of the test
+            proc = subprocess.Popen([pytest_py, f, "print_tag"], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            tmp_stdout, tmp_stderr = proc.communicate()
+            tags_of_test = []
+            if proc.returncode == 0:
+               tmp = tmp_stdout.decode('ascii').splitlines()
+               for t in tmp:
+                  if ("Tag(s):" in t) or ("Tags" in t):
+                     words = t.replace(",", " ").split() # tags should be separated by comma
+                     for i in range(1, len(words)):
+                        tags_of_test.append(words[i])
+            print(root + "/" + f)
+            print("proc.returncode: ", proc.returncode)
+            print("tags_of_test: ", tags_of_test)
+            print("---------------------------------------")
