@@ -28,10 +28,15 @@ def walk_and_run(origin_path, pytest_py = "python2", tags = [], verbose = 0):
                num_tests += 1
    end0 = time_module.time()
    print("Test completed, %d/%d passed. Total time = %f s." % (num_passed_tests, num_tests, end0 - start0))
-   print("Tests take more than one second to run:")
+   cnt_long_tests = 0
    for fn, elapsed_time in run_tests.items():
       if elapsed_time > 1.0:
-         print("  " + fn + ": %f s" % (elapsed_time))
+         cnt_long_tests += 1
+   if cnt_long_tests > 0:
+      print("%d tests take more than one second to run" % (cnt_long_tests))
+      for fn, elapsed_time in run_tests.items():
+         if elapsed_time > 1.0:
+            print("  " + fn + ": %f s" % (elapsed_time))
    if len(tags) == 0:
       # save the list of tests
       ifile = open(origin_path+"/updated_list_of_test.txt", 'w')

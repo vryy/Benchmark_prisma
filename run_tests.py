@@ -18,6 +18,9 @@ if len(sys.argv) > 2:
     else:
       tags.append(sys.argv[i])
 
-print("Tags to be tested:", tags, ", verbose =", verbose)
+if len(tags) > 0:
+    print(f"Tags to be tested: {tags}, verbose = {verbose}")
+else:
+    print(f"Tags to be tested: all, verbose = {verbose}")
 
 runner.run(origin_path, {'pytest_py': sys.argv[1], 'tags': tags, 'verbose': verbose, 'cache': cache})
