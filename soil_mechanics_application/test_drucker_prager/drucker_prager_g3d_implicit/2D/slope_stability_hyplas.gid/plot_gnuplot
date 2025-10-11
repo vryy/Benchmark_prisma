@@ -1,0 +1,14 @@
+set output "load_settlement.pdf"
+set terminal pdf enhanced
+set view equal xy
+#set size ratio -1
+set key right bottom
+#set nokey
+#set yrange [0:0.8]
+set xlabel "settlement at point A (m)"
+set ylabel "gravity factor, {/Symbol a}" enhanced
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+plot "settlement_a.txt" using (-$1):($2) with linespoints ls 1 title "Drucker-Prager (backward Euler) solution", \

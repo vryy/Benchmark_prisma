@@ -1,0 +1,24 @@
+*HEADING
+ekate -> Abaqus interface
+(c) 2016, 2017, 2018 Hoang-Giang Bui, Ruhr-University Bochum
+*NODE
+1,    0.00000,    1.00000,    0.00000
+2,    0.00000,    0.00000,    0.00000
+3,    1.00000,    1.00000,    0.00000
+4,    1.00000,    0.00000,    0.00000
+**
+*ELEMENT, TYPE=S4
+1, 4, 3, 1, 2
+**
+
+*MATERIAL,NAME=TrussProperties
+*MATERIAL,NAME=Isotropic3D
+*MATERIAL,NAME=DruckerPrager
+*MATERIAL,NAME=UserDefined
+*MATERIAL,NAME=IsotropicDamage3D
+*MATERIAL,NAME=GroutingMortar
+*MATERIAL,NAME=TutorialDamageModel
+
+*ELSET,ELSET=Isotropic3D_Set
+1,
+

@@ -1,0 +1,20 @@
+set output "report.pdf"
+set terminal pdf
+set view equal xy
+#set size ratio -1
+set key right bottom
+#set nokey
+#set yrange [0:0.8]
+set xlabel "normalized settlement, u/B"
+set ylabel "normalized pressure, P/c"
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 5 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 5 pi -1 ps 1.0
+plot "/mnt/ARBEIT/kratos_bundle/Benchmark_kratos/soil_mechanics_application/test_mohr_coulomb/mohr_coulomb_3d_implicit/2D/08_4_3_strip_footing_collapse/associative/hyplas_mesh/report_mc.grf"  using ($2):($1) with linespoints ls 3 title "MC (associative, backward Euler) ref solution", \
+     "/mnt/ARBEIT/kratos_bundle/Benchmark_kratos/soil_mechanics_application/test_mohr_coulomb/mohr_coulomb_3d_implicit/2D/08_4_3_strip_footing_collapse/nonassociative/hyplas_mesh/report_mc.grf"  using ($2):($1) with linespoints ls 4 title "MC (nonassociative, backward Euler) ref solution", \
+     "associative/hyplas_mesh/report_mc.grf" using ($2):($1) with linespoints ls 1 title "MC (associative, backward Euler) solution", \
+     "nonassociative/hyplas_mesh/report_mc.grf" using ($2):($1) with linespoints ls 2 title "MC (nonassociative, backward Euler) solution", \
+     "/home/buih/kratos_bundle/Benchmark_kratos/soil_mechanics_application/test_mohr_coulomb/mohr_coulomb_3d_implicit/2D/08_4_3_strip_footing_collapse/no_dilatancy/abaqus/strip_footing.gid/abaqus_nonassoc.grf" using ($2):($1)  with line ls 4 title "MC (Abaqus, zero dilatancy) solution", \
+     "no_dilatancy/strip_footing.gid/report_mc.grf" using ($2):($1) with line ls 1 title "MC (no dilatancy, backward Euler) solution", \
+

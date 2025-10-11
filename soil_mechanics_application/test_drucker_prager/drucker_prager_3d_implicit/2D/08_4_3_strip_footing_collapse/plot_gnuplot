@@ -1,0 +1,27 @@
+set output "report.pdf"
+set terminal pdf
+set view equal xy
+#set size ratio -1
+set key right bottom
+#set nokey
+#set yrange [0:0.8]
+set xlabel "normalized settlement, u/B"
+set ylabel "normalized pressure, P/c"
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 5 lc rgb 'orange' lt 1 lw 2 pt 7 pi -1 ps 1.0
+plot "associative/inner_cone/report_dp.grf" using ($2):($1) with linespoints ls 1 title "DP (inner cone, backward Euler) solution", \
+     "associative/outer_cone/report_dp.grf" using ($2):($1) with linespoints ls 2 title "DP (outer cone, backward Euler) solution", \
+     "associative/plane_strain_match/report_dp.grf" using ($2):($1) with linespoints ls 3 title "DP (plane strain match, backward Euler) solution", \
+     "nonassociative/plane_strain_match/report_dp.grf" using ($2):($1) with linespoints ls 4 title "DP (plane strain match, nonassociative, backward Euler) solution", \
+     "small_dilatancy/plane_strain_match/report_dp.grf" using ($2):($1) with linespoints ls 5 title "DP (plane strain match, small dilatancy, backward Euler) solution", \
+
+
+#"/home/hbui/Benchmark_kratos/soil_mechanics_application/test_mohr_coulomb/mohr_coulomb_3d_implicit/2D/08_4_3_strip_footing_collapse_2021/associative/report_mc.grf" using ($2):($1) with linespoints ls 4 title "MC (backward Euler) solution", \
+
+plot "small_dilatancy/plane_strain_match/report_dp.grf" using ($2):($1) with linespoints ls 1 title "DP (plane strain match, small dilatancy, backward Euler) solution", \
+     "no_dilatancy/plane_strain_match/report_dp.grf" using ($2):($1) with linespoints ls 2 title "DP (plane strain match, small dilatancy, backward Euler) solution", \
+     "/home/buih/kratos_bundle/Benchmark_kratos/soil_mechanics_application/test_drucker_prager/drucker_prager_3d_implicit/2D_initial_stiffness_strategy/08_4_3_strip_footing_collapse/no_dilatancy/plane_strain_match/report_dp.grf" using ($2):($1) with linespoints ls 3 title "DP (plane strain match, zero dilatancy, initial stiffness) solution", \
+     "/home/buih/kratos_bundle/Benchmark_kratos/soil_mechanics_application/test_mohr_coulomb/mohr_coulomb_3d_implicit/2D_initial_stiffness/08_4_3_strip_footing_collapse/no_dilatancy/hyplas_mesh/report_mc.grf" using ($2):($1) with linespoints ls 5 title "MC (plane strain match, zero dilatancy, initial stiffness) solution", \

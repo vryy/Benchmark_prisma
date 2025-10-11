@@ -1,0 +1,21 @@
+set output "report.pdf"
+set terminal pdf
+set view equal xy
+#set size ratio -1
+set key right bottom
+#set nokey
+#set yrange [0:0.8]
+set xrange reverse
+set yrange [* : -100] reverse
+set xlabel "e\\_zz"
+set ylabel "s\\_zz [kN/m2]"
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 0.7
+set style line 2 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 0.7
+plot "/media/WORK/workspace2/PlaxisV20/Triaxial_test_HS/lcocco_paper/axial_compression.txt" using ($3):($4) with lines ls 2 title "Plaxis", \
+     "results.txt" using ($1):($4) with lines ls 1 title "HS", \
+
+unset xrange
+unset yrange
+set xlabel "p"
+set ylabel "q"
+plot "results.txt" using ($7):($8) with lines title "HS"

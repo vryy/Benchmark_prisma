@@ -1,0 +1,2700 @@
+mElemId : 1
+mGaussId : 0
+yield_cond : -2.969054e-15
+mIsYielded : 1
+--------------------------
+mElemId : 1
+mGaussId : 1
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 1
+mGaussId : 2
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 1
+mGaussId : 3
+yield_cond : 2.831295288921624e-15
+mIsYielded : 1
+--------------------------
+mElemId : 2
+mGaussId : 0
+yield_cond : -6.166559294809837e-01
+mIsYielded : 0
+--------------------------
+mElemId : 2
+mGaussId : 1
+yield_cond : -1.388112376996005e+00
+mIsYielded : 0
+--------------------------
+mElemId : 2
+mGaussId : 2
+yield_cond : -1.452127755503196e+00
+mIsYielded : 0
+--------------------------
+mElemId : 2
+mGaussId : 3
+yield_cond : -6.402614573800469e-01
+mIsYielded : 0
+--------------------------
+mElemId : 3
+mGaussId : 0
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 3
+mGaussId : 1
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 3
+mGaussId : 2
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 3
+mGaussId : 3
+yield_cond : -1.808983801756582e-15
+mIsYielded : 1
+--------------------------
+mElemId : 4
+mGaussId : 0
+yield_cond : -7.891075845132851e-01
+mIsYielded : 0
+--------------------------
+mElemId : 4
+mGaussId : 1
+yield_cond : -1.508166074093030e+00
+mIsYielded : 0
+--------------------------
+mElemId : 4
+mGaussId : 2
+yield_cond : -1.696978119716217e+00
+mIsYielded : 0
+--------------------------
+mElemId : 4
+mGaussId : 3
+yield_cond : -8.015220097181959e-01
+mIsYielded : 0
+--------------------------
+mElemId : 5
+mGaussId : 0
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 5
+mGaussId : 1
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 5
+mGaussId : 2
+yield_cond : -3.204722896968525e-01
+mIsYielded : 0
+--------------------------
+mElemId : 5
+mGaussId : 3
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 6
+mGaussId : 0
+yield_cond : -1.089025534004067e+00
+mIsYielded : 0
+--------------------------
+mElemId : 6
+mGaussId : 1
+yield_cond : -1.784218177049923e+00
+mIsYielded : 0
+--------------------------
+mElemId : 6
+mGaussId : 2
+yield_cond : -2.051727718705973e+00
+mIsYielded : 0
+--------------------------
+mElemId : 6
+mGaussId : 3
+yield_cond : -1.042496781236693e+00
+mIsYielded : 0
+--------------------------
+mElemId : 7
+mGaussId : 0
+yield_cond : 2.301650933337182e-14
+mIsYielded : 1
+--------------------------
+mElemId : 7
+mGaussId : 1
+yield_cond : -2.245822575527459e-14
+mIsYielded : 1
+--------------------------
+mElemId : 7
+mGaussId : 2
+yield_cond : 4.687406925192906e-15
+mIsYielded : 1
+--------------------------
+mElemId : 7
+mGaussId : 3
+yield_cond : -4.171538398158915e-14
+mIsYielded : 1
+--------------------------
+mElemId : 8
+mGaussId : 0
+yield_cond : 1.466400697015105e-14
+mIsYielded : 1
+--------------------------
+mElemId : 8
+mGaussId : 1
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 8
+mGaussId : 2
+yield_cond : -8.809279836209405e-16
+mIsYielded : 1
+--------------------------
+mElemId : 8
+mGaussId : 3
+yield_cond : -5.289193119765235e-15
+mIsYielded : 1
+--------------------------
+mElemId : 9
+mGaussId : 0
+yield_cond : -6.681276846968697e-15
+mIsYielded : 1
+--------------------------
+mElemId : 9
+mGaussId : 1
+yield_cond : -1.549780711925729e-14
+mIsYielded : 1
+--------------------------
+mElemId : 9
+mGaussId : 2
+yield_cond : 2.791417890486108e-16
+mIsYielded : 1
+--------------------------
+mElemId : 9
+mGaussId : 3
+yield_cond : -2.040997756290492e-15
+mIsYielded : 1
+--------------------------
+mElemId : 10
+mGaussId : 0
+yield_cond : -1.132155593764690e-14
+mIsYielded : 1
+--------------------------
+mElemId : 10
+mGaussId : 1
+yield_cond : 1.439211561718162e-15
+mIsYielded : 1
+--------------------------
+mElemId : 10
+mGaussId : 2
+yield_cond : -6.681276846968697e-15
+mIsYielded : 1
+--------------------------
+mElemId : 10
+mGaussId : 3
+yield_cond : -4.361137301629594e-15
+mIsYielded : 1
+--------------------------
+mElemId : 11
+mGaussId : 0
+yield_cond : 4.223379016125085e-15
+mIsYielded : 1
+--------------------------
+mElemId : 11
+mGaussId : 1
+yield_cond : 1.164782556121021e-14
+mIsYielded : 1
+--------------------------
+mElemId : 11
+mGaussId : 2
+yield_cond : -6.681276846968697e-15
+mIsYielded : 1
+--------------------------
+mElemId : 11
+mGaussId : 3
+yield_cond : -2.737039619892223e-15
+mIsYielded : 1
+--------------------------
+mElemId : 12
+mGaussId : 0
+yield_cond : 3.295323197989444e-15
+mIsYielded : 1
+--------------------------
+mElemId : 12
+mGaussId : 1
+yield_cond : 4.919420879726816e-15
+mIsYielded : 1
+--------------------------
+mElemId : 12
+mGaussId : 2
+yield_cond : 3.295323197989444e-15
+mIsYielded : 1
+--------------------------
+mElemId : 12
+mGaussId : 3
+yield_cond : -4.361137301629594e-15
+mIsYielded : 1
+--------------------------
+mElemId : 13
+mGaussId : 0
+yield_cond : 5.847476697862457e-15
+mIsYielded : 1
+--------------------------
+mElemId : 13
+mGaussId : 1
+yield_cond : 2.135253425319893e-15
+mIsYielded : 1
+--------------------------
+mElemId : 13
+mGaussId : 2
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 13
+mGaussId : 3
+yield_cond : 1.207197607184252e-15
+mIsYielded : 1
+--------------------------
+mElemId : 14
+mGaussId : 0
+yield_cond : -3.792983582353131e-02
+mIsYielded : 0
+--------------------------
+mElemId : 14
+mGaussId : 1
+yield_cond : -2.793259433832204e-01
+mIsYielded : 0
+--------------------------
+mElemId : 14
+mGaussId : 2
+yield_cond : -8.375555087235144e-01
+mIsYielded : 0
+--------------------------
+mElemId : 14
+mGaussId : 3
+yield_cond : 9.751836526503416e-16
+mIsYielded : 1
+--------------------------
+mElemId : 15
+mGaussId : 0
+yield_cond : -1.025888952471602e+00
+mIsYielded : 0
+--------------------------
+mElemId : 15
+mGaussId : 1
+yield_cond : -6.311775138299226e-01
+mIsYielded : 0
+--------------------------
+mElemId : 15
+mGaussId : 2
+yield_cond : -1.574678773952631e+00
+mIsYielded : 0
+--------------------------
+mElemId : 15
+mGaussId : 3
+yield_cond : -1.481474931562234e+00
+mIsYielded : 0
+--------------------------
+mElemId : 16
+mGaussId : 0
+yield_cond : -1.808983801756582e-15
+mIsYielded : 1
+--------------------------
+mElemId : 16
+mGaussId : 1
+yield_cond : -8.809279836209405e-16
+mIsYielded : 1
+--------------------------
+mElemId : 16
+mGaussId : 2
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 16
+mGaussId : 3
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 17
+mGaussId : 0
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 17
+mGaussId : 1
+yield_cond : -4.294561185866378e-01
+mIsYielded : 0
+--------------------------
+mElemId : 17
+mGaussId : 2
+yield_cond : -7.431343689764861e-01
+mIsYielded : 0
+--------------------------
+mElemId : 17
+mGaussId : 3
+yield_cond : -7.145910709350763e-01
+mIsYielded : 0
+--------------------------
+mElemId : 18
+mGaussId : 0
+yield_cond : -1.352887652943857e+00
+mIsYielded : 0
+--------------------------
+mElemId : 18
+mGaussId : 1
+yield_cond : -1.146207297140436e+00
+mIsYielded : 0
+--------------------------
+mElemId : 18
+mGaussId : 2
+yield_cond : -1.636052629740041e+00
+mIsYielded : 0
+--------------------------
+mElemId : 18
+mGaussId : 3
+yield_cond : -1.619798704697766e+00
+mIsYielded : 0
+--------------------------
+mElemId : 19
+mGaussId : 0
+yield_cond : 1.814421628815970e-14
+mIsYielded : 1
+--------------------------
+mElemId : 19
+mGaussId : 1
+yield_cond : 2.626470469684656e-14
+mIsYielded : 1
+--------------------------
+mElemId : 19
+mGaussId : 2
+yield_cond : 2.510463492417701e-14
+mIsYielded : 1
+--------------------------
+mElemId : 19
+mGaussId : 3
+yield_cond : 1.141581160667630e-14
+mIsYielded : 1
+--------------------------
+mElemId : 20
+mGaussId : 0
+yield_cond : 6.311504606930278e-15
+mIsYielded : 1
+--------------------------
+mElemId : 20
+mGaussId : 1
+yield_cond : -9.697458255909531e-15
+mIsYielded : 1
+--------------------------
+mElemId : 20
+mGaussId : 2
+yield_cond : -5.289193119765235e-15
+mIsYielded : 1
+--------------------------
+mElemId : 20
+mGaussId : 3
+yield_cond : -6.489140290870303e-16
+mIsYielded : 1
+--------------------------
+mElemId : 21
+mGaussId : 0
+yield_cond : 4.455392970658996e-15
+mIsYielded : 1
+--------------------------
+mElemId : 21
+mGaussId : 1
+yield_cond : -2.040997756290492e-15
+mIsYielded : 1
+--------------------------
+mElemId : 21
+mGaussId : 2
+yield_cond : 7.471574379599829e-15
+mIsYielded : 1
+--------------------------
+mElemId : 21
+mGaussId : 3
+yield_cond : 1.814421628815970e-14
+mIsYielded : 1
+--------------------------
+mElemId : 22
+mGaussId : 0
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 22
+mGaussId : 1
+yield_cond : -1.085752802857908e-14
+mIsYielded : 1
+--------------------------
+mElemId : 22
+mGaussId : 2
+yield_cond : 4.687406925192906e-15
+mIsYielded : 1
+--------------------------
+mElemId : 22
+mGaussId : 3
+yield_cond : -4.593151256163505e-15
+mIsYielded : 1
+--------------------------
+mElemId : 23
+mGaussId : 0
+yield_cond : 4.223379016125085e-15
+mIsYielded : 1
+--------------------------
+mElemId : 23
+mGaussId : 1
+yield_cond : -1.673351438288475e-01
+mIsYielded : 0
+--------------------------
+mElemId : 23
+mGaussId : 2
+yield_cond : 5.151434834260726e-15
+mIsYielded : 1
+--------------------------
+mElemId : 23
+mGaussId : 3
+yield_cond : -5.985234983366967e-15
+mIsYielded : 1
+--------------------------
+mElemId : 24
+mGaussId : 0
+yield_cond : 5.111557435825211e-16
+mIsYielded : 1
+--------------------------
+mElemId : 24
+mGaussId : 1
+yield_cond : -4.108181134325157e-01
+mIsYielded : 0
+--------------------------
+mElemId : 24
+mGaussId : 2
+yield_cond : -6.489140290870303e-16
+mIsYielded : 1
+--------------------------
+mElemId : 24
+mGaussId : 3
+yield_cond : 1.671225516252072e-15
+mIsYielded : 1
+--------------------------
+mElemId : 25
+mGaussId : 0
+yield_cond : 8.167616243201560e-15
+mIsYielded : 1
+--------------------------
+mElemId : 25
+mGaussId : 1
+yield_cond : 1.439211561718162e-15
+mIsYielded : 1
+--------------------------
+mElemId : 25
+mGaussId : 2
+yield_cond : 6.543518561464188e-15
+mIsYielded : 1
+--------------------------
+mElemId : 25
+mGaussId : 3
+yield_cond : 1.303990928841368e-14
+mIsYielded : 1
+--------------------------
+mElemId : 26
+mGaussId : 0
+yield_cond : -9.465444301375620e-15
+mIsYielded : 1
+--------------------------
+mElemId : 26
+mGaussId : 1
+yield_cond : 2.135253425319893e-15
+mIsYielded : 1
+--------------------------
+mElemId : 26
+mGaussId : 2
+yield_cond : 1.419997906108323e-14
+mIsYielded : 1
+--------------------------
+mElemId : 26
+mGaussId : 3
+yield_cond : 6.775532515998099e-15
+mIsYielded : 1
+--------------------------
+mElemId : 27
+mGaussId : 0
+yield_cond : 1.652011860642233e-14
+mIsYielded : 1
+--------------------------
+mElemId : 27
+mGaussId : 1
+yield_cond : 6.775532515998099e-15
+mIsYielded : 1
+--------------------------
+mElemId : 27
+mGaussId : 2
+yield_cond : 6.543518561464188e-15
+mIsYielded : 1
+--------------------------
+mElemId : 27
+mGaussId : 3
+yield_cond : 1.559206278828669e-14
+mIsYielded : 1
+--------------------------
+mElemId : 28
+mGaussId : 0
+yield_cond : 1.671225516252072e-15
+mIsYielded : 1
+--------------------------
+mElemId : 28
+mGaussId : 1
+yield_cond : -5.289193119765235e-15
+mIsYielded : 1
+--------------------------
+mElemId : 28
+mGaussId : 2
+yield_cond : -5.289193119765235e-15
+mIsYielded : 1
+--------------------------
+mElemId : 28
+mGaussId : 3
+yield_cond : 6.775532515998099e-15
+mIsYielded : 1
+--------------------------
+mElemId : 29
+mGaussId : 0
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 29
+mGaussId : 1
+yield_cond : 1.187983951574412e-14
+mIsYielded : 1
+--------------------------
+mElemId : 29
+mGaussId : 2
+yield_cond : -1.808983801756582e-15
+mIsYielded : 1
+--------------------------
+mElemId : 29
+mGaussId : 3
+yield_cond : 2.599281334387713e-15
+mIsYielded : 1
+--------------------------
+mElemId : 30
+mGaussId : 0
+yield_cond : 1.512803487921887e-14
+mIsYielded : 1
+--------------------------
+mElemId : 30
+mGaussId : 1
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 30
+mGaussId : 2
+yield_cond : 1.671225516252072e-15
+mIsYielded : 1
+--------------------------
+mElemId : 30
+mGaussId : 3
+yield_cond : -2.273011710824402e-15
+mIsYielded : 1
+--------------------------
+mElemId : 31
+mGaussId : 0
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 31
+mGaussId : 1
+yield_cond : 3.063309243455534e-15
+mIsYielded : 1
+--------------------------
+mElemId : 31
+mGaussId : 2
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 31
+mGaussId : 3
+yield_cond : 1.118379765214239e-14
+mIsYielded : 1
+--------------------------
+mElemId : 32
+mGaussId : 0
+yield_cond : 2.367267379853803e-15
+mIsYielded : 1
+--------------------------
+mElemId : 32
+mGaussId : 1
+yield_cond : 3.991365061591175e-15
+mIsYielded : 1
+--------------------------
+mElemId : 32
+mGaussId : 2
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 32
+mGaussId : 3
+yield_cond : 3.063309243455534e-15
+mIsYielded : 1
+--------------------------
+mElemId : 33
+mGaussId : 0
+yield_cond : 1.207197607184252e-15
+mIsYielded : 1
+--------------------------
+mElemId : 33
+mGaussId : 1
+yield_cond : -6.489140290870303e-16
+mIsYielded : 1
+--------------------------
+mElemId : 33
+mGaussId : 2
+yield_cond : 6.543518561464188e-15
+mIsYielded : 1
+--------------------------
+mElemId : 33
+mGaussId : 3
+yield_cond : -1.808983801756582e-15
+mIsYielded : 1
+--------------------------
+mElemId : 34
+mGaussId : 0
+yield_cond : 1.439211561718162e-15
+mIsYielded : 1
+--------------------------
+mElemId : 34
+mGaussId : 1
+yield_cond : 2.599281334387713e-15
+mIsYielded : 1
+--------------------------
+mElemId : 34
+mGaussId : 2
+yield_cond : 1.207197607184252e-15
+mIsYielded : 1
+--------------------------
+mElemId : 34
+mGaussId : 3
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 35
+mGaussId : 0
+yield_cond : 2.367267379853803e-15
+mIsYielded : 1
+--------------------------
+mElemId : 35
+mGaussId : 1
+yield_cond : -1.112941938154851e-15
+mIsYielded : 1
+--------------------------
+mElemId : 35
+mGaussId : 2
+yield_cond : 1.207197607184252e-15
+mIsYielded : 1
+--------------------------
+mElemId : 35
+mGaussId : 3
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 36
+mGaussId : 0
+yield_cond : 4.687406925192906e-15
+mIsYielded : 1
+--------------------------
+mElemId : 36
+mGaussId : 1
+yield_cond : 5.383448788794637e-15
+mIsYielded : 1
+--------------------------
+mElemId : 36
+mGaussId : 2
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 36
+mGaussId : 3
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 37
+mGaussId : 0
+yield_cond : 2.367267379853803e-15
+mIsYielded : 1
+--------------------------
+mElemId : 37
+mGaussId : 1
+yield_cond : 4.223379016125085e-15
+mIsYielded : 1
+--------------------------
+mElemId : 37
+mGaussId : 2
+yield_cond : 3.527337152523355e-15
+mIsYielded : 1
+--------------------------
+mElemId : 37
+mGaussId : 3
+yield_cond : 5.847476697862457e-15
+mIsYielded : 1
+--------------------------
+mElemId : 38
+mGaussId : 0
+yield_cond : 1.671225516252072e-15
+mIsYielded : 1
+--------------------------
+mElemId : 38
+mGaussId : 1
+yield_cond : -8.809279836209405e-16
+mIsYielded : 1
+--------------------------
+mElemId : 38
+mGaussId : 2
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 38
+mGaussId : 3
+yield_cond : -6.489140290870303e-16
+mIsYielded : 1
+--------------------------
+mElemId : 39
+mGaussId : 0
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 39
+mGaussId : 1
+yield_cond : -8.809279836209405e-16
+mIsYielded : 1
+--------------------------
+mElemId : 39
+mGaussId : 2
+yield_cond : 9.751836526503416e-16
+mIsYielded : 1
+--------------------------
+mElemId : 39
+mGaussId : 3
+yield_cond : -2.040997756290492e-15
+mIsYielded : 1
+--------------------------
+mElemId : 40
+mGaussId : 0
+yield_cond : 9.095672061337201e-15
+mIsYielded : 1
+--------------------------
+mElemId : 40
+mGaussId : 1
+yield_cond : 6.311504606930278e-15
+mIsYielded : 1
+--------------------------
+mElemId : 40
+mGaussId : 2
+yield_cond : -3.665095438027864e-15
+mIsYielded : 1
+--------------------------
+mElemId : 40
+mGaussId : 3
+yield_cond : 3.527337152523355e-15
+mIsYielded : 1
+--------------------------
+mElemId : 41
+mGaussId : 0
+yield_cond : -2.273011710824402e-15
+mIsYielded : 1
+--------------------------
+mElemId : 41
+mGaussId : 1
+yield_cond : 1.207197607184252e-15
+mIsYielded : 1
+--------------------------
+mElemId : 41
+mGaussId : 2
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 41
+mGaussId : 3
+yield_cond : -6.489140290870303e-16
+mIsYielded : 1
+--------------------------
+mElemId : 42
+mGaussId : 0
+yield_cond : 2.791417890486108e-16
+mIsYielded : 1
+--------------------------
+mElemId : 42
+mGaussId : 1
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 42
+mGaussId : 2
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 42
+mGaussId : 3
+yield_cond : -9.193306698810150e-03
+mIsYielded : 0
+--------------------------
+mElemId : 43
+mGaussId : 0
+yield_cond : -1.576969847222671e-15
+mIsYielded : 1
+--------------------------
+mElemId : 43
+mGaussId : 1
+yield_cond : 1.439211561718162e-15
+mIsYielded : 1
+--------------------------
+mElemId : 43
+mGaussId : 2
+yield_cond : -1.549690126968561e-01
+mIsYielded : 0
+--------------------------
+mElemId : 43
+mGaussId : 3
+yield_cond : -5.838060360371865e-02
+mIsYielded : 0
+--------------------------
+mElemId : 44
+mGaussId : 0
+yield_cond : -2.288161499401343e-02
+mIsYielded : 0
+--------------------------
+mElemId : 44
+mGaussId : 1
+yield_cond : 5.111557435825211e-16
+mIsYielded : 1
+--------------------------
+mElemId : 44
+mGaussId : 2
+yield_cond : -2.022290768920642e-01
+mIsYielded : 0
+--------------------------
+mElemId : 44
+mGaussId : 3
+yield_cond : -8.870743067009054e-02
+mIsYielded : 0
+--------------------------
+mElemId : 45
+mGaussId : 0
+yield_cond : -1.021351718745461e-01
+mIsYielded : 0
+--------------------------
+mElemId : 45
+mGaussId : 1
+yield_cond : -1.105616433844298e-01
+mIsYielded : 0
+--------------------------
+mElemId : 45
+mGaussId : 2
+yield_cond : -1.357540346568194e-01
+mIsYielded : 0
+--------------------------
+mElemId : 45
+mGaussId : 3
+yield_cond : -1.302515839348084e-01
+mIsYielded : 0
+--------------------------
+mElemId : 46
+mGaussId : 0
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 46
+mGaussId : 1
+yield_cond : -2.932977718796392e-01
+mIsYielded : 0
+--------------------------
+mElemId : 46
+mGaussId : 2
+yield_cond : -6.731140576162700e-01
+mIsYielded : 0
+--------------------------
+mElemId : 46
+mGaussId : 3
+yield_cond : -1.576969847222671e-15
+mIsYielded : 1
+--------------------------
+mElemId : 47
+mGaussId : 0
+yield_cond : -1.391379935461021e+00
+mIsYielded : 0
+--------------------------
+mElemId : 47
+mGaussId : 1
+yield_cond : -2.220343519583094e+00
+mIsYielded : 0
+--------------------------
+mElemId : 47
+mGaussId : 2
+yield_cond : -2.426905414728120e+00
+mIsYielded : 0
+--------------------------
+mElemId : 47
+mGaussId : 3
+yield_cond : -1.574181929518079e+00
+mIsYielded : 0
+--------------------------
+mElemId : 48
+mGaussId : 0
+yield_cond : 5.111557435825211e-16
+mIsYielded : 1
+--------------------------
+mElemId : 48
+mGaussId : 1
+yield_cond : -8.386726537237913e-01
+mIsYielded : 0
+--------------------------
+mElemId : 48
+mGaussId : 2
+yield_cond : -1.034910634917415e+00
+mIsYielded : 0
+--------------------------
+mElemId : 48
+mGaussId : 3
+yield_cond : -2.240313680171255e-01
+mIsYielded : 0
+--------------------------
+mElemId : 49
+mGaussId : 0
+yield_cond : -1.713423739646705e+00
+mIsYielded : 0
+--------------------------
+mElemId : 49
+mGaussId : 1
+yield_cond : -2.301427322112637e+00
+mIsYielded : 0
+--------------------------
+mElemId : 49
+mGaussId : 2
+yield_cond : -2.011735959967187e+00
+mIsYielded : 0
+--------------------------
+mElemId : 49
+mGaussId : 3
+yield_cond : -1.732894954584803e+00
+mIsYielded : 0
+--------------------------
+mElemId : 50
+mGaussId : 0
+yield_cond : -3.097773080539141e-01
+mIsYielded : 0
+--------------------------
+mElemId : 50
+mGaussId : 1
+yield_cond : -1.125183037558906e+00
+mIsYielded : 0
+--------------------------
+mElemId : 50
+mGaussId : 2
+yield_cond : -1.236396610062749e+00
+mIsYielded : 0
+--------------------------
+mElemId : 50
+mGaussId : 3
+yield_cond : -5.127386276506578e-01
+mIsYielded : 0
+--------------------------
+mElemId : 51
+mGaussId : 0
+yield_cond : -1.713363067770410e+00
+mIsYielded : 0
+--------------------------
+mElemId : 51
+mGaussId : 1
+yield_cond : -1.867987659938955e+00
+mIsYielded : 0
+--------------------------
+mElemId : 51
+mGaussId : 2
+yield_cond : -1.703824901508769e+00
+mIsYielded : 0
+--------------------------
+mElemId : 51
+mGaussId : 3
+yield_cond : -1.610235949784547e+00
+mIsYielded : 0
+--------------------------
+mElemId : 52
+mGaussId : 0
+yield_cond : -3.287815345765120e-01
+mIsYielded : 0
+--------------------------
+mElemId : 52
+mGaussId : 1
+yield_cond : -5.534717580952430e-01
+mIsYielded : 0
+--------------------------
+mElemId : 52
+mGaussId : 2
+yield_cond : -5.372652872242399e-01
+mIsYielded : 0
+--------------------------
+mElemId : 52
+mGaussId : 3
+yield_cond : -3.590306860835715e-01
+mIsYielded : 0
+--------------------------
+mElemId : 53
+mGaussId : 0
+yield_cond : -6.815806482095449e-01
+mIsYielded : 0
+--------------------------
+mElemId : 53
+mGaussId : 1
+yield_cond : -8.175571053799136e-01
+mIsYielded : 0
+--------------------------
+mElemId : 53
+mGaussId : 2
+yield_cond : -8.054648345689046e-01
+mIsYielded : 0
+--------------------------
+mElemId : 53
+mGaussId : 3
+yield_cond : -6.571328602481971e-01
+mIsYielded : 0
+--------------------------
+mElemId : 54
+mGaussId : 0
+yield_cond : -3.154021169237016e-01
+mIsYielded : 0
+--------------------------
+mElemId : 54
+mGaussId : 1
+yield_cond : -5.138456313387576e-01
+mIsYielded : 0
+--------------------------
+mElemId : 54
+mGaussId : 2
+yield_cond : -4.879958661018623e-01
+mIsYielded : 0
+--------------------------
+mElemId : 54
+mGaussId : 3
+yield_cond : -2.652826687961244e-01
+mIsYielded : 0
+--------------------------
+mElemId : 55
+mGaussId : 0
+yield_cond : -6.474406661711833e-01
+mIsYielded : 0
+--------------------------
+mElemId : 55
+mGaussId : 1
+yield_cond : -7.693177998519529e-01
+mIsYielded : 0
+--------------------------
+mElemId : 55
+mGaussId : 2
+yield_cond : -6.332223206379792e-01
+mIsYielded : 0
+--------------------------
+mElemId : 55
+mGaussId : 3
+yield_cond : -5.898857051775380e-01
+mIsYielded : 0
+--------------------------
+mElemId : 56
+mGaussId : 0
+yield_cond : -1.962856777937290e-01
+mIsYielded : 0
+--------------------------
+mElemId : 56
+mGaussId : 1
+yield_cond : -3.763589602729153e-01
+mIsYielded : 0
+--------------------------
+mElemId : 56
+mGaussId : 2
+yield_cond : -5.060319367766547e-01
+mIsYielded : 0
+--------------------------
+mElemId : 56
+mGaussId : 3
+yield_cond : -4.091621099908902e-02
+mIsYielded : 0
+--------------------------
+mElemId : 57
+mGaussId : 0
+yield_cond : -5.680737052484852e-01
+mIsYielded : 0
+--------------------------
+mElemId : 57
+mGaussId : 1
+yield_cond : -6.420076010952684e-01
+mIsYielded : 0
+--------------------------
+mElemId : 57
+mGaussId : 2
+yield_cond : -9.103981229170354e-01
+mIsYielded : 0
+--------------------------
+mElemId : 57
+mGaussId : 3
+yield_cond : -6.554513300919822e-02
+mIsYielded : 0
+--------------------------
+mElemId : 58
+mGaussId : 0
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 58
+mGaussId : 1
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 58
+mGaussId : 2
+yield_cond : -2.706395743815900e-01
+mIsYielded : 0
+--------------------------
+mElemId : 58
+mGaussId : 3
+yield_cond : -9.294816193822467e-02
+mIsYielded : 0
+--------------------------
+mElemId : 59
+mGaussId : 0
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 59
+mGaussId : 1
+yield_cond : -6.489140290870303e-16
+mIsYielded : 1
+--------------------------
+mElemId : 59
+mGaussId : 2
+yield_cond : -3.105870936941068e-01
+mIsYielded : 0
+--------------------------
+mElemId : 59
+mGaussId : 3
+yield_cond : -1.334210839131489e-01
+mIsYielded : 0
+--------------------------
+mElemId : 60
+mGaussId : 0
+yield_cond : -3.870473719582162e-01
+mIsYielded : 0
+--------------------------
+mElemId : 60
+mGaussId : 1
+yield_cond : -3.507874924965634e-01
+mIsYielded : 0
+--------------------------
+mElemId : 60
+mGaussId : 2
+yield_cond : -7.655542640683718e-01
+mIsYielded : 0
+--------------------------
+mElemId : 60
+mGaussId : 3
+yield_cond : -8.143645866804446e-01
+mIsYielded : 0
+--------------------------
+mElemId : 61
+mGaussId : 0
+yield_cond : -4.506172465713041e-01
+mIsYielded : 0
+--------------------------
+mElemId : 61
+mGaussId : 1
+yield_cond : -3.297065501883413e-01
+mIsYielded : 0
+--------------------------
+mElemId : 61
+mGaussId : 2
+yield_cond : -7.710013300406561e-01
+mIsYielded : 0
+--------------------------
+mElemId : 61
+mGaussId : 3
+yield_cond : -7.680721501881900e-01
+mIsYielded : 0
+--------------------------
+mElemId : 62
+mGaussId : 0
+yield_cond : -1.084400663878678e+00
+mIsYielded : 0
+--------------------------
+mElemId : 62
+mGaussId : 1
+yield_cond : -1.089938048301912e+00
+mIsYielded : 0
+--------------------------
+mElemId : 62
+mGaussId : 2
+yield_cond : -1.532643183359207e+00
+mIsYielded : 0
+--------------------------
+mElemId : 62
+mGaussId : 3
+yield_cond : -1.628805346083424e+00
+mIsYielded : 0
+--------------------------
+mElemId : 63
+mGaussId : 0
+yield_cond : -1.043121237154870e+00
+mIsYielded : 0
+--------------------------
+mElemId : 63
+mGaussId : 1
+yield_cond : -1.045996979949491e+00
+mIsYielded : 0
+--------------------------
+mElemId : 63
+mGaussId : 2
+yield_cond : -1.403895638170456e+00
+mIsYielded : 0
+--------------------------
+mElemId : 63
+mGaussId : 3
+yield_cond : -1.481984159623552e+00
+mIsYielded : 0
+--------------------------
+mElemId : 64
+mGaussId : 0
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 64
+mGaussId : 1
+yield_cond : -9.015747657562548e-02
+mIsYielded : 0
+--------------------------
+mElemId : 64
+mGaussId : 2
+yield_cond : -3.259503151606857e-01
+mIsYielded : 0
+--------------------------
+mElemId : 64
+mGaussId : 3
+yield_cond : -2.013801681648951e-01
+mIsYielded : 0
+--------------------------
+mElemId : 65
+mGaussId : 0
+yield_cond : 5.111557435825211e-16
+mIsYielded : 1
+--------------------------
+mElemId : 65
+mGaussId : 1
+yield_cond : -4.352095881472638e-01
+mIsYielded : 0
+--------------------------
+mElemId : 65
+mGaussId : 2
+yield_cond : -1.989126668032259e-01
+mIsYielded : 0
+--------------------------
+mElemId : 65
+mGaussId : 3
+yield_cond : -2.696052969067717e-01
+mIsYielded : 0
+--------------------------
+mElemId : 66
+mGaussId : 0
+yield_cond : -5.039935381460481e-01
+mIsYielded : 0
+--------------------------
+mElemId : 66
+mGaussId : 1
+yield_cond : -3.555524661695518e-01
+mIsYielded : 0
+--------------------------
+mElemId : 66
+mGaussId : 2
+yield_cond : -7.411400696381432e-01
+mIsYielded : 0
+--------------------------
+mElemId : 66
+mGaussId : 3
+yield_cond : -7.440056165087107e-01
+mIsYielded : 0
+--------------------------
+mElemId : 67
+mGaussId : 0
+yield_cond : -5.000483725885554e-01
+mIsYielded : 0
+--------------------------
+mElemId : 67
+mGaussId : 1
+yield_cond : -4.026718806056518e-01
+mIsYielded : 0
+--------------------------
+mElemId : 67
+mGaussId : 2
+yield_cond : -7.034258913871222e-01
+mIsYielded : 0
+--------------------------
+mElemId : 67
+mGaussId : 3
+yield_cond : -7.058106888356519e-01
+mIsYielded : 0
+--------------------------
+mElemId : 68
+mGaussId : 0
+yield_cond : -9.945140621926042e-01
+mIsYielded : 0
+--------------------------
+mElemId : 68
+mGaussId : 1
+yield_cond : -9.400714090561823e-01
+mIsYielded : 0
+--------------------------
+mElemId : 68
+mGaussId : 2
+yield_cond : -1.248726129524457e+00
+mIsYielded : 0
+--------------------------
+mElemId : 68
+mGaussId : 3
+yield_cond : -1.357251801674530e+00
+mIsYielded : 0
+--------------------------
+mElemId : 69
+mGaussId : 0
+yield_cond : -9.294192046136703e-01
+mIsYielded : 0
+--------------------------
+mElemId : 69
+mGaussId : 1
+yield_cond : -8.749885713629848e-01
+mIsYielded : 0
+--------------------------
+mElemId : 69
+mGaussId : 2
+yield_cond : -1.126682151774686e+00
+mIsYielded : 0
+--------------------------
+mElemId : 69
+mGaussId : 3
+yield_cond : -1.206283095463992e+00
+mIsYielded : 0
+--------------------------
+mElemId : 70
+mGaussId : 0
+yield_cond : -9.898067020445838e-01
+mIsYielded : 0
+--------------------------
+mElemId : 70
+mGaussId : 1
+yield_cond : -9.808210801442867e-01
+mIsYielded : 0
+--------------------------
+mElemId : 70
+mGaussId : 2
+yield_cond : -7.685693941063665e-01
+mIsYielded : 0
+--------------------------
+mElemId : 70
+mGaussId : 3
+yield_cond : -7.430711357089067e-01
+mIsYielded : 0
+--------------------------
+mElemId : 71
+mGaussId : 0
+yield_cond : -9.821847661870993e-01
+mIsYielded : 0
+--------------------------
+mElemId : 71
+mGaussId : 1
+yield_cond : -1.002973204819963e+00
+mIsYielded : 0
+--------------------------
+mElemId : 71
+mGaussId : 2
+yield_cond : -7.702699985464447e-01
+mIsYielded : 0
+--------------------------
+mElemId : 71
+mGaussId : 3
+yield_cond : -7.332769526780966e-01
+mIsYielded : 0
+--------------------------
+mElemId : 72
+mGaussId : 0
+yield_cond : -1.026885048293412e+00
+mIsYielded : 0
+--------------------------
+mElemId : 72
+mGaussId : 1
+yield_cond : -1.085050279389262e+00
+mIsYielded : 0
+--------------------------
+mElemId : 72
+mGaussId : 2
+yield_cond : -8.410264048374403e-01
+mIsYielded : 0
+--------------------------
+mElemId : 72
+mGaussId : 3
+yield_cond : -7.795570376200704e-01
+mIsYielded : 0
+--------------------------
+mElemId : 73
+mGaussId : 0
+yield_cond : -6.979241483423373e-01
+mIsYielded : 0
+--------------------------
+mElemId : 73
+mGaussId : 1
+yield_cond : -5.851934478755374e-01
+mIsYielded : 0
+--------------------------
+mElemId : 73
+mGaussId : 2
+yield_cond : -4.282755170436818e-01
+mIsYielded : 0
+--------------------------
+mElemId : 73
+mGaussId : 3
+yield_cond : -4.464308348363639e-01
+mIsYielded : 0
+--------------------------
+mElemId : 74
+mGaussId : 0
+yield_cond : -5.942242927210217e-01
+mIsYielded : 0
+--------------------------
+mElemId : 74
+mGaussId : 1
+yield_cond : -5.891441635191476e-01
+mIsYielded : 0
+--------------------------
+mElemId : 74
+mGaussId : 2
+yield_cond : -3.892757046292860e-01
+mIsYielded : 0
+--------------------------
+mElemId : 74
+mGaussId : 3
+yield_cond : -4.121881260806243e-01
+mIsYielded : 0
+--------------------------
+mElemId : 75
+mGaussId : 0
+yield_cond : -6.250693753650272e-01
+mIsYielded : 0
+--------------------------
+mElemId : 75
+mGaussId : 1
+yield_cond : -6.433337441566931e-01
+mIsYielded : 0
+--------------------------
+mElemId : 75
+mGaussId : 2
+yield_cond : -3.978606144778530e-01
+mIsYielded : 0
+--------------------------
+mElemId : 75
+mGaussId : 3
+yield_cond : -4.328542765886474e-01
+mIsYielded : 0
+--------------------------
+mElemId : 76
+mGaussId : 0
+yield_cond : -3.665043427379081e-01
+mIsYielded : 0
+--------------------------
+mElemId : 76
+mGaussId : 1
+yield_cond : -3.197415141843579e-01
+mIsYielded : 0
+--------------------------
+mElemId : 76
+mGaussId : 2
+yield_cond : -2.378798442314811e-01
+mIsYielded : 0
+--------------------------
+mElemId : 76
+mGaussId : 3
+yield_cond : -2.985537657738307e-01
+mIsYielded : 0
+--------------------------
+mElemId : 77
+mGaussId : 0
+yield_cond : -3.096614066111481e-01
+mIsYielded : 0
+--------------------------
+mElemId : 77
+mGaussId : 1
+yield_cond : -3.333016686010697e-01
+mIsYielded : 0
+--------------------------
+mElemId : 77
+mGaussId : 2
+yield_cond : -1.130322670549993e-01
+mIsYielded : 0
+--------------------------
+mElemId : 77
+mGaussId : 3
+yield_cond : -1.863650649512330e-01
+mIsYielded : 0
+--------------------------
+mElemId : 78
+mGaussId : 0
+yield_cond : -1.825981057984059e-01
+mIsYielded : 0
+--------------------------
+mElemId : 78
+mGaussId : 1
+yield_cond : -2.865676573188115e-01
+mIsYielded : 0
+--------------------------
+mElemId : 78
+mGaussId : 2
+yield_cond : -6.489140290870303e-16
+mIsYielded : 1
+--------------------------
+mElemId : 78
+mGaussId : 3
+yield_cond : -2.163443275097870e-01
+mIsYielded : 0
+--------------------------
+mElemId : 79
+mGaussId : 0
+yield_cond : -5.341856222232374e-01
+mIsYielded : 0
+--------------------------
+mElemId : 79
+mGaussId : 1
+yield_cond : -1.150334803348073e+00
+mIsYielded : 0
+--------------------------
+mElemId : 79
+mGaussId : 2
+yield_cond : -9.189869052085071e-01
+mIsYielded : 0
+--------------------------
+mElemId : 79
+mGaussId : 3
+yield_cond : -5.351478090812096e-01
+mIsYielded : 0
+--------------------------
+mElemId : 80
+mGaussId : 0
+yield_cond : -1.480355353207733e+00
+mIsYielded : 0
+--------------------------
+mElemId : 80
+mGaussId : 1
+yield_cond : -1.654911723024800e+00
+mIsYielded : 0
+--------------------------
+mElemId : 80
+mGaussId : 2
+yield_cond : -1.455601207706773e+00
+mIsYielded : 0
+--------------------------
+mElemId : 80
+mGaussId : 3
+yield_cond : -1.236868689373251e+00
+mIsYielded : 0
+--------------------------
+mElemId : 81
+mGaussId : 0
+yield_cond : -5.850987827924796e-01
+mIsYielded : 0
+--------------------------
+mElemId : 81
+mGaussId : 1
+yield_cond : -8.476461205495871e-01
+mIsYielded : 0
+--------------------------
+mElemId : 81
+mGaussId : 2
+yield_cond : -8.368815824432965e-01
+mIsYielded : 0
+--------------------------
+mElemId : 81
+mGaussId : 3
+yield_cond : -6.677470106554907e-01
+mIsYielded : 0
+--------------------------
+mElemId : 82
+mGaussId : 0
+yield_cond : -1.064466722253446e+00
+mIsYielded : 0
+--------------------------
+mElemId : 82
+mGaussId : 1
+yield_cond : -1.299060478076610e+00
+mIsYielded : 0
+--------------------------
+mElemId : 82
+mGaussId : 2
+yield_cond : -1.088018994705216e+00
+mIsYielded : 0
+--------------------------
+mElemId : 82
+mGaussId : 3
+yield_cond : -9.508578348672521e-01
+mIsYielded : 0
+--------------------------
+mElemId : 83
+mGaussId : 0
+yield_cond : -8.297491062448087e-01
+mIsYielded : 0
+--------------------------
+mElemId : 83
+mGaussId : 1
+yield_cond : -8.985047733167940e-01
+mIsYielded : 0
+--------------------------
+mElemId : 83
+mGaussId : 2
+yield_cond : -1.100703891138616e+00
+mIsYielded : 0
+--------------------------
+mElemId : 83
+mGaussId : 3
+yield_cond : -1.022314770656490e+00
+mIsYielded : 0
+--------------------------
+mElemId : 84
+mGaussId : 0
+yield_cond : -9.786693129731628e-01
+mIsYielded : 0
+--------------------------
+mElemId : 84
+mGaussId : 1
+yield_cond : -1.032870308175941e+00
+mIsYielded : 0
+--------------------------
+mElemId : 84
+mGaussId : 2
+yield_cond : -1.165939635905103e+00
+mIsYielded : 0
+--------------------------
+mElemId : 84
+mGaussId : 3
+yield_cond : -1.133019578193174e+00
+mIsYielded : 0
+--------------------------
+mElemId : 85
+mGaussId : 0
+yield_cond : -9.383580620481903e-01
+mIsYielded : 0
+--------------------------
+mElemId : 85
+mGaussId : 1
+yield_cond : -1.120433401093356e+00
+mIsYielded : 0
+--------------------------
+mElemId : 85
+mGaussId : 2
+yield_cond : -1.069501500623097e+00
+mIsYielded : 0
+--------------------------
+mElemId : 85
+mGaussId : 3
+yield_cond : -9.248406651341289e-01
+mIsYielded : 0
+--------------------------
+mElemId : 86
+mGaussId : 0
+yield_cond : -1.225369896009356e+00
+mIsYielded : 0
+--------------------------
+mElemId : 86
+mGaussId : 1
+yield_cond : -1.312075751018297e+00
+mIsYielded : 0
+--------------------------
+mElemId : 86
+mGaussId : 2
+yield_cond : -1.259898892676021e+00
+mIsYielded : 0
+--------------------------
+mElemId : 86
+mGaussId : 3
+yield_cond : -1.207374361608534e+00
+mIsYielded : 0
+--------------------------
+mElemId : 87
+mGaussId : 0
+yield_cond : -8.766164673918942e-01
+mIsYielded : 0
+--------------------------
+mElemId : 87
+mGaussId : 1
+yield_cond : -1.063669776646484e+00
+mIsYielded : 0
+--------------------------
+mElemId : 87
+mGaussId : 2
+yield_cond : -8.999468380057826e-01
+mIsYielded : 0
+--------------------------
+mElemId : 87
+mGaussId : 3
+yield_cond : -8.294279098921783e-01
+mIsYielded : 0
+--------------------------
+mElemId : 88
+mGaussId : 0
+yield_cond : -1.126199023251913e+00
+mIsYielded : 0
+--------------------------
+mElemId : 88
+mGaussId : 1
+yield_cond : -1.175024077506033e+00
+mIsYielded : 0
+--------------------------
+mElemId : 88
+mGaussId : 2
+yield_cond : -9.745885394837134e-01
+mIsYielded : 0
+--------------------------
+mElemId : 88
+mGaussId : 3
+yield_cond : -1.081308733152351e+00
+mIsYielded : 0
+--------------------------
+mElemId : 89
+mGaussId : 0
+yield_cond : -6.893167689353734e-01
+mIsYielded : 0
+--------------------------
+mElemId : 89
+mGaussId : 1
+yield_cond : -8.782331268996326e-01
+mIsYielded : 0
+--------------------------
+mElemId : 89
+mGaussId : 2
+yield_cond : -7.538435136094623e-01
+mIsYielded : 0
+--------------------------
+mElemId : 89
+mGaussId : 3
+yield_cond : -4.772508636546517e-01
+mIsYielded : 0
+--------------------------
+mElemId : 90
+mGaussId : 0
+yield_cond : -9.280995525202659e-01
+mIsYielded : 0
+--------------------------
+mElemId : 90
+mGaussId : 1
+yield_cond : -8.606737429956901e-01
+mIsYielded : 0
+--------------------------
+mElemId : 90
+mGaussId : 2
+yield_cond : -6.144544333304638e-01
+mIsYielded : 0
+--------------------------
+mElemId : 90
+mGaussId : 3
+yield_cond : -6.329198120880083e-01
+mIsYielded : 0
+--------------------------
+mElemId : 91
+mGaussId : 0
+yield_cond : -1.616156272356482e-01
+mIsYielded : 0
+--------------------------
+mElemId : 91
+mGaussId : 1
+yield_cond : -9.476067945032602e-01
+mIsYielded : 0
+--------------------------
+mElemId : 91
+mGaussId : 2
+yield_cond : -1.186457442525078e-02
+mIsYielded : 0
+--------------------------
+mElemId : 91
+mGaussId : 3
+yield_cond : -6.434412700188183e-01
+mIsYielded : 0
+--------------------------
+mElemId : 92
+mGaussId : 0
+yield_cond : -1.344955892688761e-15
+mIsYielded : 1
+--------------------------
+mElemId : 92
+mGaussId : 1
+yield_cond : -1.344955892688761e-15
+mIsYielded : 1
+--------------------------
+mElemId : 92
+mGaussId : 2
+yield_cond : -4.593151256163505e-15
+mIsYielded : 1
+--------------------------
+mElemId : 92
+mGaussId : 3
+yield_cond : -6.489140290870303e-16
+mIsYielded : 1
+--------------------------
+mElemId : 93
+mGaussId : 0
+yield_cond : 2.135253425319893e-15
+mIsYielded : 1
+--------------------------
+mElemId : 93
+mGaussId : 1
+yield_cond : -1.112941938154851e-15
+mIsYielded : 1
+--------------------------
+mElemId : 93
+mGaussId : 2
+yield_cond : 5.615462743328547e-15
+mIsYielded : 1
+--------------------------
+mElemId : 93
+mGaussId : 3
+yield_cond : -9.233430346841710e-15
+mIsYielded : 1
+--------------------------
+mElemId : 94
+mGaussId : 0
+yield_cond : -5.489503915608830e-01
+mIsYielded : 0
+--------------------------
+mElemId : 94
+mGaussId : 1
+yield_cond : 3.527337152523355e-15
+mIsYielded : 1
+--------------------------
+mElemId : 94
+mGaussId : 2
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 94
+mGaussId : 3
+yield_cond : -7.192155500657157e-01
+mIsYielded : 0
+--------------------------
+mElemId : 95
+mGaussId : 0
+yield_cond : -8.809279836209405e-16
+mIsYielded : 1
+--------------------------
+mElemId : 95
+mGaussId : 1
+yield_cond : -2.505025665358312e-15
+mIsYielded : 1
+--------------------------
+mElemId : 95
+mGaussId : 2
+yield_cond : 2.599281334387713e-15
+mIsYielded : 1
+--------------------------
+mElemId : 95
+mGaussId : 3
+yield_cond : 2.791417890486108e-16
+mIsYielded : 1
+--------------------------
+mElemId : 96
+mGaussId : 0
+yield_cond : 3.759351107057264e-15
+mIsYielded : 1
+--------------------------
+mElemId : 96
+mGaussId : 1
+yield_cond : 1.652011860642233e-14
+mIsYielded : 1
+--------------------------
+mElemId : 96
+mGaussId : 2
+yield_cond : 1.095178369760848e-14
+mIsYielded : 1
+--------------------------
+mElemId : 96
+mGaussId : 3
+yield_cond : 3.063309243455534e-15
+mIsYielded : 1
+--------------------------
+mElemId : 97
+mGaussId : 0
+yield_cond : -6.156126134050988e-01
+mIsYielded : 0
+--------------------------
+mElemId : 97
+mGaussId : 1
+yield_cond : -1.591383614319098e-01
+mIsYielded : 0
+--------------------------
+mElemId : 97
+mGaussId : 2
+yield_cond : -2.505025665358312e-15
+mIsYielded : 1
+--------------------------
+mElemId : 97
+mGaussId : 3
+yield_cond : -1.576969847222671e-15
+mIsYielded : 1
+--------------------------
+mElemId : 98
+mGaussId : 0
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 98
+mGaussId : 1
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 98
+mGaussId : 2
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 98
+mGaussId : 3
+yield_cond : 2.135253425319893e-15
+mIsYielded : 1
+--------------------------
+mElemId : 99
+mGaussId : 0
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 99
+mGaussId : 1
+yield_cond : -1.576969847222671e-15
+mIsYielded : 1
+--------------------------
+mElemId : 99
+mGaussId : 2
+yield_cond : 2.367267379853803e-15
+mIsYielded : 1
+--------------------------
+mElemId : 99
+mGaussId : 3
+yield_cond : 3.295323197989444e-15
+mIsYielded : 1
+--------------------------
+mElemId : 100
+mGaussId : 0
+yield_cond : -1.344955892688761e-15
+mIsYielded : 1
+--------------------------
+mElemId : 100
+mGaussId : 1
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 100
+mGaussId : 2
+yield_cond : 3.759351107057264e-15
+mIsYielded : 1
+--------------------------
+mElemId : 100
+mGaussId : 3
+yield_cond : 9.751836526503416e-16
+mIsYielded : 1
+--------------------------
+mElemId : 101
+mGaussId : 0
+yield_cond : 2.135253425319893e-15
+mIsYielded : 1
+--------------------------
+mElemId : 101
+mGaussId : 1
+yield_cond : 2.367267379853803e-15
+mIsYielded : 1
+--------------------------
+mElemId : 101
+mGaussId : 2
+yield_cond : 2.599281334387713e-15
+mIsYielded : 1
+--------------------------
+mElemId : 101
+mGaussId : 3
+yield_cond : -1.344955892688761e-15
+mIsYielded : 1
+--------------------------
+mElemId : 102
+mGaussId : 0
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 102
+mGaussId : 1
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 102
+mGaussId : 2
+yield_cond : -2.737039619892223e-15
+mIsYielded : 1
+--------------------------
+mElemId : 102
+mGaussId : 3
+yield_cond : 1.439211561718162e-15
+mIsYielded : 1
+--------------------------
+mElemId : 103
+mGaussId : 0
+yield_cond : 4.919420879726816e-15
+mIsYielded : 1
+--------------------------
+mElemId : 103
+mGaussId : 1
+yield_cond : 4.223379016125085e-15
+mIsYielded : 1
+--------------------------
+mElemId : 103
+mGaussId : 2
+yield_cond : 2.791417890486108e-16
+mIsYielded : 1
+--------------------------
+mElemId : 103
+mGaussId : 3
+yield_cond : 7.239560425065919e-15
+mIsYielded : 1
+--------------------------
+mElemId : 104
+mGaussId : 0
+yield_cond : -8.809279836209405e-16
+mIsYielded : 1
+--------------------------
+mElemId : 104
+mGaussId : 1
+yield_cond : -1.808983801756582e-15
+mIsYielded : 1
+--------------------------
+mElemId : 104
+mGaussId : 2
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 104
+mGaussId : 3
+yield_cond : -8.809279836209405e-16
+mIsYielded : 1
+--------------------------
+mElemId : 105
+mGaussId : 0
+yield_cond : 2.831295288921624e-15
+mIsYielded : 1
+--------------------------
+mElemId : 105
+mGaussId : 1
+yield_cond : 2.791417890486108e-16
+mIsYielded : 1
+--------------------------
+mElemId : 105
+mGaussId : 2
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 105
+mGaussId : 3
+yield_cond : -2.040997756290492e-15
+mIsYielded : 1
+--------------------------
+mElemId : 106
+mGaussId : 0
+yield_cond : 2.135253425319893e-15
+mIsYielded : 1
+--------------------------
+mElemId : 106
+mGaussId : 1
+yield_cond : -4.593151256163505e-15
+mIsYielded : 1
+--------------------------
+mElemId : 106
+mGaussId : 2
+yield_cond : 3.759351107057264e-15
+mIsYielded : 1
+--------------------------
+mElemId : 106
+mGaussId : 3
+yield_cond : -1.068389157648453e-01
+mIsYielded : 0
+--------------------------
+mElemId : 107
+mGaussId : 0
+yield_cond : -3.897109392561774e-15
+mIsYielded : 1
+--------------------------
+mElemId : 107
+mGaussId : 1
+yield_cond : 2.791417890486108e-16
+mIsYielded : 1
+--------------------------
+mElemId : 107
+mGaussId : 2
+yield_cond : 1.207197607184252e-15
+mIsYielded : 1
+--------------------------
+mElemId : 107
+mGaussId : 3
+yield_cond : 9.751836526503416e-16
+mIsYielded : 1
+--------------------------
+mElemId : 108
+mGaussId : 0
+yield_cond : -2.737039619892223e-15
+mIsYielded : 1
+--------------------------
+mElemId : 108
+mGaussId : 1
+yield_cond : 9.751836526503416e-16
+mIsYielded : 1
+--------------------------
+mElemId : 108
+mGaussId : 2
+yield_cond : 6.311504606930278e-15
+mIsYielded : 1
+--------------------------
+mElemId : 108
+mGaussId : 3
+yield_cond : -2.737039619892223e-15
+mIsYielded : 1
+--------------------------
+mElemId : 109
+mGaussId : 0
+yield_cond : -6.452528740340918e-01
+mIsYielded : 0
+--------------------------
+mElemId : 109
+mGaussId : 1
+yield_cond : -4.361137301629594e-15
+mIsYielded : 1
+--------------------------
+mElemId : 109
+mGaussId : 2
+yield_cond : -1.808983801756582e-15
+mIsYielded : 1
+--------------------------
+mElemId : 109
+mGaussId : 3
+yield_cond : 2.135253425319893e-15
+mIsYielded : 1
+--------------------------
+mElemId : 110
+mGaussId : 0
+yield_cond : -2.273011710824402e-15
+mIsYielded : 1
+--------------------------
+mElemId : 110
+mGaussId : 1
+yield_cond : -1.848861200192097e-16
+mIsYielded : 1
+--------------------------
+mElemId : 110
+mGaussId : 2
+yield_cond : -5.057179165231326e-15
+mIsYielded : 1
+--------------------------
+mElemId : 110
+mGaussId : 3
+yield_cond : -1.344955892688761e-15
+mIsYielded : 1
+--------------------------
+mElemId : 111
+mGaussId : 0
+yield_cond : 3.759351107057264e-15
+mIsYielded : 1
+--------------------------
+mElemId : 111
+mGaussId : 1
+yield_cond : -9.233430346841710e-15
+mIsYielded : 1
+--------------------------
+mElemId : 111
+mGaussId : 2
+yield_cond : -3.201067528960043e-15
+mIsYielded : 1
+--------------------------
+mElemId : 111
+mGaussId : 3
+yield_cond : 5.615462743328547e-15
+mIsYielded : 1
+--------------------------
+mElemId : 112
+mGaussId : 0
+yield_cond : 9.751836526503416e-16
+mIsYielded : 1
+--------------------------
+mElemId : 112
+mGaussId : 1
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 112
+mGaussId : 2
+yield_cond : -8.073360574172159e-15
+mIsYielded : 1
+--------------------------
+mElemId : 112
+mGaussId : 3
+yield_cond : -5.753221028833056e-15
+mIsYielded : 1
+--------------------------
+mElemId : 113
+mGaussId : 0
+yield_cond : 3.527337152523355e-15
+mIsYielded : 1
+--------------------------
+mElemId : 113
+mGaussId : 1
+yield_cond : 5.151434834260726e-15
+mIsYielded : 1
+--------------------------
+mElemId : 113
+mGaussId : 2
+yield_cond : -2.686649089141889e-14
+mIsYielded : 1
+--------------------------
+mElemId : 113
+mGaussId : 3
+yield_cond : 7.239560425065919e-15
+mIsYielded : 1
+--------------------------
+mElemId : 114
+mGaussId : 0
+yield_cond : 2.116039769710053e-14
+mIsYielded : 1
+--------------------------
+mElemId : 114
+mGaussId : 1
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 114
+mGaussId : 2
+yield_cond : 2.812081633311784e-14
+mIsYielded : 1
+--------------------------
+mElemId : 114
+mGaussId : 3
+yield_cond : -1.085752802857908e-14
+mIsYielded : 1
+--------------------------
+mElemId : 115
+mGaussId : 0
+yield_cond : 2.791417890486108e-16
+mIsYielded : 1
+--------------------------
+mElemId : 115
+mGaussId : 1
+yield_cond : -2.092581453053048e-02
+mIsYielded : 0
+--------------------------
+mElemId : 115
+mGaussId : 2
+yield_cond : -5.521207074299146e-15
+mIsYielded : 1
+--------------------------
+mElemId : 115
+mGaussId : 3
+yield_cond : -2.737039619892223e-15
+mIsYielded : 1
+--------------------------
+mElemId : 116
+mGaussId : 0
+yield_cond : -2.969053574426133e-15
+mIsYielded : 1
+--------------------------
+mElemId : 116
+mGaussId : 1
+yield_cond : 3.063309243455534e-15
+mIsYielded : 1
+--------------------------
+mElemId : 116
+mGaussId : 2
+yield_cond : -5.629132713747493e-02
+mIsYielded : 0
+--------------------------
+mElemId : 116
+mGaussId : 3
+yield_cond : 1.671225516252072e-15
+mIsYielded : 1
+--------------------------
+mElemId : 117
+mGaussId : 0
+yield_cond : -3.201067528960043e-15
+mIsYielded : 1
+--------------------------
+mElemId : 117
+mGaussId : 1
+yield_cond : 1.671225516252072e-15
+mIsYielded : 1
+--------------------------
+mElemId : 117
+mGaussId : 2
+yield_cond : -3.897109392561774e-15
+mIsYielded : 1
+--------------------------
+mElemId : 117
+mGaussId : 3
+yield_cond : 7.431696981164314e-16
+mIsYielded : 1
+--------------------------
+mElemId : 118
+mGaussId : 0
+yield_cond : -1.104892889609389e-01
+mIsYielded : 0
+--------------------------
+mElemId : 118
+mGaussId : 1
+yield_cond : -2.181746981220060e-01
+mIsYielded : 0
+--------------------------
+mElemId : 118
+mGaussId : 2
+yield_cond : -2.148847401652806e-01
+mIsYielded : 0
+--------------------------
+mElemId : 118
+mGaussId : 3
+yield_cond : -6.608798125906412e-02
+mIsYielded : 0
+--------------------------
+mElemId : 119
+mGaussId : 0
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 119
+mGaussId : 1
+yield_cond : -1.893970377015803e-01
+mIsYielded : 0
+--------------------------
+mElemId : 119
+mGaussId : 2
+yield_cond : -5.718301654547796e-02
+mIsYielded : 0
+--------------------------
+mElemId : 119
+mGaussId : 3
+yield_cond : -1.264442723836175e-01
+mIsYielded : 0
+--------------------------
+mElemId : 120
+mGaussId : 0
+yield_cond : -3.201067528960043e-15
+mIsYielded : 1
+--------------------------
+mElemId : 120
+mGaussId : 1
+yield_cond : -9.235878818242810e-02
+mIsYielded : 0
+--------------------------
+mElemId : 120
+mGaussId : 2
+yield_cond : -6.327454655613375e-02
+mIsYielded : 0
+--------------------------
+mElemId : 120
+mGaussId : 3
+yield_cond : -1.808983801756582e-15
+mIsYielded : 1
+--------------------------
+mElemId : 121
+mGaussId : 0
+yield_cond : -4.169000745531200e-16
+mIsYielded : 1
+--------------------------
+mElemId : 121
+mGaussId : 1
+yield_cond : 2.367267379853803e-15
+mIsYielded : 1
+--------------------------
+mElemId : 121
+mGaussId : 2
+yield_cond : -5.057179165231326e-15
+mIsYielded : 1
+--------------------------
+mElemId : 121
+mGaussId : 3
+yield_cond : 3.991365061591175e-15
+mIsYielded : 1
+--------------------------
+mElemId : 122
+mGaussId : 0
+yield_cond : 1.207197607184252e-15
+mIsYielded : 1
+--------------------------
+mElemId : 122
+mGaussId : 1
+yield_cond : -7.841346619638249e-15
+mIsYielded : 1
+--------------------------
+mElemId : 122
+mGaussId : 2
+yield_cond : 7.007546470532008e-15
+mIsYielded : 1
+--------------------------
+mElemId : 122
+mGaussId : 3
+yield_cond : 6.311504606930278e-15
+mIsYielded : 1
+--------------------------
+mElemId : 123
+mGaussId : 0
+yield_cond : -5.985234983366967e-15
+mIsYielded : 1
+--------------------------
+mElemId : 123
+mGaussId : 1
+yield_cond : 2.023234187896489e-14
+mIsYielded : 1
+--------------------------
+mElemId : 123
+mGaussId : 2
+yield_cond : 2.394456515150746e-14
+mIsYielded : 1
+--------------------------
+mElemId : 123
+mGaussId : 3
+yield_cond : 3.063309243455534e-15
+mIsYielded : 1
+--------------------------
+mElemId : 124
+mGaussId : 0
+yield_cond : -6.217248937900877e-15
+mIsYielded : 1
+--------------------------
+mElemId : 124
+mGaussId : 1
+yield_cond : -4.593151256163505e-15
+mIsYielded : 1
+--------------------------
+mElemId : 124
+mGaussId : 2
+yield_cond : 4.223379016125085e-15
+mIsYielded : 1
+--------------------------
+mElemId : 124
+mGaussId : 3
+yield_cond : 1.903239470785983e-15
+mIsYielded : 1
+--------------------------
+mElemId : 125
+mGaussId : 0
+yield_cond : -3.897109392561774e-15
+mIsYielded : 1
+--------------------------
+mElemId : 125
+mGaussId : 1
+yield_cond : -7.841346619638249e-15
+mIsYielded : 1
+--------------------------
+mElemId : 125
+mGaussId : 2
+yield_cond : 1.698414651549015e-14
+mIsYielded : 1
+--------------------------
+mElemId : 125
+mGaussId : 3
+yield_cond : 9.327686015871111e-15
+mIsYielded : 1
+--------------------------
+mElemId : 126
+mGaussId : 0
+yield_cond : -1.503377921018947e-14
+mIsYielded : 1
+--------------------------
+mElemId : 126
+mGaussId : 1
+yield_cond : 5.615462743328547e-15
+mIsYielded : 1
+--------------------------
+mElemId : 126
+mGaussId : 2
+yield_cond : -1.155356989218081e-14
+mIsYielded : 1
+--------------------------
+mElemId : 126
+mGaussId : 3
+yield_cond : 2.831295288921624e-15
+mIsYielded : 1
+--------------------------
+mElemId : 127
+mGaussId : 0
+yield_cond : 1.884025815176143e-14
+mIsYielded : 1
+--------------------------
+mElemId : 127
+mGaussId : 1
+yield_cond : -1.294565361938427e-14
+mIsYielded : 1
+--------------------------
+mElemId : 127
+mGaussId : 2
+yield_cond : 1.443199301561714e-14
+mIsYielded : 1
+--------------------------
+mElemId : 127
+mGaussId : 3
+yield_cond : 6.311504606930278e-15
+mIsYielded : 1
+--------------------------
+mElemId : 128
+mGaussId : 0
+yield_cond : -1.340968152845209e-14
+mIsYielded : 1
+--------------------------
+mElemId : 128
+mGaussId : 1
+yield_cond : -8.769402437773890e-15
+mIsYielded : 1
+--------------------------
+mElemId : 128
+mGaussId : 2
+yield_cond : 2.831295288921624e-15
+mIsYielded : 1
+--------------------------
+mElemId : 128
+mGaussId : 3
+yield_cond : 4.712783451470052e-17
+mIsYielded : 1
+--------------------------
+mElemId : 129
+mGaussId : 0
+yield_cond : -1.344955892688761e-15
+mIsYielded : 1
+--------------------------
+mElemId : 129
+mGaussId : 1
+yield_cond : 6.079490652396367e-15
+mIsYielded : 1
+--------------------------
+mElemId : 129
+mGaussId : 2
+yield_cond : 3.991365061591175e-15
+mIsYielded : 1
+--------------------------
+mElemId : 129
+mGaussId : 3
+yield_cond : 1.025574183400675e-14
+mIsYielded : 1
+--------------------------
+mElemId : 130
+mGaussId : 0
+yield_cond : 8.774840264833278e-14
+mIsYielded : 1
+--------------------------
+mElemId : 130
+mGaussId : 1
+yield_cond : -3.433081483493954e-15
+mIsYielded : 1
+--------------------------
+mElemId : 130
+mGaussId : 2
+yield_cond : 4.320172337782201e-14
+mIsYielded : 1
+--------------------------
+mElemId : 130
+mGaussId : 3
+yield_cond : 1.102537562381221e-13
+mIsYielded : 1
+--------------------------
+mElemId : 131
+mGaussId : 0
+yield_cond : 1.489602092468496e-14
+mIsYielded : 1
+--------------------------
+mElemId : 131
+mGaussId : 1
+yield_cond : -2.825857461862235e-14
+mIsYielded : 1
+--------------------------
+mElemId : 131
+mGaussId : 2
+yield_cond : 1.791220233362579e-14
+mIsYielded : 1
+--------------------------
+mElemId : 131
+mGaussId : 3
+yield_cond : -2.040997756290492e-15
+mIsYielded : 1
+--------------------------
+mElemId : 132
+mGaussId : 0
+yield_cond : -2.040997756290492e-15
+mIsYielded : 1
+--------------------------
+mElemId : 132
+mGaussId : 1
+yield_cond : -2.273011710824402e-15
+mIsYielded : 1
+--------------------------
+mElemId : 132
+mGaussId : 2
+yield_cond : -2.044666167072792e+00
+mIsYielded : 0
+--------------------------
+mElemId : 132
+mGaussId : 3
+yield_cond : 5.111557435825211e-16
+mIsYielded : 1
+--------------------------
+mElemId : 133
+mGaussId : 0
+yield_cond : -1.254724215683307e-13
+mIsYielded : 1
+--------------------------
+mElemId : 133
+mGaussId : 1
+yield_cond : 2.348053724243964e-14
+mIsYielded : 1
+--------------------------
+mElemId : 133
+mGaussId : 2
+yield_cond : -1.132155593764690e-14
+mIsYielded : 1
+--------------------------
+mElemId : 133
+mGaussId : 3
+yield_cond : -1.354490216132889e-13
+mIsYielded : 1
+--------------------------
+mElemId : 134
+mGaussId : 0
+yield_cond : 1.280789533387976e-14
+mIsYielded : 1
+--------------------------
+mElemId : 134
+mGaussId : 1
+yield_cond : 2.831295288921624e-15
+mIsYielded : 1
+--------------------------
+mElemId : 134
+mGaussId : 2
+yield_cond : -2.165509393063509e+00
+mIsYielded : 0
+--------------------------
+mElemId : 134
+mGaussId : 3
+yield_cond : 2.135253425319893e-15
+mIsYielded : 1
+--------------------------
+mElemId : 135
+mGaussId : 0
+yield_cond : -1.650828221538309e+00
+mIsYielded : 0
+--------------------------
+mElemId : 135
+mGaussId : 1
+yield_cond : -2.207889281552752e-01
+mIsYielded : 0
+--------------------------
+mElemId : 135
+mGaussId : 2
+yield_cond : -1.710271706632960e+00
+mIsYielded : 0
+--------------------------
+mElemId : 135
+mGaussId : 3
+yield_cond : -1.100310138407733e-01
+mIsYielded : 0
+--------------------------

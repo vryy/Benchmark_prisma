@@ -1,0 +1,18 @@
+#set terminal postscript eps enhanced color
+set terminal pdf
+#set view equal xy
+#set size ratio -1
+#set size 1.5, 1.5
+
+#set output "convergence_error.eps"
+set output "bottom_water_flow.pdf"
+set xlabel "time (min)"
+set ylabel "flow (cm/min)"
+#set xtics 0.5
+#set ytics 1.0
+set title "Bottom water flow"
+#plot "bottom_water_flow.grf" using ($1/60):(-$2*60.0/0.01) with lines title "saturated", \
+
+set style line 1 lc rgb 'blue' lt 1 lw 1 pt 7 pi -1 ps 1.0
+plot "bottom_water_flow.log" using ($1/60):(-$2*60.0/0.01) with linespoints ls 1 notitle, \
+

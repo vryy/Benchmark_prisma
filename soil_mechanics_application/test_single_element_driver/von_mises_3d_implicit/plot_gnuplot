@@ -1,0 +1,17 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set output "output.pdf"
+set xlabel "deviatoric strain"
+set ylabel "deviatoric stress q"
+#set xtics 0.5
+#set ytics 1.0
+plot "output.txt" using ($3):($5) with lines notitle
+
+

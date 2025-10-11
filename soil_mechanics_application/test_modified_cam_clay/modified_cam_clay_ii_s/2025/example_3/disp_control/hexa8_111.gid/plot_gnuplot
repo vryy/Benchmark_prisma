@@ -1,0 +1,61 @@
+set terminal pdf enhanced color
+
+set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right top
+
+set xrange [0: 600]
+set yrange [0: 350]
+
+M = 1.2
+pc0 = 500
+pc1 = 254166.666669/1000
+
+set output "loading_path.pdf"
+set xlabel "p' (kPa)"
+set ylabel "q (kPa)"
+set parametric
+set trange [0:pi]
+plot "analytical_loading_path.txt" using ($1)/1000:($2)/1000 with lines title "analytical loading path", \
+     "loading_path.txt" using ($1)/1000:($2)/1000 with lines title "load path", \
+     pc0/2*(1+cos(t)), M*pc0/2*sin(t) title "initial yield surface", \
+     t*600/pi, M*t*600/pi title "CSL"
+
+unset parametric
+unset xrange
+unset yrange
+set key right bottom
+
+set size ratio 0.5
+#set xrange [-5: 20]
+#set yrange [0: 200]
+
+set xlabel "(-)uz (mm)"
+set ylabel "q (kPa)"
+plot "loading_path.txt" using (-$6)*1000:($2)/1000 with lines notitle, \
+
+set xlabel "volumetric strain"
+set ylabel "p' (kPa)"
+plot "loading_path.txt" using ($7):($1)/1000 with lines title "computed", \
+     "analytical_loading_path.txt" using ($4):($1)/1000 with lines title "reference", \
+
+#set xlabel "axial strain"
+#set ylabel "q (kPa)"
+#plot "loading_path.txt" using ($9):($2)/1000 with lines title "computed", \
+#     "analytical_loading_path.txt" using (-$6):($2)/1000 with lines title "reference", \
+
+set xlabel "deviatoric strain"
+set ylabel "q (kPa)"
+plot "loading_path.txt" using ($8):($2)/1000 with lines title "computed", \
+     "analytical_loading_path.txt" using ($5):($2)/1000 with lines title "reference", \
+
+#set xlabel "p' (kPa)"
+#set ylabel "uz (mm)"
+#plot "loading_path.txt" using ($1)/1000:($6)*1000 with lines notitle, \
+
+#set xlabel "ux (mm)"
+#set ylabel "uz (mm)"
+#plot "loading_path.txt" using ($4)*1000:($6)*1000 with lines notitle, \

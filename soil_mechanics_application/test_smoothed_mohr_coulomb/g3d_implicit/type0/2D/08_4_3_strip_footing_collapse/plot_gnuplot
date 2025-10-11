@@ -1,0 +1,19 @@
+set output "report.pdf"
+set terminal pdf
+set view equal xy
+#set size ratio -1
+set key right bottom
+#set nokey
+#set yrange [0:0.8]
+set xlabel "normalized settlement, u/B"
+set ylabel "normalized pressure, P/c"
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 5 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 6 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+plot "associative/report_smc.grf" using ($2):($1) with linespoints ls 1 title "S-MC (associative, type 0, backward Euler) solution", \
+     "/media/WORK/kratos_bundle/Benchmark_kratos/soil_mechanics_application/test_mohr_coulomb/mohr_coulomb_3d_implicit/2D/08_4_3_strip_footing_collapse/nonassociative/report_mc.grf" using ($2):($1) with linespoints ls 4 title "MC (nonassociative, backward Euler) solution", \
+     "nonassociative/report_smc.grf" using ($2):($1) with linespoints ls 2 title "S-MC (nonassociative, type 0, backward Euler) solution", \
+
+#     "/media/WORK/Benchmark_kratos/soil_mechanics_application/test_smoothed_mohr_coulomb/implicit_explicit_lode_angle_type1/2D/08_4_3_strip_footing_collapse_2021/associative/report_smc.grf" using ($2):($1) with linespoints ls 2 title "S-MC (associative, type 1, backward Euler) solution", \
+#    "/media/WORK/Benchmark_kratos/soil_mechanics_application/test_smoothed_mohr_coulomb/implicit_explicit_lode_angle_type2/2D/08_4_3_strip_footing_collapse_2021/associative/report_smc.grf" using ($2):($1) with linespoints ls 3 title "S-MC (associative, type 2, backward Euler) solution", \

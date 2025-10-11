@@ -1,0 +1,17 @@
+set output "report.pdf"
+set terminal pdf
+set view equal xy
+#set size ratio -1
+set key right bottom
+#set nokey
+#set yrange [0:0.8]
+set xlabel "displacement"
+set ylabel "reaction"
+set format x "%.e"
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+plot "implicit/square.gid/reaction.txt" using ($1):(-$2) with lines ls 1 title "J2 (backward Euler) solution", \
+     "explicit_substepping/square.gid/reaction.txt" using ($1):(-$2) with lines ls 2 title "J2 (explicit-substepping) solution", \
+     "implicit_von_mises_g3d/square.gid/reaction.txt" using ($1):(-$2) with lines ls 3 title "J2 (backward Euler, general integration) solution", \
