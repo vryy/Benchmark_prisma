@@ -7,5 +7,9 @@ __pycache__
 *.vtm
 *.pvtu
 *.log
+*.txt
+*.pdf
+*.png
+*.post.vv
 log_*
 results_*

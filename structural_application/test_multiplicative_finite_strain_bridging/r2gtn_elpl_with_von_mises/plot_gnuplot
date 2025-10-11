@@ -1,0 +1,21 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right bottom
+
+set output "monitoring.pdf"
+set xlabel "Displacement (mm)"
+set ylabel "Reaction force (kN)"
+#set xtics 0.5
+#set ytics 1.0
+#set title "Temperature"
+set yrange[0:5]
+plot "solid_necking_bar_q4/monitoring.log" using ($2):($3/1000) with lines title "Von Mises (Q4)", \
+     "solid_necking_bar_q4_using_GTN/monitoring.log" using ($2):($3/1000) with lines title "GTN (Q4)", \
+     "solid_necking_bar_q4_fbar/monitoring.log" using ($2):($3/1000) with lines title "Von Mises (Q4, fbar)", \
+     "solid_necking_bar_q4_using_GTN_fbar/monitoring.log" using ($2):($3/1000) with lines title "GTN (Q4, fbar)", \
+     "r2gtn_elpl_plane_strain_finite_strain_multiplicative_bridging_q8/monitoring.log" using ($2):($3/1000) with lines title "Von Mises (Q8)", \

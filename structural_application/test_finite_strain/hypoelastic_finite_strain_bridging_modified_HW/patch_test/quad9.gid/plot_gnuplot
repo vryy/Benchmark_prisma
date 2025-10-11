@@ -1,0 +1,18 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right bottom
+
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+
+set output "monitoring.pdf"
+set xlabel "Displacement (mm)"
+set ylabel "Reaction force (N)"
+plot "monitoring.log" using ($2):($3) with lines title "Hypoelastic Finite strain", \

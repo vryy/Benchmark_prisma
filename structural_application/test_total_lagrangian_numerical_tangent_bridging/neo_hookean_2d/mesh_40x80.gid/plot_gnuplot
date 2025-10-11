@@ -1,0 +1,16 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right bottom
+
+set output "monitoring.pdf"
+set xlabel "Displacement"
+set ylabel "Reaction force"
+#set xtics 0.5
+#set ytics 1.0
+#set title "Temperature"
+plot "monitoring.log" using ($1):($2) with linespoints ps 0.3 title "Neo-Hookean", \

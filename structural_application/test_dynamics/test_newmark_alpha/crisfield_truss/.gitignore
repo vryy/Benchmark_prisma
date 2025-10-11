@@ -1,0 +1,11 @@
+__pycache__
+*.post.bin
+*.post.msh
+*.post.res
+*.time
+*.vtu
+*.vtm
+*.pvtu
+*.log
+log_*
+results_*

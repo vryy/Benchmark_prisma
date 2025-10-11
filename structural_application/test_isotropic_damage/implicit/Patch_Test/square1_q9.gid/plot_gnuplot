@@ -1,0 +1,24 @@
+set output "reaction_result.pdf"
+set terminal pdf
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set xlabel "u [mm]"
+set ylabel "F [kN]"
+#set xtics 0.5
+#set ytics 1.0
+set title "Load-displacement curve"
+plot "results.txt" using (1000*$2):(-$4) with lines notitle
+
+set title "Damage-displacement curve"
+set ylabel "damage"
+plot "results.txt" using (1000*$2):($3) with lines notitle
+
+set title "Stress-displacement curve"
+set ylabel "stress-xx"
+plot "results.txt" using (1000*$2):($5) with lines notitle

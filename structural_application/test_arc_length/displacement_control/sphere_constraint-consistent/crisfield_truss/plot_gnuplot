@@ -1,0 +1,21 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set output "output.pdf"
+set xrange [*:0]
+set xlabel "ux/B2"
+set ylabel "uy/H"
+#set xtics 0.5
+#set ytics 1.0
+set title "normalized displacements"
+set style line 1 \
+    linecolor 'green' \
+    linetype 1 linewidth 1 \
+    pointtype 7 pointsize 0.3
+plot "output.txt" using ($2):($3) with linespoints ls 1 notitle, \

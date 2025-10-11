@@ -1,0 +1,26 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.0
+
+#set size square
+set size ratio 5./6.
+set key right bottom
+
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+
+set output "monitoring.pdf"
+set xlabel "Displacement (mm)"
+set ylabel "Reaction force (kN)"
+set xtics 0,1,6
+set ytics 0,2,10
+#set title ""
+set xrange[0:6]
+set yrange[0:10]
+plot "monitoring.log" using ($1):(2*$2) with linespoints ls 1 title "Von-Mises (Finite Strain)", \
+     "../ref_results_hyplas.txt" using ($1):(2*$2) with lines title "Von-Mises (QUAD\\_4, Hyplas)", \
+     "../ref_results_hyplas_fbar.txt" using ($1):(2*$2) with lines title "Von-Mises (QUAD\\_4\\_FBAR, Hyplas)", \
