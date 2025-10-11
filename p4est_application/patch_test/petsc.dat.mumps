@@ -1,0 +1,11 @@
+-skip_petscrc
+-ksp_monitor
+-ksp_type preonly
+-pc_type lu
+-pc_factor_mat_solver_package mumps
+-mat_mumps_icntl_1 6
+-mat_mumps_icntl_4 3
+-mat_mumps_icntl_7 4
+-mat_mumps_icntl_14 20
+-mat_mumps_icntl_23 0
+
