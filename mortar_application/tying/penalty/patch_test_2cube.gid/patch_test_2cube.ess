@@ -1,0 +1,73 @@
+# boundary condition
+tol = 1.0e-6
+prescribed_nodes = []
+for node in model.model_part.Nodes:
+    if abs(node.X0 - 0.0) < tol or abs(node.X0 - 1.0) < tol:
+        node.Fix(DISPLACEMENT_X)
+        node.SetSolutionStepValue(DISPLACEMENT_X, 0.0)
+    if abs(node.Y0 - 0.0) < tol or abs(node.Y0 - 1.0) < tol:
+        node.Fix(DISPLACEMENT_Y)
+        node.SetSolutionStepValue(DISPLACEMENT_Y, 0.0)
+    if abs(node.Z0 - 0.0) < tol:
+        node.Fix(DISPLACEMENT_Z)
+        node.SetSolutionStepValue(DISPLACEMENT_Z, 0.0)
+    if abs(node.Z0 - 2.0) < tol:
+        node.Fix(DISPLACEMENT_Z)
+        node.SetSolutionStepValue(DISPLACEMENT_Z, 0.0)
+        prescribed_nodes.append(node)
+
+model.Solve(0.0, 0, 0, 0, 0)
+
+# create the correct mortar master/slave surfaces based on node_groups
+master_index_set = IntegerVector(1)
+master_index_set[0] = 10
+for cond in model.model_part.Conditions:
+    is_master = True
+    for node in cond.GetNodes():
+        if node.Id not in model.node_groups['master']:
+            is_master = False
+            break
+    if is_master == True:
+        cond.SetValue(MASTER_INDEX_SET, master_index_set)
+
+slave_index_set = IntegerVector(1)
+slave_index_set[0] = 10
+for cond in model.model_part.Conditions:
+    is_slave = True
+    for node in cond.GetNodes():
+        if node.Id not in model.node_groups['slave']:
+            is_slave = False
+            break
+    if is_slave == True:
+        cond.SetValue(SLAVE_INDEX_SET, slave_index_set)
+
+# setup mortar tying links
+util = MortarTyingUtility()
+util.SetupTyingLinkElementBased(model.model_part, 10, "tying_link_finite_deformation_lagrange")
+
+# add Lagrange multiplier dof
+for node in model.model_part.Nodes:
+    node.AddDof(LAGRANGE_DISPLACEMENT_X, REACTION_LAGRANGE_DISPLACEMENT_X)
+    node.AddDof(LAGRANGE_DISPLACEMENT_Y, REACTION_LAGRANGE_DISPLACEMENT_Y)
+    node.AddDof(LAGRANGE_DISPLACEMENT_Z, REACTION_LAGRANGE_DISPLACEMENT_Z)
+
+# prescribe the Lagrange multiplier at the mortar surface
+for i in model.layer_nodes_sets['slave']:
+    node = model.model_part.Nodes[i]
+    if abs(node.Z0 - 1.0) < tol and (abs(node.X0 - 0.0) < tol or abs(node.X0 - 1.0) < tol):
+        node.Fix(LAGRANGE_DISPLACEMENT_X)
+        node.SetSolutionStepValue(LAGRANGE_DISPLACEMENT_X, 0.0)
+    if abs(node.Z0 - 1.0) < tol and (abs(node.Y0 - 0.0) < tol or abs(node.Y0 - 1.0) < tol):
+        node.Fix(LAGRANGE_DISPLACEMENT_Y)
+        node.SetSolutionStepValue(LAGRANGE_DISPLACEMENT_Y, 0.0)
+
+# load increment
+disp = 0.0
+delta_disp = 0.1
+for i in range(0, 1):
+    disp = disp + delta_disp
+    for node in prescribed_nodes:
+        node.SetSolutionStepValue(DISPLACEMENT_Z, disp)
+    model.Solve(disp, 0, 0, 0, 0)
+    model.WriteOutput(disp)
+
