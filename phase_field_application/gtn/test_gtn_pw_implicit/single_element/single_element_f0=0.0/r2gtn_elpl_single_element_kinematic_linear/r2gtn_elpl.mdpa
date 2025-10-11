@@ -1,0 +1,20 @@
+Begin ModelPartData
+//  VARIABLE_NAME value
+End ModelPartData
+
+Begin Properties 1
+DENSITY         7620  //scalar
+BODY_FORCE [3] (0.0, 0.0, 0.0)
+GRAVITY [3] ( 0.0, 0.0, 0.0 )
+End Properties
+
+Begin Nodes
+1   0.000000000e+00 0.000000000e+00 0.000000000e+00
+2   1.000000000e+00 0.000000000e+00 0.000000000e+00
+3   1.000000000e+00 1.000000000e+00 0.000000000e+00
+4   0.000000000e+00 1.000000000e+00 0.000000000e+00
+End Nodes
+
+Begin Elements KinematicLinear2D4N
+1   1   1   2   3   4
+End Elements

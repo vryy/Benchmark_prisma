@@ -1,0 +1,18 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set output "monitoring.pdf"
+set xlabel "Displacement (mm)"
+set ylabel "Reaction force (N)"
+#set xtics 0.5
+#set ytics 1.0
+#set title "Temperature"
+plot "monitoring.log" using ($2):($3) with linespoints ps 0.3 title "GTN", \
+     "/home/buih/kratos_bundle/Benchmark_kratos/phase_field_application/gtn/test_gtn_3d_implicit/single_element_with_fc/r2gtn_elpl_single_element_kinematic_linear/monitoring.log" using ($2):($3) with lines title "GTN-local", \
+

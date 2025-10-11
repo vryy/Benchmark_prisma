@@ -1,0 +1,1 @@
+abaqus_solid_necking_q4.py

@@ -1,0 +1,19 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right bottom
+
+set output "monitoring.pdf"
+set xlabel "Displacement (mm)"
+set ylabel "Reaction force (N)"
+#set xtics 0.5
+#set ytics 1.0
+#set title "Temperature"
+plot "monitoring.log" using ($2):($3) with linespoints ps 0.3 title "GTN", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl_single_element_nonlgeom/abaqus.rpt" using ($2):($3) with lines title "Abaqus (Plane strain) (no NLGEOM)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl_single_element/abaqus.rpt" using ($2):($3) with lines title "Abaqus (Plane strain) (with NLGEOM)", \
+

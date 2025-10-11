@@ -1,0 +1,25 @@
+set output "reaction_result.pdf"
+set terminal pdf
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set xlabel "u [mm]"
+set ylabel "F [kN]"
+#set xtics 0.5
+#set ytics 1.0
+set title "Load-displacement curve"
+set style line 1 \
+    linecolor 'green' \
+    linetype 1 linewidth 1 \
+    pointtype 7 pointsize 0.1
+set style line 2 \
+    linecolor 'red' \
+    linetype 1 linewidth 1 \
+    pointtype 7 pointsize 0.2
+plot "results_reaction.txt" using (1000*$2):(-$3) with linespoints ls 2 title "arc-length", \
+     "../../../displacement_controlled/current/square1_q9.gid/results_reaction.txt" using (1000*$2):(-$3) with lines ls 1 title "disp-controlled", \

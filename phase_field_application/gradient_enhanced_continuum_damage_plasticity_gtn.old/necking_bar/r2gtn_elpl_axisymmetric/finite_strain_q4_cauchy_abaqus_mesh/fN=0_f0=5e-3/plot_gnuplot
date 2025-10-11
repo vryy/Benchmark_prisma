@@ -1,0 +1,34 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right bottom
+
+set output "monitoring.pdf"
+set xlabel "Displacement (mm)"
+set ylabel "Reaction force (N)"
+#set xtics 0.5
+#set ytics 1.0
+#set title "Temperature"
+plot "du=1e-3/monitoring.log" using ($2):($3/1000) with lines title "GTN (Q4, fN=0,f0=5e-3; du=1e-3)", \
+     "du=5e-3/monitoring.log" using ($2):($3/1000) with lines title "GTN (Q4, fN=0,f0=5e-3; du=5e-3)", \
+     "du=1e-2/monitoring.log" using ($2):($3/1000) with lines title "GTN (Q4, fN=0,f0=5e-3; du=1e-2)", \
+
+plot "du=1e-3/monitoring.log" using ($2):($3/1000) with lines title "GTN (Q4, fN=0,f0=5e-3; du=1e-3)", \
+     "du=5e-3/monitoring.log" using ($2):($3/1000) with lines title "GTN (Q4, fN=0,f0=5e-3; du=5e-3)", \
+     "du=1e-2/monitoring.log" using ($2):($3/1000) with lines title "GTN (Q4, fN=0,f0=5e-3; du=1e-2)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=0/monitoring.log" using ($2):($3/1000) with linespoints ps 0.3 title "Abaqus (NLGEOM, fN=0)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=0_f0=5e-3/abaqus_reaction.rpt" using ($2):($3/1000) with linespoints ps 0.3 title "Abaqus (NLGEOM, fN=0,f0=5e-3)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=1e-2/abaqus.rpt" using ($2):($3/1000) with linespoints ps 0.3 title "Abaqus (NLGEOM, fN=1e-2)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=5e-2/abaqus.rpt" using ($2):($3/1000) with linespoints ps 0.3 title "Abaqus (NLGEOM, fN=5e-2)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=1e-1/abaqus.rpt" using ($2):($3/1000) with linespoints ps 0.3 title "Abaqus (NLGEOM, fN=1e-1)", \
+
+plot "du=5e-3/monitoring.log" using ($2):($3/1000) with linespoints ps 0.3 title "GTN (Q4, fbar, fN=0,f0=5e-3; du=5e-3)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=0_f0=5e-3/abaqus_reaction.rpt" using ($2):($3/1000) with linespoints ps 0.3 title "Abaqus (NLGEOM, fN=0,f0=5e-3,auto-step)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=0_f0=5e-3/abaqus_reaction_fine.rpt" using ($2):($3/1000) with linespoints ps 0.3 title "Abaqus (NLGEOM, fN=0,f0=5e-3,auto-step-fine)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=0_f0=5e-3/abaqus-fixed.rpt" using ($2):($3/1000) with linespoints ps 0.3 title "Abaqus (NLGEOM, fN=0,f0=5e-3,fixed-step)", \
+     "/home/buih/workspace2/abaqus/GTN-MSK/r2gtn_elpl/fN=0_f0=5e-3/abaqus-fixed-fine.rpt" using ($2):($3/1000) with lines title "Abaqus (NLGEOM, fN=0,f0=5e-3,fixed-fine-step)", \
+
