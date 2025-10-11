@@ -1,0 +1,28 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right bottom
+
+set output "w.pdf"
+set xlabel "x-coordinate"
+set ylabel "vertical displacement (mm)"
+#set xtics 0.5
+#set ytics 1.0
+set title "Deflection along the middle axis"
+set xrange [0:3];
+#set yrange [0:0.083];
+plot "w_computed.txt" using ($1):(-$2*1000) with points title "w (computed)", \
+     "w_analytical.txt" using ($1):(-$2*1000) with lines title "w (analytical)", \
+     "w_analytical.txt" using ($1):(-$3*1000) with lines title "w (analytical-BE)", \
+
+set title "Rotation along the middle axis"
+set key right bottom
+#set yrange [0:0.083];
+set ylabel "Rotation"
+plot "w_computed.txt" using ($1):($3) with points title "psi (computed)", \
+     "w_analytical.txt" using ($1):($4) with lines title "psi (analytical)", \
+     "w_analytical.txt" using ($1):($6) with lines title "psi (analytical-BE)", \
