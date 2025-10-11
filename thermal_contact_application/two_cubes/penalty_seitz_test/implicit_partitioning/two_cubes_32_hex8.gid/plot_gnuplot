@@ -1,0 +1,24 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+
+set output "monitoring.pdf"
+set xlabel "Normal contact traction"
+set ylabel "Temperature"
+#set xtics 0.5
+#set ytics 1.0
+#set title "Temperature"
+plot "monitoring.log" using ($2):($3) with linespoints ls 1 title "slave", \
+     "monitoring.log" using ($2):($4) with linespoints ls 2 title "master", \
+     "analytical_solution.txt" using ($1):($2) with lines title "slave (analytical solution)", \
+     "analytical_solution.txt" using ($1):($3) with lines title "master (analytical solution)", \
