@@ -115,6 +115,7 @@ def main(output=True, logging=True):
 
 def test():
     main(output=False, logging=False)
+    print("Test passed")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
