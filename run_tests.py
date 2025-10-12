@@ -23,4 +23,19 @@ if len(tags) > 0:
 else:
     print(f"Tags to be tested: all, verbose = {verbose}")
 
-runner.run(origin_path, {'pytest_py': sys.argv[1], 'tags': tags, 'verbose': verbose, 'cache': cache})
+# Check if the file exists
+exclude_file = ".appignore"
+if os.path.isfile(exclude_file):
+    # Read lines, strip whitespace, and ignore empty lines
+    with open(exclude_file, "r") as f:
+        exclude_names = [line.strip() for line in f if line.strip()]
+else:
+    exclude_names = []  # No file, no exclusions
+
+params = {}
+params['pytest_py'] = sys.argv[1]
+params['tags']      = tags
+params['verbose']   = verbose
+params['cache']     = cache
+params['exclude']   = exclude_names
+runner.run(origin_path, params)

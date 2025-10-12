@@ -1,25 +1,34 @@
 import os
 import time as time_module
 import subprocess
+import shutil
 
 def run(origin_path, params):
    if params['cache'] == 0:
-      walk_and_run(origin_path, pytest_py = params['pytest_py'], tags = params['tags'], verbose = params['verbose'])
+      walk_and_run(origin_path, pytest_py = params['pytest_py'], tags = params['tags'], verbose = params['verbose'], exclude = params['exclude'])
    else:
       pass
 
 """ Walk the folder and look for test and run them
 """
-def walk_and_run(origin_path, pytest_py = "python2", tags = [], verbose = 0):
+def walk_and_run(origin_path, pytest_py = "python2", tags = [], verbose = 0, exclude=[]):
    fname = []
    num_tests = 0
    num_passed_tests = 0
    start0 = time_module.time()
    run_tests = {}
    for root, d_names, f_names in os.walk(origin_path):
+      need_to_run = True
+      for p in exclude: # check if the folder is in the exclude list
+         exclude_path = os.path.join(origin_path, p)
+         if os.path.commonpath([root, exclude_path]) == exclude_path:
+            # print(f"{root} is excluded")
+            need_to_run = False
+      if not need_to_run:
+         continue
       for f in f_names:
          if f.startswith("pytest_") and f.endswith(".py"):
-            success, elapsed_time = run_file(root, f, pytest_py=pytest_py, tags=tags, verbose=verbose)
+            success, elapsed_time = run_file(origin_path, root, f, pytest_py=pytest_py, tags=tags, verbose=verbose)
             if success:
                num_passed_tests += 1
                fn = os.path.join(root, f)
@@ -54,11 +63,32 @@ def run_cache(origin_path, pytest_py = "python2", tags = [], verbose = 0):
 
 """ Run a test file
 """
-def run_file(root, f, pytest_py = "python2", tags=[], verbose=0):
+def run_file(origin_path, root, f, pytest_py = "python2", tags=[], verbose=0):
    run_with_tag = (len(tags) > 0)
 
+   use_temp_folder_for_test = False
+   if os.name == "nt":
+      if len(root) > 250:  # deal with the long folder name on Windows
+         link_path = os.path.join(origin_path, "ztemp")
+         ### try to create symlink # this solution does not work if the local folder contains symlink
+         # if os.path.exists(link_path):
+         #    try:
+         #       shutil.rmtree(link_path)
+         #    except Exception:
+         #       pass
+         # print(f"link_path: {link_path}")
+         # cmd = ["cmd", "/c", "mklink", "/J", "\\\\?\\"+root, link_path]
+         # subprocess.run(cmd, shell=False, check=True)
+         ### try to copy and run in a temporary directory
+         use_temp_folder_for_test = True
+         shutil.copytree(root, link_path, symlinks=False, dirs_exist_ok=False)
+      else:
+         link_path = root
+   else:
+      link_path = root
+
    # obtain the tags of the test
-   proc = subprocess.Popen([pytest_py, f, "print_tag"], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+   proc = subprocess.Popen([pytest_py, f, "print_tag"], cwd=link_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
    tmp_stdout, tmp_stderr = proc.communicate()
    tags_of_test = []
    if proc.returncode == 0:
@@ -86,7 +116,7 @@ def run_file(root, f, pytest_py = "python2", tags=[], verbose=0):
    if run_mode != 0:
       if run_mode > 0:
          start = time_module.time()
-         proc = subprocess.Popen([pytest_py, f, "test"], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
+         proc = subprocess.Popen([pytest_py, f, "test"], cwd=link_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
          tmp_stdout, tmp_stderr = proc.communicate()
          if verbose:
             for line in tmp_stdout.splitlines():
@@ -118,6 +148,11 @@ def run_file(root, f, pytest_py = "python2", tags=[], verbose=0):
             for tag in tags_of_test:
                print(" " + str(tag), end='')
             print('')
+
+   # clean up
+   if use_temp_folder_for_test:
+      print(f"{link_path} is deleted")
+      shutil.rmtree(link_path)
 
    return success, elapsed_time
 
