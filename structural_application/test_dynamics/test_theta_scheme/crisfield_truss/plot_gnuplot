@@ -1,0 +1,22 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set output "output.pdf"
+set xlabel "t [ms]"
+set ylabel "ux/B2"
+#set xtics 0.5
+#set ytics 1.0
+set title "normalized displacements"
+plot "output.txt" using ($1*1000):($2) with lines notitle, \
+
+set ylabel "uy/H"
+#set xtics 0.5
+#set ytics 1.0
+set title "normalized displacements"
+plot "output.txt" using ($1*1000):($3) with lines notitle, \
