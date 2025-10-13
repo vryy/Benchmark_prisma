@@ -1,0 +1,17 @@
+set terminal pdf enhanced color
+
+set size square
+set key left bottom
+
+set output "results.pdf"
+set datafile separator ","
+
+set xrange [0:0.04]
+
+set xlabel "e-axial"
+set ylabel "e-vol"
+plot "triaxial_test_axial_strain_volumetric_strain.csv" using ($1):($2) with lines, \
+
+#set xlabel "e\_axial"
+#set ylabel "s"
+#plot "triaxial_test_axial_strain_deviatoric_stress.csv" using ($1):($2) with lines, \
