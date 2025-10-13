@@ -1,0 +1,37 @@
+BeginZE /home/hbui/Benchmark_kratos/soil_mechanics_application/test_saturated_soils/terzaghi_hex27.gid/terzaghi_hex27.vv
+   x -6.6034550666809082 7.6034550666809082
+   y 4.36939525604248047 -3.36939549446105957
+   z -15.1081867218017578 8.10818672180175781
+   e 3.86939549446105957
+   v 0.588171839714050293 -0.19149431586265564 -0.237262055277824402
+   r 0.749059736728668213
+   m 0.814073264598846436 0.130183771252632141 -0.565983116626739502 0 -0.580710053443908691 0.195521146059036255 -0.790283083915710449 0 0.00777963828295469284 0.972020387649536133 0.234767556190490723 0 0 0 0 1
+   c 0.5 0.5 3.5
+   pd 0
+   pno 0
+   pfo 0
+   pf 4
+   pv 0
+   NowUse 0
+   DrawingType 0
+   LightVector 56.7272987365722656 -2.90557003021240234 136.632003784179688 0
+   OGLShadow(UseShadows) 0
+   OGLShadow(RenderMode) RenderNice
+   OGLShadow(ShadowBias) -0.002
+   OGLShadow(AmbientShadows) 1
+   OGLShadow(UseFBO) 0
+   OGLShadow(FBOSize) 0
+   OGLShadow(DimmedLightFactor) 0.02
+   OGLStereo(UseStereo) 0
+   OGLStereo(RelativeEyeDistance) 1
+   OGLStereo(FlipEyes) 0
+   OGLStereo(StereoMode) AnaglyphColors
+   OGLStereo(EyeDistance) 0.075
+   OGLStereo(LeftEyeDistance) 1 0 0 1
+   OGLStereo(RightEyeDistance) 0 1 1 1
+EndZE /home/hbui/Benchmark_kratos/soil_mechanics_application/test_saturated_soils/terzaghi_hex27.gid/terzaghi_hex27.vv
+
+BeginMirror
+   Mirror 0 Angle 0.0 AngleFake -15.0 SizeFactor 2.0 HeightOffset 0.25 Color #d9e5f24d Backlight Off EdgeStyle No Type Scene DrawMode Mirror
+EndMirror
+
