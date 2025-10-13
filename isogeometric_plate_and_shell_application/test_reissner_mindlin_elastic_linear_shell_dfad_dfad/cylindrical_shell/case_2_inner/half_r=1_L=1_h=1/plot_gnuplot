@@ -1,0 +1,37 @@
+#set terminal postscript eps enhanced color
+set terminal pdf
+#set view equal xy
+#set size ratio -1
+#set size 1.5, 1.5
+set key left bottom
+
+set output "radial_displacement.pdf"
+set xlabel "angle"
+set ylabel "ur"
+#set xtics 0.5
+#set ytics 1.0
+set xrange [0:pi]
+set key center bottom
+set title "Radial displacement"
+plot "ur_check_polar.txt" using ($1+0.5*pi):($4) with linespoints title "computed", \
+     "/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1.txt" using ($1):($2) with lines title "analytical solution", \
+
+set key right bottom
+set ylabel "psi"
+plot "ur_check_polar.txt" using ($1+0.5*pi):(-$5) with linespoints title "computed", \
+     "/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1.txt" using ($1):($3) with lines title "analytical solution", \
+
+set key right top
+set ylabel "shear force"
+plot "force_polar.txt" using ($1+0.5*pi):(-$10) with linespoints title "2D-RST", \
+     "/home/hbui/workspace/matlab/FSDT/2025_kcle/case2_shear_forces_r=1.txt" using ($1):($3) with lines title "1D-RST", \
+
+set key right bottom
+set ylabel "membrane force"
+plot "force_polar.txt" using ($1+0.5*pi):($2) with linespoints title "2D-RST", \
+     "/home/hbui/workspace/matlab/FSDT/2025_kcle/case2_rm_forces_r=1.txt" using ($1):($5) with lines title "1D-RST", \
+
+set key right bottom
+set ylabel "bending moment"
+plot "force_polar.txt" using ($1+0.5*pi):($6) with linespoints title "2D-RST", \
+     "/home/hbui/workspace/matlab/FSDT/2025_kcle/case2_rm_forces_r=1.txt" using ($1):($6) with lines title "1D-RST", \

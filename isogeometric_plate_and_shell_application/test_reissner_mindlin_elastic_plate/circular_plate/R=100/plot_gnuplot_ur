@@ -1,0 +1,34 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set output "ur.pdf"
+set xlabel "radius"
+set ylabel "vertical displacement (mm)"
+#set xtics 0.5
+#set ytics 1.0
+set title "Deflection on axial direction"
+set xrange [0:1];
+#set yrange [0:0.083];
+plot "ur_computed.txt" using ($1):(-$2*1000) with points title "u_r", \
+     "ur_analytical.txt" using ($1):(-$2*1000) with lines title "u_r (analytical)", \
+     "ur_analytical.txt" using ($1):(-$3*1000) with lines title "u_r (analytical-KH)", \
+
+set title "Psi on axial direction"
+set key left top
+set ylabel "psi"
+#set yrange [0:0.083];
+plot "ur_computed.txt" using ($1):($3) with points title "psi_r", \
+     "ur_analytical.txt" using ($1):($4) with lines title "psi_r (analytical)", \
+
+set title "Rotation on axial direction"
+set key left top
+#set yrange [0:0.083];
+set ylabel "varphi"
+plot "ur_computed.txt" using ($1):($5) with points title "varphi_r", \
+     "ur_analytical.txt" using ($1):($5) with lines title "varphi_r (analytical)", \

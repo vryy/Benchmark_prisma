@@ -1,0 +1,19 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set output "convergence.pdf"
+set xlabel "ndofs (x 100k)"
+set ylabel "vertical displacement (mm)"
+#set xtics 0.5
+#set ytics 1.0
+set title "Convergence (R=100) (p=2, q=2)"
+set xrange [0:9];
+#set yrange [0:0.083];
+plot "convergence.log" using ($3/1e5):(-$4*1000) with lines notitle, \
+     "analytical_solution.txt" using ($1/1e5):(-$2*1000) with lines notitle, \

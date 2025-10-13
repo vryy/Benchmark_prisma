@@ -1,0 +1,51 @@
+import sys
+import os
+
+import simulation_include
+import KratosMultiphysics
+from KratosMultiphysics.MKLSolversApplication import *
+
+nu = 0.3
+E = 2.0*(1+nu) # G=1
+r = 1.0
+h = 1.0e-1
+f = 1.0/h # fbar = 1
+# f = 1.0/h / 1e4 # fbar = 1 # with scale for plotting
+plinear_solver = MKLPardisoSolver()
+
+def test():
+    order = 2
+    nsampling = 10
+    model1 = simulation_include.Model(E, nu, r, h, f, order, nsampling, plinear_solver)
+    model = model1.Run(output=False)
+    # for node in model.model_part.Nodes:
+    #     print(node.Id)
+    #     print(node.GetSolutionStepValue(KratosMultiphysics.DISPLACEMENT))
+    tol = 1e-8
+    ref_w = 602.842784855
+    test_node = model.model_part.Nodes[628]
+    w = test_node.GetSolutionStepValue(KratosMultiphysics.DISPLACEMENT_Z)
+    # print(w)
+    test = abs(w - ref_w) / abs(w + ref_w)
+    # print(test)
+    assert(test < tol)
+    print("test passed")
+
+def full():
+
+    order = 3
+
+    nsampling = [10, 20, 30, 50, 100]
+
+    for ns in nsampling:
+        model1 = simulation_include.Model(E, nu, r, h, f, order, ns, plinear_solver)
+        model1.Run()
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        globals()[sys.argv[1]]()
+    else:
+        order = 2
+        nsampling = 10
+        model1 = simulation_include.Model(E, nu, r, h, f, order, nsampling, plinear_solver)
+        model1.Run()
