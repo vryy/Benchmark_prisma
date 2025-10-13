@@ -1,0 +1,80 @@
+set terminal postscript eps enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+set size square
+set key left bottom
+
+#set output "convergence_error.eps"
+set output "convergence_error_qt.eps"
+set xlabel "log10 - (#dofs)^{1/2}"
+set ylabel "log10 - error norm"
+set xtics 0.5
+set ytics 1.0
+set title "Convergence of error norm (quad-tree integration)"
+plot "q4/convergence_qt.grf" using (log10($2)/2):(log10($5)) with lines title "q4-qt-d4-h1", \
+     "q4/convergence_qt.grf" using (log10($2)/2):(log10($4)) with lines title "q4-qt-d4-l2", \
+     "q9/convergence_qt_d4.grf" using (log10($2)/2):(log10($5)) with lines title "q9-qt-d4-h1", \
+     "q9/convergence_qt_d6.grf" using (log10($2)/2):(log10($5)) with lines title "q9-qt-d6-h1", \
+     "q9/convergence_qt_d8.grf" using (log10($2)/2):(log10($5)) with lines title "q9-qt-d8-h1", \
+     "q9/convergence_qt_d4.grf" using (log10($2)/2):(log10($4)) with lines title "q9-qt-d4-l2" lt rgb "grey", \
+     "q9/convergence_qt_d6.grf" using (log10($2)/2):(log10($4)) with lines title "q9-qt-d6-l2", \
+     "q9/convergence_qt_d8.grf" using (log10($2)/2):(log10($4)) with lines title "q9-qt-d8-l2", \
+
+set output "convergence_error_mf.eps"
+set title "Convergence of error norm (moment-fitting integration)"
+plot "q4/convergence_mf.grf" using (log10($2)/2):(log10($5)) with lines title "q4-mf-d4-h1", \
+     "q4/convergence_mf.grf" using (log10($2)/2):(log10($4)) with lines title "q4-mf-d4-l2", \
+     "q9/convergence_mf_d4.grf" using (log10($2)/2):(log10($5)) with lines title "q9-mf-d4-h1", \
+     "q9/convergence_mf_d6.grf" using (log10($2)/2):(log10($5)) with lines title "q9-mf-d6-h1", \
+     "q9/convergence_mf_d8.grf" using (log10($2)/2):(log10($5)) with lines title "q9-mf-d8-h1", \
+     "q9/convergence_mf_d4.grf" using (log10($2)/2):(log10($4)) with lines title "q9-mf-d4-l2" lt rgb "grey", \
+     "q9/convergence_mf_d6.grf" using (log10($2)/2):(log10($4)) with lines title "q9-mf-d6-l2", \
+     "q9/convergence_mf_d8.grf" using (log10($2)/2):(log10($4)) with lines title "q9-mf-d8-l2", \
+
+set output "convergence_error_compare_qt_mf_q4.eps"
+set xlabel "log10 - (#dofs)^{1/2}"
+set ylabel "log10 - error norm"
+set xtics 0.5
+set ytics 1.0
+set title "Convergence of error norm using q4 element"
+plot "q4/convergence_qt.grf" using (log10($2)/2):(log10($5)) with lines title "q4-qt-d4-h1", \
+     "q4/convergence_qt.grf" using (log10($2)/2):(log10($4)) with lines title "q4-qt-d4-l2", \
+     "q4/convergence_mf.grf" using (log10($2)/2):(log10($5)) with lines title "q4-mf-d4-h1", \
+     "q4/convergence_mf.grf" using (log10($2)/2):(log10($4)) with lines title "q4-mf-d4-l2", \
+
+set output "convergence_error_compare_qt_mf_q9_d4.eps"
+set xlabel "log10 - (#dofs)^{1/2}"
+set ylabel "log10 - error norm"
+set xtics 0.5
+set ytics 1.0
+set title "Convergence of error norm using q9 element (quad-tree depth = 4)"
+plot "q9/convergence_qt_d4.grf" using (log10($2)/2):(log10($5)) with lines title "q9-qt-d4-h1", \
+     "q9/convergence_qt_d4.grf" using (log10($2)/2):(log10($4)) with lines title "q9-qt-d4-l2", \
+     "q9/convergence_mf_d4.grf" using (log10($2)/2):(log10($5)) with lines title "q9-mf-d4-h1", \
+     "q9/convergence_mf_d4.grf" using (log10($2)/2):(log10($4)) with lines title "q9-mf-d4-l2", \
+
+set output "convergence_error_compare_qt_mf_q9_d6.eps"
+set xlabel "log10 - (#dofs)^{1/2}"
+set ylabel "log10 - error norm"
+set xtics 0.5
+set ytics 1.0
+set title "Convergence of error norm using q9 element (quad-tree depth = 6)"
+plot "q9/convergence_qt_d6.grf" using (log10($2)/2):(log10($5)) with lines title "q9-qt-d6-h1", \
+     "q9/convergence_qt_d6.grf" using (log10($2)/2):(log10($4)) with lines title "q9-qt-d6-l2", \
+     "q9/convergence_mf_d6.grf" using (log10($2)/2):(log10($5)) with lines title "q9-mf-d6-h1", \
+     "q9/convergence_mf_d6.grf" using (log10($2)/2):(log10($4)) with lines title "q9-mf-d6-l2", \
+
+set output "convergence_error_compare_qt_mf_q9_d8.eps"
+set xlabel "log10 - (#dofs)^{1/2}"
+set ylabel "log10 - error norm"
+set xtics 0.5
+set ytics 1.0
+set title "Convergence of error norm using q9 element (quad-tree depth = 8)"
+plot "q9/convergence_qt_d8.grf" using (log10($2)/2):(log10($5)) with lines title "q9-qt-d8-h1", \
+     "q9/convergence_qt_d8.grf" using (log10($2)/2):(log10($4)) with lines title "q9-qt-d8-l2", \
+     "q9/convergence_mf_d8.grf" using (log10($2)/2):(log10($5)) with lines title "q9-mf-d8-h1", \
+     "q9/convergence_mf_d8.grf" using (log10($2)/2):(log10($4)) with lines title "q9-mf-d8-l2", \
+
