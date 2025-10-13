@@ -38,4 +38,5 @@ params['tags']      = tags
 params['verbose']   = verbose
 params['cache']     = cache
 params['exclude']   = exclude_names
+params['dry_run']   = False # enable this to NOT run the actual test (assume passing)
 runner.run(origin_path, params)
