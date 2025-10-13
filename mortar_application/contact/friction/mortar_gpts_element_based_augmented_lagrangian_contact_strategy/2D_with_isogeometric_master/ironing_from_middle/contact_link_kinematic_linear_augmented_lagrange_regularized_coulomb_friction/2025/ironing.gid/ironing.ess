@@ -1,0 +1,81 @@
+
+adolc_util = AdolCMortarTapeUtility()
+adolc_util.Regiter_Tape_Projection()
+adolc_util.Regiter_Tape_ContactLinkKinematicLinearPenaltyContact()
+
+## boundary conditions
+for node_id in model.layer_nodes_sets['base']:
+    node = model.model_part.Nodes[node_id]
+    node.Fix(DISPLACEMENT_X)
+    node.Fix(DISPLACEMENT_Y)
+    node.SetSolutionStepValue(DISPLACEMENT_X, 0.0)
+    node.SetSolutionStepValue(DISPLACEMENT_Y, 0.0)
+
+prescribed_nodes = []
+for node_id in model.layer_nodes_sets['load']:
+    node = model.model_part.Nodes[node_id]
+    node.Fix(DISPLACEMENT_X)
+    node.Fix(DISPLACEMENT_Y)
+    node.SetSolutionStepValue(DISPLACEMENT_X, 0.0)
+    node.SetSolutionStepValue(DISPLACEMENT_Y, 0.0)
+    prescribed_nodes.append(node)
+
+## contact parameters
+model.solver.solver.contact_tying_indices = {}
+#model.solver.solver.contact_tying_indices[10] = "contact_link_kinematic_linear_penalty_2d"
+#model.solver.solver.contact_tying_indices[10] = "contact_link_kinematic_linear_penalty_2d_no_linearized"
+model.solver.solver.contact_tying_indices[10] = "contact_link_kinematic_linear_penalty_ad"
+model.solver.solver.Parameters['penalty'] = {10: 1.0e7} #{10: 1.0e7}
+model.solver.solver.Parameters['friction_coefficient'] = {10: 0.0}
+model.solver.solver.Parameters['solution_strategy'] = "solve active-set penalty"
+model.solver.solver.Parameters['stop_active_set_if_not_converged'] = False
+model.solver.solver.Parameters['dimension'] = 2
+model.solver.solver.Parameters['gap_tolerance'] = 1.0e-10
+model.solver.solver.Parameters['tying_integration_order'] = 4
+model.solver.solver.Parameters['predict_local_point_method'] = 0
+model.solver.solver.Parameters['maximal_detection_distance'] = 1e-3
+model.solver.solver.Parameters['polygon_offset'] = 0.01
+#model.solver.solver.Parameters['test_linearization'] = False
+#model.solver.solver.Parameters['test_linearization_disp'] = 1.0e-7
+#model.solver.solver.Parameters['test_linearization_tol'] = 1.0e-6
+#model.solver.solver.Parameters['visualize_contact_pairs'] = False
+#model.solver.solver.Parameters['compute_contact_force'] = True
+#model.solver.solver.Parameters['active_set_rel_tol'] = 1.0e-8
+#model.solver.solver.Parameters['active_set_abs_tol'] = 1.0e-12
+#model.solver.solver.Parameters['max_active_set_iter'] = 10
+model.solver.solver.InitializeContact()
+
+#################################
+time = 0.0
+model.Solve(time, 0, 0, 0, 0)
+#model.WriteOutput(time)
+
+#################################
+
+disp = 0.0
+delta_disp = 0.1
+delta_time = 0.1
+
+disp = disp + delta_disp
+time = time + delta_time
+for node in prescribed_nodes:
+    node.SetSolutionStepValue(DISPLACEMENT_Y, -disp)
+
+model.Solve(time, 0, 0, 0, 0)
+model.WriteOutput(time)
+
+#################################
+
+print("########CONTACT STARTS##########")
+
+delta_disp = 0.01
+delta_time = 0.01
+
+for step in range(0, 100):
+    disp = disp + delta_disp
+    time = time + delta_time
+    for node in prescribed_nodes:
+        node.SetSolutionStepValue(DISPLACEMENT_Y, -disp)
+    model.Solve(time, 0, 0, 0, 0)
+    model.WriteOutput(time)
+

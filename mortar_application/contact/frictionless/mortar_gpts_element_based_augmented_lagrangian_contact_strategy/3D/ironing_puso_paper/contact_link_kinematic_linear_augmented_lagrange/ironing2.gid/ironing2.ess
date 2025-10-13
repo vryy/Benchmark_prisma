@@ -1,0 +1,108 @@
+
+tol = 1.0e-6
+for node in model.model_part.Nodes:
+    if abs(node.Z0 - 0.0) < tol:
+        node.Fix(DISPLACEMENT_X)
+        node.Fix(DISPLACEMENT_Y)
+        node.Fix(DISPLACEMENT_Z)
+        node.SetSolutionStepValue(DISPLACEMENT_X, 0.0)
+        node.SetSolutionStepValue(DISPLACEMENT_Y, 0.0)
+        node.SetSolutionStepValue(DISPLACEMENT_Z, 0.0)
+
+prescribed_nodes = []
+for node_id in model.layer_nodes_sets['load']:
+    node = model.model_part.Nodes[node_id]
+    node.Fix(DISPLACEMENT_X)
+    node.Fix(DISPLACEMENT_Y)
+    node.Fix(DISPLACEMENT_Z)
+    node.SetSolutionStepValue(DISPLACEMENT_X, 0.0)
+    node.SetSolutionStepValue(DISPLACEMENT_Y, 0.0)
+    node.SetSolutionStepValue(DISPLACEMENT_Z, 0.0)
+    prescribed_nodes.append(node)
+
+# define some parameters for contact solution strategy
+model.solver.solver.contact_tying_indices = {}
+model.solver.solver.contact_tying_indices[10] = "contact_link_kinematic_linear_penalty_no_linearized"
+#model.solver.solver.contact_tying_indices[10] = "contact_link_kinematic_linear_penalty"
+model.solver.solver.mortar_contact_utility.SetValue(MAXIMAL_DETECTION_DISTANCE, 1.0e-3)
+#model.solver.solver.mortar_contact_utility.SetValue(TYING_INTEGRATION_ORDER, 2)
+model.solver.solver.Parameters['penalty'] = {10: 1.0e7}
+model.solver.solver.Parameters['friction_coefficient'] = {10: 0.0}
+model.solver.solver.Parameters['predict_local_point_method'] = 2
+model.solver.solver.Parameters['solution_strategy'] = "solve active-set penalty"
+model.solver.solver.Parameters['test_linearization'] = False
+model.solver.solver.Parameters['test_linearization_disp'] = 1.0e-7
+model.solver.solver.Parameters['test_linearization_tol'] = 1.0e-6
+model.solver.solver.Parameters['visualize_contact_pairs'] = False
+model.solver.solver.Parameters['compute_contact_force'] = True
+
+# solve zero displacement
+time = 0.0
+model.Solve(time, 0, 0, 0, 0)
+#model.WriteOutput(time)
+
+print("#####################################################")
+print("#####################################################")
+print("###########LOAD STEP START###########################")
+print("#####################################################")
+print("#####################################################")
+
+disp = 0.0
+
+delta_time = 0.1
+delta_disp = 0.1
+for i in range(0, 5):
+    time = time + delta_time
+    disp = disp + delta_disp
+    for node in prescribed_nodes:
+        node.SetSolutionStepValue(DISPLACEMENT_Z, -disp)
+
+    model.Solve(time, 0, 0, 0, 0)
+    model.WriteOutput(time)
+    print("#####################################################")
+    print("########LOAD STEP " + str(time) + " IS SOLVED########")
+    print("#####################################################")
+
+print("#####################################################")
+print("#####################################################")
+print("###########PENETRATION START#########################")
+print("#####################################################")
+print("#####################################################")
+
+delta_time = 0.01
+delta_disp = 0.01
+for i in range(0, 90):
+    time = time + delta_time
+    disp = disp + delta_disp
+    for node in prescribed_nodes:
+        node.SetSolutionStepValue(DISPLACEMENT_Z, -disp)
+
+    model.Solve(time, 0, 0, 0, 0)
+    model.WriteOutput(time)
+    print("#####################################################")
+    print("########LOAD STEP " + str(time) + " IS SOLVED########")
+    print("#####################################################")
+
+print("#####################################################")
+print("#####################################################")
+print("###############SLIDING START#########################")
+print("#####################################################")
+print("#####################################################")
+
+disp = 0.0
+delta_time = 0.01
+delta_disp = 0.01
+for i in range(0, 300):
+    time = time + delta_time
+    disp = disp + delta_disp
+    for node in prescribed_nodes:
+        node.SetSolutionStepValue(DISPLACEMENT_X, disp)
+
+    model.Solve(time, 0, 0, 0, 0)
+    model.WriteOutput(time)
+    print("#####################################################")
+    print("########LOAD STEP " + str(time) + " IS SOLVED########")
+    print("#####################################################")
+
+print("Analysis completed")
+
