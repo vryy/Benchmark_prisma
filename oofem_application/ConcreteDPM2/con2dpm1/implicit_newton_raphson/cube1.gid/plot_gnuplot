@@ -1,0 +1,17 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+set size square
+set key left bottom
+
+#set output "convergence_error.eps"
+set output "reaction.pdf"
+set xlabel "ux (mm)"
+set ylabel "reaction (kN)"
+#set xtics 0.5
+#set ytics 1.0
+set yrange [0:1100]
+plot "reaction.log" using ($1*1000):($2/1000) with linespoints title "reaction", \
