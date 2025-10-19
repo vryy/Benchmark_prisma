@@ -7,9 +7,9 @@ import shutil
 def run(origin_path, params):
    if params['cache'] == 0:
       cpu_info = get_cpu_info()
-      print("---------------------------")
+      print("---------------------------------------------------------------------------------")
       print(f"System information -- OS: {platform.system()}, CPU: {cpu_info}")
-      print("---------------------------")
+      print("---------------------------------------------------------------------------------")
       walk_and_run(origin_path, pytest_py = params['pytest_py'], tags = params['tags'], verbose = params['verbose'], exclude = params['exclude'], dry_run=params['dry_run'])
    else:
       pass
@@ -172,7 +172,6 @@ def run_file(origin_path, root, f, pytest_py = "python2", tags=[], verbose=0, dr
 
    # clean up
    if use_temp_folder_for_test:
-      print(f"{link_path} is deleted")
       shutil.rmtree(link_path)
 
    return success, elapsed_time

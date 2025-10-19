@@ -1,6 +1,5 @@
 import sys
 import os
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
 
 #importing Kratos modules
 from KratosMultiphysics import *
@@ -23,9 +22,6 @@ multipatch_util = MultiPatchUtility()
 multipatch_refine_util = MultiPatchRefinementUtility()
 bsplines_patch_util = BSplinesPatchUtility()
 mpatch_export = MultiNURBSPatchMatlabExporter()
-
-sys.path.append(kratos_root_path + "/applications/isogeometric_application/examples/nurbs_multipatch")
-import example_interface_3d
 
 def Refine(mpatch):
     print("###############REFINEMENT###############")
