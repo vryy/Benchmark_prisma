@@ -19,7 +19,7 @@ import time as time_module
 from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
-from KratosMultiphysics.MKLSolversApplication import *
+#from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.LayerApplication import *
 kernel = Kernel()   #defining kernel
@@ -138,7 +138,7 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        plinear_solver = MKLPardisoSolver()
+        plinear_solver = SuperLUSolver()
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
@@ -176,7 +176,7 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        plinear_solver = MKLPardisoSolver()
+        plinear_solver = SuperLUSolver()
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
