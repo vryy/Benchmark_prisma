@@ -318,7 +318,10 @@ def CreateModel(logging=True):
     model = model_iga_include.Model('ironing', os.getcwd()+"/", model_part, params)
     # change to contact solver
     model.solver = mortar_gpts_element_based_active_set_penalty_contact_strategy.SampleSolver(model_part, model.abs_tol, model.rel_tol, model.analysis_parameters)
-    model.solver.structure_linear_solver = MKLPardisoSolver()
+    if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+        model.solver.structure_linear_solver = MKLPardisoSolver()
+    else:
+        model.solver.structure_linear_solver = SuperLUSolver()
     model.solver.Initialize()
     (model.solver.solver).SetEchoLevel(model.analysis_parameters['echo_level'])
     (model.solver.solver).max_iter = model.analysis_parameters['max_iter'] #control the maximum iterations of Newton Raphson loop
