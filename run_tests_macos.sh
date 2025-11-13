@@ -4,6 +4,8 @@ reset
 # cd $HOME/kratos_builds/cmake_build_release
 # sh do_make.sh
 # cd -
+# ignore system error warnings
+ulimit -c 0
 # run tests
 export PATH="$HOME/opt/cmake-3.30.5/bin:$HOME/opt/openmpi-3.1.2/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/pmk/env/global/bin:/opt/X11/bin:/Library/Apple/usr/bin:/Applications/iTerm.app/Contents/Resources/utilities"
 export KRATOS_ROOT_PATH=$HOME/kratos_bundle/kratos_bcn2
