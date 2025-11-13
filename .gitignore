@@ -1,3 +1,4 @@
 __pycache__
 *.log
+.DS_Store
 updated_list_of_test.txt
