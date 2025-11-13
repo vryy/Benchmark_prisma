@@ -4,13 +4,17 @@ import os
 import simulation_include
 import KratosMultiphysics
 from KratosMultiphysics.MKLSolversApplication import *
+from KratosMultiphysics.ExternalSolversApplication import *
 
 E = 2.1e11
 nu = 0.3
 L = 3.0
 h = 1.0
 f = -1e6
-plinear_solver = MKLPardisoSolver()
+if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+    plinear_solver = MKLPardisoSolver()
+else:
+    plinear_solver = SuperLUSolver()
 
 def test():
     order = 3

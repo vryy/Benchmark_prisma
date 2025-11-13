@@ -6,6 +6,7 @@ sys.path.append(os.getcwd() + "/..")
 import simulation_include
 import KratosMultiphysics
 from KratosMultiphysics.MKLSolversApplication import *
+from KratosMultiphysics.ExternalSolversApplication import *
 
 sys.path.append(os.environ['HOME'] + "/kratos_bundle/Benchmark_kratos/python3/plate_and_shell_application/test_reissner_mindlin_elastic_linear_shell_dfad_dfad/cylindrical_shell")
 import analytical_solution
@@ -16,7 +17,10 @@ L = 1.0
 R = 1.0
 h = 1.0
 p = 1.0
-plinear_solver = MKLPardisoSolver()
+if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+    plinear_solver = MKLPardisoSolver()
+else:
+    plinear_solver = SuperLUSolver()
 drill_stiff = 1e-3 # set drill stiff to 0 to have optimal convergence
 
 def test():
