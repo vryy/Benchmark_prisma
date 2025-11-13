@@ -6,6 +6,7 @@ reset
 # cd -
 # run tests
 export PATH=/usr/bin
+export BENCHMARK_PRISMA=$(pwd)
 export KRATOS_ROOT_PATH=~/kratos_bundle/kratos_bcn2
 export KRATOS_INSTALL_PREFIX=~/kratos_libs/Release312
 #export KRATOS_INSTALL_PREFIX=~/kratos_libs/Release312_complex
