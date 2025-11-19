@@ -25,19 +25,21 @@ def save(logging=False, output=False):
 
     multipatch_util.CheckInterfaces(mpatch, True)
 
-    serializer1 = Serializer("mpatch", SerializerTraceType.SERIALIZER_TRACE_ERROR)
+    serializer1 = Serializer("patch", SerializerTraceType.SERIALIZER_TRACE_ERROR)
     for patch_ptr in mpatch.Patches():
         patch = patch_ptr.GetReference()
         print(patch.Id)
         patch.Save(serializer1, f"patch_{patch.Id}")
 
 def load():
-    serializer2 = Serializer("mpatch", SerializerTraceType.SERIALIZER_TRACE_ERROR)
+    serializer2 = Serializer("patch", SerializerTraceType.SERIALIZER_TRACE_ERROR)
     patch1 = Patch3DSelector.RealPatch
     patch1.Load(serializer2, "patch_1")
     print(patch1)
 
 def test():
+    save(logging=False, output=False)
+    load()
     print("Test passed")
 
 if __name__ == '__main__':
