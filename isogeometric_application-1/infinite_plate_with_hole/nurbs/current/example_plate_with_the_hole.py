@@ -69,13 +69,12 @@ def CreateMultiPatch():
 
     return mpatch
 
-def Refine(mpatch):
+def Refine(mpatch, order=[2, 2], nsampling=10):
     print("###############REFINEMENT###############")
 ##    patch1_ptr = mpatch[1]
-    multipatch_refine_util.DegreeElevate(mpatch[1], [0, 1])
+    multipatch_refine_util.DegreeElevate(mpatch[1], [order[0]-2, order[1]-1])
 
     ins_knots = []
-    nsampling = 10
     for i in range(1, nsampling):
         ins_knots.append(float(i)/nsampling)
 
@@ -161,9 +160,9 @@ def CreateModel(mpatch):
 
     return mpatch_mp
 
-def main(logging=True, output=True):
+def main(logging=True, output=True, order=[2, 2], nsampling=10):
     mpatch = CreateMultiPatch()
-    mpatch = Refine(mpatch)
+    mpatch = Refine(mpatch, order=order, nsampling=nsampling)
     mpatch.Enumerate()
     print(mpatch)
 
@@ -219,9 +218,12 @@ def main(logging=True, output=True):
     ##################################################################
 
     if output:
+
+        mpatch_post = mpatch.Clone()
         ## post processing
         params_post = {}
         params_post['name'] = "plate_with_hole"
+        params_post['backend'] = ["GiD", "Glvis", "ParaView"]
         params_post['division mode'] = "uniform"
         params_post['uniform division number'] = 40
     #    params_post['division mode'] = "non-uniform"
@@ -230,7 +232,7 @@ def main(logging=True, output=True):
     #    params_post['division number w'] = 1
         params_post['variables list'] = [DISPLACEMENT, THREED_STRESSES]
         dim = 2
-        model_iga_include.PostMultiPatch(mpatch, dim, time, params_post)
+        model_iga_include.PostMultiPatch(mpatch_post, dim, time, params_post)
 
     #    ## post processing
     #    r1 = 1.0
@@ -248,8 +250,8 @@ def main(logging=True, output=True):
 
     return model
 
-def test():
-    model = main(logging=False, output=False)
+def test1():
+    model = main(logging=False, output=False, order=[2, 2], nsampling=10)
 
     l2_error_ref = 5.9755404293107594e-04
     h1_error_ref = 1.1676942847371211e-02
@@ -257,7 +259,22 @@ def test():
     assert(abs(model.l2_error - l2_error_ref) < 1e-10)
     assert(abs(model.h1_error - h1_error_ref) < 1e-10)
 
-    print("Test passed")
+    print("Test 1 passed")
+
+def test2():
+    model = main(logging=False, output=False, order=[3, 2], nsampling=10)
+
+    l2_error_ref = 6.3294354295203800e-04
+    h1_error_ref = 1.1672342788086794e-02
+
+    assert(abs(model.l2_error - l2_error_ref) < 1e-10)
+    assert(abs(model.h1_error - h1_error_ref) < 1e-10)
+
+    print("Test 2 passed")
+
+def test():
+    test1()
+    test2()
 
 def tag():
     return "IGA"
@@ -269,4 +286,4 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=True)
+        main(logging=True, output=True, order=[3, 2], nsampling=10)
