@@ -90,7 +90,7 @@ class AnalyticalSolution:
 
 class Model:
 
-    def __init__(self, E, nu, L, D, h, f, order=2, nsampling=[10, 10], plinear_solver = MKLPardisoSolver()):
+    def __init__(self, E, nu, L, D, h, f, order=2, nsampling=[10, 10], plinear_solver = SuperLUSolver()):
         self.young_modulus = E
         self.poisson_ratio = nu
         self.length = L
@@ -285,10 +285,15 @@ class Model:
         time = 1.0
         model.Solve(time, 0, 0, 0, 0)
 
+        if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+            transfer_solver = MKLPardisoSolver()
+        else:
+            transfer_solver = SuperLUSolver()
+
         transfer_util = BezierPostUtility()
-        # transfer_util.TransferVariablesToNodes(THREED_STRESSES, model.model_part, MKLPardisoSolver())
-        transfer_util.TransferVariablesToNodes(TRUE_SHEAR_ROTATION, model.model_part, MKLPardisoSolver())
-        transfer_util.TransferVariablesToNodes(TRUE_AVERAGE_DISPLACEMENT, model.model_part, MKLPardisoSolver())
+        # transfer_util.TransferVariablesToNodes(THREED_STRESSES, model.model_part, transfer_solver)
+        transfer_util.TransferVariablesToNodes(TRUE_SHEAR_ROTATION, model.model_part, transfer_solver)
+        transfer_util.TransferVariablesToNodes(TRUE_AVERAGE_DISPLACEMENT, model.model_part, transfer_solver)
 
         ######Synchronize back the results to multipatch
         mpatch_mp.SynchronizeBackward(DISPLACEMENT)

@@ -10,7 +10,10 @@ from square_include import *
 ###  SIMULATION  #################################################
 ##################################################################
 
-transfer_util = VariableTransferUtility(MKLPardisoSolver())
+if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+    transfer_util = VariableTransferUtility(MKLPardisoSolver())
+else:
+    transfer_util = VariableTransferUtility(SuperLUSolver())
 
 def ConstructModelPart(p4est_model, order):
     # start to construct the Kratos model_part

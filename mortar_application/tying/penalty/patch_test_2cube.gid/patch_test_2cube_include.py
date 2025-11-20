@@ -115,7 +115,10 @@ class Model:
         self.model_part_io = ModelPartIO(self.path+self.problem_name)
         self.model_part_io.ReadModelPart(self.model_part)
         self.meshWritten = False
-        variable_transfer_solver = MKLPardisoSolver()
+        if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+            variable_transfer_solver = MKLPardisoSolver()
+        else:
+            variable_transfer_solver = SuperLUSolver()
 #        variable_transfer_solver.SetEchoLevel(0)
         self.variable_transfer_util = VariableTransferUtility(variable_transfer_solver)
         ## READ DEACTIVATION FILE ########################################
