@@ -178,12 +178,38 @@ def load():
     mpatch.Load(serializer2, "mpatch")
     return mpatch
 
-def main(logging=True, output=True, order=[2, 2], nsampling=10):
-    mpatch = save(order=order, nsampling=nsampling)
-    print("saved mpatch")
-    mpatch = load()
-    # print(mpatch)
-    print("loaded mpatch")
+def save1(order=[2, 2], nsampling=10):
+    mpatch = CreateMultiPatch()
+    mpatch = Refine(mpatch, order=order, nsampling=nsampling)
+
+    mpatch.Enumerate()
+
+    # serializer1 = Serializer("mpatchw", SerializerTraceType.SERIALIZER_TRACE_ERROR)
+    serializer1 = Serializer("mpatchw", SerializerTraceType.SERIALIZER_NO_TRACE) # use SERIALIZER_TRACE_ERROR to save the restart in Ascii (useful for debugging)
+    mpatch_wrapper = MultiPatchWrapper(mpatch)
+    mpatch_wrapper.Save(serializer1, "mpatchw")
+
+    return mpatch
+
+def load1():
+    serializer2 = Serializer("mpatchw", SerializerTraceType.SERIALIZER_NO_TRACE)
+    mpatch_wrapper = MultiPatchWrapper()
+    mpatch_wrapper.Load(serializer2, "mpatchw")
+    return mpatch_wrapper.Get()
+
+def main(logging=True, output=True, order=[2, 2], nsampling=10, restart_method=1):
+    if restart_method == 1:
+        mpatch = save(order=order, nsampling=nsampling)
+        print("saved mpatch")
+        mpatch = load()
+        # print(mpatch)
+        print("loaded mpatch")
+    elif restart_method == 2:
+        mpatch = save1(order=order, nsampling=nsampling)
+        print("saved mpatch")
+        mpatch = load1()
+        # print(mpatch)
+        print("loaded mpatch")
 
     if logging:
         mpatch_export.Export(mpatch, "example_plate_with_hole.m")
@@ -238,6 +264,9 @@ def main(logging=True, output=True, order=[2, 2], nsampling=10):
 
     if output:
 
+        serializerp = Serializer("mpatch_post", SerializerTraceType.SERIALIZER_NO_TRACE) # use SERIALIZER_TRACE_ERROR to save the restart in Ascii (useful for debugging)
+        mpatch.Save(serializerp, "mpatch")
+
         mpatch_post = mpatch.Clone()
 
         # print(f"mpatch: {mpatch}")
@@ -248,7 +277,7 @@ def main(logging=True, output=True, order=[2, 2], nsampling=10):
         ## post processing
         params_post = {}
         params_post['name'] = "plate_with_hole"
-        params_post['backend'] = ["GiD", "Glvis", "ParaView"]
+        params_post['backend'] = ["GiD", "Glvis"] #, "ParaView"]
         params_post['division mode'] = "uniform"
         params_post['uniform division number'] = 40
         # params_post['output format'] = "ascii"
@@ -276,8 +305,8 @@ def main(logging=True, output=True, order=[2, 2], nsampling=10):
 
     return model
 
-def test1():
-    model = main(logging=False, output=False, order=[2, 2], nsampling=10)
+def test1(restart_method=1):
+    model = main(logging=False, output=False, order=[2, 2], nsampling=10, restart_method=restart_method)
 
     l2_error_ref = 5.9755404293107594e-04
     h1_error_ref = 1.1676942847371211e-02
@@ -287,8 +316,8 @@ def test1():
 
     print("Test 1 passed")
 
-def test2():
-    model = main(logging=False, output=False, order=[3, 2], nsampling=10)
+def test2(restart_method=1):
+    model = main(logging=False, output=False, order=[3, 2], nsampling=10, restart_method=restart_method)
 
     l2_error_ref = 6.3294354295203800e-04
     h1_error_ref = 1.1672342788086794e-02
@@ -299,8 +328,10 @@ def test2():
     print("Test 2 passed")
 
 def test():
-    test1()
-    test2()
+    test1(restart_method=1)
+    test2(restart_method=1)
+    test1(restart_method=2)
+    test2(restart_method=2)
 
 def tag():
     return "IGA"
