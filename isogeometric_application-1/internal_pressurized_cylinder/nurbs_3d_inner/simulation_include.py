@@ -233,6 +233,8 @@ class Model:
         print("*******************************************")
 
         if output:
+            mpatch_post = mpatch.Clone()
+
             ## post processing
             params_post = {}
             params_post['name'] = "internal_pressurized_cylinder"
@@ -245,7 +247,7 @@ class Model:
             params_post['variables list'] = [DISPLACEMENT, THREED_STRESSES]
             params_post['backend'] = ["GiD"] #, "ParaView"]
             dim = 3
-            model_iga_include.PostMultiPatch(mpatch, dim, time, params_post, model_part=model.model_part)
+            model_iga_include.PostMultiPatch(mpatch_post, dim, time, params_post, model_part=model.model_part)
 
     #        ## post processing
     #        r1 = 1.0
@@ -256,5 +258,9 @@ class Model:
     #        disp_grid_function_2 = mpatch[2].GetReference().GridFunction(DISPLACEMENT)
     #        left_side_disp = disp_grid_function_2.GetValue([0.0, r1, 0.0])
     #        print("displacement at (0.0, 1.0, 0.0): " + str(left_side_disp[2]))
+
+            serializer1 = Serializer("mpatchw", SerializerTraceType.SERIALIZER_NO_TRACE) # use SERIALIZER_TRACE_ERROR to save the restart in Ascii (useful for debugging)
+            mpatch_wrapper = MultiPatchWrapper(mpatch_post)
+            mpatch_wrapper.Save(serializer1, "mpatchw")
 
         return l2_error, h1_error
