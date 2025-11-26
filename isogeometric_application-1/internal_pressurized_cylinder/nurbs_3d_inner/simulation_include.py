@@ -13,6 +13,10 @@ from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
+try:
+    from KratosMultiphysics.VisualApplication import *
+except ModuleNotFoundError:
+    print("VisualApplication not found!")
 kernel = Kernel()   #defining kernel
 
 import model_iga_include
@@ -206,7 +210,7 @@ class Model:
 
         return [mpatch_mp, model]
 
-    def Run(self, logging=True, output=True,):
+    def Run(self, logging=True, output=True, visual=True):
         #############ANALYSIS MODEL#######################################
         [mpatch_mp, model] = self.CreateModel(logging=logging)
         mpatch = mpatch_mp.GetMultiPatch()
@@ -245,7 +249,7 @@ class Model:
             params_post['division number v'] = 10
             params_post['division number w'] = 1
             params_post['variables list'] = [DISPLACEMENT, THREED_STRESSES]
-            params_post['backend'] = ["GiD"] #, "ParaView"]
+            params_post['backend'] = ["GiD", "ParaView"]
             dim = 3
             model_iga_include.PostMultiPatch(mpatch_post, dim, time, params_post, model_part=model.model_part)
 
@@ -262,5 +266,9 @@ class Model:
             serializer1 = Serializer("mpatchw", SerializerTraceType.SERIALIZER_NO_TRACE) # use SERIALIZER_TRACE_ERROR to save the restart in Ascii (useful for debugging)
             mpatch_wrapper = MultiPatchWrapper(mpatch_post)
             mpatch_wrapper.Save(serializer1, "mpatchw")
+
+        if visual and "KratosVisualApplication" in KratosGlobals.RequestedApplications:
+            gui = IgaGUI(mpatch)
+            gui.Run(globals(), locals())
 
         return l2_error, h1_error

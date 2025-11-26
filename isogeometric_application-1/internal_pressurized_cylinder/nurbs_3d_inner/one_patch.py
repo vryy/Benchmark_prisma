@@ -5,7 +5,7 @@ import simulation_include
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 
-def main(output=True, logging=True, order = 2, nsampling = [9, 9]):
+def main(output=True, logging=True, order = 2, nsampling = [9, 9], visual=False):
     # parameters taken from GeoPDE's ex_plane_strain_ring example
     E = 1.0
     nu = 0.0
@@ -16,7 +16,7 @@ def main(output=True, logging=True, order = 2, nsampling = [9, 9]):
 
     plinear_solver = SuperLUSolver()
     model = simulation_include.Model(E, nu, P, r1, r2, l, order, nsampling, plinear_solver)
-    return model.Run(logging=logging, output=output)
+    return model.Run(logging=logging, output=output, visual=visual)
 
 def test():
     l2_error, h1_error = main(logging=False, output=False)
@@ -41,4 +41,4 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=True)
+        main(logging=True, output=True, visual=True)
