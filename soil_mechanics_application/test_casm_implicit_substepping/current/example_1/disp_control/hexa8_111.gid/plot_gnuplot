@@ -1,0 +1,67 @@
+set terminal pdf enhanced color
+
+set output "loading_path.pdf"
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right top
+
+set xrange [0:1100]
+set yrange [0:500]
+
+M = 1.2
+N = 3
+R = 2.0
+pc0 = 200.0
+#pc1 = 508333.333333/1000
+pc1 = 666666.66666/1000
+
+set xlabel "p' (kPa)"
+set ylabel "q (kPa)"
+set parametric
+set trange [0.00001:1]
+plot "analytical_loading_path.txt" using ($1)/1000:($2)/1000 with lines title "analytical loading path", \
+     "loading_path.txt" using ($1)/1000:($2)/1000 with lines title "loading path", \
+     pc0*t, M*pc0*t*((-log(t)/log(R))**(1.0/N)) title "initial yield envelope", \
+     pc1*t, M*pc1*t*((-log(t)/log(R))**(1.0/N)) title "final yield envelope", \
+     t*600, M*t*600 title "CSL"
+
+unset parametric
+unset xrange
+unset yrange
+set key right bottom
+
+#set xlabel "(-)uz (mm)"
+#set ylabel "q (kPa)"
+#plot "loading_path.txt" using (-$6)*1000:($2)/1000 with lines notitle, \
+
+set xlabel "volumetric strain"
+set ylabel "p' (kPa)"
+plot "analytical_loading_path.txt" using ($4):($1)/1000 with lines title "reference", \
+     "loading_path.txt" using ($7):($1)/1000 with lines title "computed", \
+
+#set xlabel "axial strain"
+#set ylabel "q (kPa)"
+#plot "loading_path.txt" using ($9):($2)/1000 with lines title "computed", \
+#     "analytical_loading_path.txt" using (-$6):($2)/1000 with lines title "reference", \
+
+set xlabel "deviatoric strain"
+set ylabel "q (kPa)"
+plot "analytical_loading_path.txt" using ($5):($2)/1000 with lines title "reference", \
+     "loading_path.txt" using ($8):($2)/1000 with lines title "computed", \
+
+#set xlabel "p' (kPa)"
+#set ylabel "uz (mm)"
+#plot "loading_path.txt" using ($1)/1000:($6)*1000 with lines notitle, \
+
+#set xlabel "ux (mm)"
+#set ylabel "uz (mm)"
+#plot "loading_path.txt" using ($4)*1000:($6)*1000 with lines notitle, \
+
+set xlabel "axial strain"
+set ylabel "q (kPa)"
+plot "analytical_loading_path.txt" using ($6):($2)/1000 with lines title "reference", \
+     "loading_path.txt" using ($9):($2)/1000 with lines title "computed", \
