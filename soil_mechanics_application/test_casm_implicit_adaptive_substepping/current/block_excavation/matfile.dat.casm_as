@@ -1,0 +1,26 @@
+begin material soil_1
+begin polygon
+-1000.0 0 -1000.0
+1000.0 0 -1000.0
+1000.0 0 1000.0
+-1000.0 0 1000.0
+end polygon
+begin parameters
+model_type casm_implicit_adaptive_substepping
+poisson_ratio 0.35
+density 1.732
+density_water 1.000
+csl_slope 1.4
+virgin_compression_index 0.37
+swell_index 0.054
+void_ratio 2.52
+spacing_ratio 2.0
+shape_parameter 1.4
+K0 1.2
+thickness 1.0
+porosity 0.2
+fix_porosity true
+fix_void_ratio true
+permeability 1e-05
+end parameters
+end material

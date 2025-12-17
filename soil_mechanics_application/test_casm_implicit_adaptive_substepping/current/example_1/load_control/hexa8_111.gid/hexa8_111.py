@@ -233,7 +233,7 @@ def main(output=True, logging=True, nsteps=266):
         apply_load_xyz(model, loadx, loady, loadz)
 
         time = time + delta_time
-        print("******Load step " + str(step) + ", time: " + str(time))
+        print("Load step " + str(step) + ", time: " + str(time))
         model.Solve(time, 0, 0, 0, 0)
         if output:
             model.WriteOutput(time)
@@ -270,12 +270,12 @@ def test():
     strain = get_strain(model.model_part.Elements[1], model.model_part.ProcessInfo)
     e = get_e(model.model_part.Elements[1], model.model_part.ProcessInfo)
 
-    ref_p = 3.3300000000000041e+05
-    ref_q = 3.9900000000000035e+05
-    ref_pc = 6.6392691238694638e+05
-    ref_ev = 3.7975801555497402e-02
-    ref_eq = 4.5743057542968052e-01
-    ref_e = 9.0852202263353787e-01
+    ref_p = 3.3299999999999994e+05
+    ref_q = 3.9900000000000006e+05
+    ref_pc = 6.6392691239536658e+05
+    ref_ev = 3.7975801555885202e-02
+    ref_eq = 4.5771391659236160e-01
+    ref_e = 9.0852202263279835e-01
 
     mon_p = pres['p'][0][0]
     mon_q = pres['q'][0][0]

@@ -1,0 +1,20 @@
+begin material soil_1
+begin polygon
+-1000.0 0 -1000.0
+1000.0 0 -1000.0
+1000.0 0 1000.0
+-1000.0 0 1000.0
+end polygon
+begin parameters
+model_type plane_strain
+youngs_modulus 2.0e4
+poisson_ratio 0.35
+density 1.732
+density_water 1.0
+thickness 1.0
+K0 0.5
+porosity 0.2
+fix_porosity true
+permeability 1.0e-4
+end parameters
+end material

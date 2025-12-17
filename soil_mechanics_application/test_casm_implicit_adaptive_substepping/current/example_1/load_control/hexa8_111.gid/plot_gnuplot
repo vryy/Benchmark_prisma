@@ -39,7 +39,7 @@ set key right bottom
 
 set xlabel "volumetric strain"
 set ylabel "p' (kPa)"
-plot "analytical_loading_path.txt" using ($4):($1)/1000 with lines linewidth 5 title "reference", \
+plot "analytical_loading_path.txt" using ($4):($1)/1000 with lines linewidth 5 title "reference" , \
      "loading_path.txt" using ($7):($1)/1000 with lines title "computed", \
 
 #set xlabel "axial strain"

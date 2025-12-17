@@ -1,0 +1,1 @@
+../../../test_modified_cam_clay/modified_cam_clay_ii_s/current/block_excavation/simulation_script_block_excavation.py
