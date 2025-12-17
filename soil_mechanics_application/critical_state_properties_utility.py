@@ -77,6 +77,7 @@ class CriticalStatePropertiesUtility:
         self.modifiedcamclayik_pointer = ModifiedCamClay3D_IK()
         self.modifiedcamclayii_pointer = ModifiedCamClay3dImplicit_II()
         self.modifiedcamclayiis_pointer = ModifiedCamClay3dImplicit_II_s()
+        self.modifiedcamclayiias_pointer = ModifiedCamClay3dImplicit_II_as()
         self.modifiedcamclayiics_pointer = ModifiedCamClayIIConstantStiffness()
         self.modifiedcamclayiii_pointer = ModifiedCamClay3dImplicit_III()
         self.casm_pointer1 = ClayAndSandExplicit()
@@ -214,6 +215,8 @@ class CriticalStatePropertiesUtility:
                         cl_pointers.append( self.modifiedcamclayii_pointer.Clone() )
                     elif( material.params['model_type'] == "modified_cam_clay_ii_s" ):
                         cl_pointers.append( self.modifiedcamclayiis_pointer.Clone() )
+                    elif( material.params['model_type'] == "modified_cam_clay_ii_as" ):
+                        cl_pointers.append( self.modifiedcamclayiias_pointer.Clone() )
                     elif( material.params['model_type'] == "modified_cam_clay_ii_constant_stiffness" ):
                         cl_pointers.append( self.modifiedcamclayiics_pointer.Clone() )
                     youngs_moduli.append( 0.0 )

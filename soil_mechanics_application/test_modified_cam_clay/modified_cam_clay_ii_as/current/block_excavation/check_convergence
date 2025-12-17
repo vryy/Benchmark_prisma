@@ -1,0 +1,1 @@
+egrep "PerformNewtonRaphsonIteration converged after|insitu_stress done" log_29Jun20
