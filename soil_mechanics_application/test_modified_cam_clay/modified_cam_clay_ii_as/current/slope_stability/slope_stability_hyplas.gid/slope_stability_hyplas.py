@@ -2,6 +2,7 @@
 import sys
 import os
 import math
+import time as time_module
 ##################################################################
 ##################################################################
 import slope_stability_hyplas_include
@@ -11,7 +12,7 @@ from slope_stability_hyplas_include import *
 ### This test is to make sure MCC-S works with prestress
 ##################################################################
 
-def main(output=True, last_output=False, logging=True, visual=False):
+def main(output=True, last_output=False, logging=True, visual=False, delta_load_lists=None):
 
     ############## INSITU MODEL ##############
 
@@ -40,7 +41,7 @@ def main(output=True, last_output=False, logging=True, visual=False):
     ############## SYSTEM MODEL ##############
 
     model = slope_stability_hyplas_include.Model('slope_stability_hyplas',os.getcwd()+"/",logging=logging)
-    model.material = "mcc-s"
+    model.material = "mcc-as"
     model.InitializeModel()
 
     ## set the overconsolidation ratio
@@ -84,16 +85,38 @@ def main(output=True, last_output=False, logging=True, visual=False):
             pointA = node
             print("pointA.Id: " + str(pointA.Id))
 
-    ##################################################################
-    delta_load_lists = [1.0]
-    for i in range(0, 48):
-        delta_load_lists.append(0.02)
-    for i in range(0, 4):
-        delta_load_lists.append(0.01)
-    for i in range(0, 4):
-        delta_load_lists.append(0.005)
-    for i in range(0, 2):
-        delta_load_lists.append(0.0025)
+    if delta_load_lists == None:
+        ##################################################################
+        # delta_load_lists = [1.0]
+        # for i in range(0, 48):
+        #     delta_load_lists.append(0.02)
+        # for i in range(0, 4):
+        #     delta_load_lists.append(0.01)
+        # for i in range(0, 4):
+        #     delta_load_lists.append(0.005)
+        # for i in range(0, 7):
+        #     delta_load_lists.append(0.0025)
+        # for i in range(0, 4):
+        #     delta_load_lists.append(0.0025 / 2)
+        ##################################################################
+        delta_load_lists = [1.0]
+        for i in range(0, 1):
+            delta_load_lists.append(0.5)        # 2^-1
+        for i in range(0, 1):
+            delta_load_lists.append(0.125)      # 2^-3
+        for i in range(0, 9):
+            delta_load_lists.append(0.125/4)    # 2^-5
+        for i in range(0, 7):
+            delta_load_lists.append(0.125/8)    # 2^-6
+        for i in range(0, 2):
+            delta_load_lists.append(0.125/16)   # 2^-7
+        for i in range(0, 1):
+            delta_load_lists.append(0.125/32)   # 2^-8
+        for i in range(0, 3):
+            delta_load_lists.append(0.125/64)   # 2^-9
+        for i in range(0, 3):
+            delta_load_lists.append(0.125/128)  # 2^-10
+        ##################################################################
 
     if logging:
         ifile = open("settlement_a.txt", "w")
@@ -155,8 +178,35 @@ def main(output=True, last_output=False, logging=True, visual=False):
 
     return model
 
-def test():
-    model = main(output=False, logging=False, visual=False)
+def test1():
+    delta_load_lists = [1.0]
+    for i in range(0, 1):
+        delta_load_lists.append(0.5)        # 2^-1
+    for i in range(0, 1):
+        delta_load_lists.append(0.125)      # 2^-3
+    for i in range(0, 9):
+        delta_load_lists.append(0.125/4)    # 2^-5
+    for i in range(0, 7):
+        delta_load_lists.append(0.125/8)    # 2^-6
+    for i in range(0, 1):
+        delta_load_lists.append(0.125/16)   # 2^-7
+    for i in range(0, 1):
+        delta_load_lists.append(0.125/32)   # 2^-8
+    # for i in range(0, 1):
+    #     delta_load_lists.append(0.125/64)   # 2^-9
+    for i in range(0, 1):
+        delta_load_lists.append(0.125/128)  # 2^-10
+
+    nprofile = 10
+
+    start = time_module.perf_counter()
+
+    for i in range(0, nprofile):
+        model = main(output=False, logging=False, visual=False, delta_load_lists=delta_load_lists)
+
+    end = time_module.perf_counter()
+
+    print("Computational time: %.16e" % ((end - start) / nprofile))
 
     tol = 1.0e-6
     for node in model.model_part.Nodes:
@@ -167,7 +217,30 @@ def test():
     dy = pointA.GetSolutionStepValue(DISPLACEMENT_Y)
     print("dy: %.16e" % (dy))
     # print(dy)
-    ref_disp = -6.3983441420996545e-01
+    ref_disp = -6.4001370169812000e-01
+    assert(abs(dy - ref_disp) / abs(ref_disp) < 1e-10)
+    #####################
+    print("Test passed")
+
+def test():
+    start = time_module.perf_counter()
+
+    model = main(output=False, logging=False, visual=False)
+
+    end = time_module.perf_counter()
+
+    print("Computational time: %.16e" % (end - start))
+
+    tol = 1.0e-6
+    for node in model.model_part.Nodes:
+        if abs(node.X0 - 35.0) < tol and abs(node.Y0 - 40.0) < tol:
+            pointA = node
+
+    ######pytesting######
+    dy = pointA.GetSolutionStepValue(DISPLACEMENT_Y)
+    print("dy: %.16e" % (dy))
+    # print(dy)
+    ref_disp = -7.5993068692010124e-01
     assert(abs(dy - ref_disp) / abs(ref_disp) < 1e-10)
     #####################
     print("Test passed")

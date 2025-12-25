@@ -27,7 +27,7 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, results_path, logging=True ):
+    def __init__( self, problem_name, path, results_path, logging=True, abs_tol=1e-13, rel_tol=1e-13 ):
         #setting the domain size for the problem to be solved
         self.domain_size = 3
         ##################################################################
@@ -94,8 +94,8 @@ class Model:
         self.analysis_parameters['list_dof'] = True
         self.analysis_parameters['log_residuum'] = logging
 
-        self.abs_tol =        1e-10
-        self.rel_tol =        1e-10
+        self.abs_tol =        abs_tol
+        self.rel_tol =        rel_tol
 
         ## generating solver
         import structural_solver_advanced
@@ -282,7 +282,7 @@ class Model:
         self.gid_io.FinalizeResults()
         self.gid_io.Reset()
 
-    def InitializeModel( self, number_of_sub_steps=4, viscous_damping=0.0 ):
+    def InitializeModel( self, sub_steps_range=[4, 3000], viscous_damping=0.0, local_error_tolerance=1e-6 ):
         ##################################################################
         ## STORE LAYER SETS ##############################################
         ##################################################################
@@ -335,15 +335,17 @@ class Model:
         ##################################################################
         #set material parameters
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, DummyConstitutiveLaw() )
-        self.model_part.Properties[1].SetValue(MINIMUM_NUMBER_OF_SUB_STEPS, number_of_sub_steps )
-        self.model_part.Properties[1].SetValue(MAXIMUM_NUMBER_OF_SUB_STEPS, 3000 )
+        self.model_part.Properties[1].SetValue(MINIMUM_NUMBER_OF_SUB_STEPS, sub_steps_range[0] )
+        self.model_part.Properties[1].SetValue(MAXIMUM_NUMBER_OF_SUB_STEPS, sub_steps_range[1] )
         self.model_part.Properties[1].SetValue(VISCOUS_DAMPING_FACTOR, viscous_damping )
+        self.model_part.Properties[1].SetValue(LOCAL_ERROR_TOLERANCE, local_error_tolerance )
         self.model_part.Properties[1].SetValue(THICKNESS, 1.0 )
         print("User-defined material selected for Ground, description: ground")
         self.model_part.Properties[2].SetValue(CONSTITUTIVE_LAW, DummyConstitutiveLaw() )
-        self.model_part.Properties[2].SetValue(MINIMUM_NUMBER_OF_SUB_STEPS, number_of_sub_steps )
-        self.model_part.Properties[2].SetValue(MAXIMUM_NUMBER_OF_SUB_STEPS, 3000 )
+        self.model_part.Properties[2].SetValue(MINIMUM_NUMBER_OF_SUB_STEPS, sub_steps_range[0] )
+        self.model_part.Properties[2].SetValue(MAXIMUM_NUMBER_OF_SUB_STEPS, sub_steps_range[1] )
         self.model_part.Properties[2].SetValue(VISCOUS_DAMPING_FACTOR, viscous_damping )
+        self.model_part.Properties[2].SetValue(LOCAL_ERROR_TOLERANCE, local_error_tolerance )
         self.model_part.Properties[2].SetValue(THICKNESS, 1.0 )
         print("User-defined material selected for Excavation, description: excavation")
         ##################################################################

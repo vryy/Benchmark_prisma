@@ -1,0 +1,69 @@
+set output "load_settlement.pdf"
+set terminal pdf enhanced
+set view equal xy
+#set size ratio -1
+set key right bottom
+#set nokey
+#set yrange [0:0.8]
+set xlabel "settlement at point A (m)"
+set ylabel "gravity factor, {/Symbol a}" enhanced
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+plot "settlement_a.txt" using (-$1):($2) with lines ls 2 title "MCC substepping solution", \
+     "settlement_a-mc.txt" using (-$1):($2) with linespoints ls 1 title "Mohr-Coulomb (backward Euler) solution", \
+
+#plot "settlement_a.txt" using (-$1):($2) with lines ls 2 title "MCC substepping solution", \
+#     "settlement_a-mc-noinsitu.txt" using (-$1):($2) with lines ls 1 title "Mohr-Coulomb (backward Euler) solution", \
+
+# alpha0 = 0.000000e+00; p0 = 1.811289e+01; q0 = 2.065332e+01; pc0 = 3.446710e+01
+# alpha1 = 2.481558e-02; p1 = 4.920264e+01; q1 = 5.603981e+01; pc1 = 9.352699e+01
+# alpha2 = 4.963116e-02; p2 = 1.335296e+02; q2 = 1.520838e+02; pc2 = 2.538186e+02
+# alpha3 = 7.444673e-02; p3 = 3.623801e+02; q3 = 4.127336e+02; pc3 = 6.888272e+02
+# alpha4 = 9.926231e-02; p4 = 9.834474e+02; q4 = 1.120100e+03; pc4 = 1.869378e+03
+# alpha5 = 1.240779e-01; p5 = 2.668935e+03; q5 = 3.039789e+03; pc5 = 5.073222e+03
+# alpha6 = 1.488935e-01; p6 = 7.243105e+03; q6 = 8.249549e+03; pc6 = 1.376799e+04
+# alpha7 = 1.737090e-01; p7 = 1.965674e+04; q7 = 2.238809e+04; pc7 = 3.736436e+04
+# alpha8 = 1.985246e-01; p8 = 5.334557e+04; q8 = 6.075805e+04; pc8 = 1.014015e+05
+# alpha9 = 2.233402e-01; p9 = 1.447722e+05; q9 = 1.648886e+05; pc9 = 2.751890e+05
+# alpha10 = 2.389740e-01; p10 = 2.715469e+05; q10 = 3.092789e+05; pc10 = 5.161677e+05
+# alpha11 = 2.546078e-01; p11 = 5.093362e+05; q11 = 5.801096e+05; pc11 = 9.681675e+05
+# alpha12 = 2.702416e-01; p12 = 9.553538e+05; q12 = 1.088102e+06; pc12 = 1.815976e+06
+# alpha13 = 2.706296e-01; p13 = 9.703823e+05; q13 = 1.105219e+06; pc13 = 1.844543e+06
+
+# M = 1.2
+
+# set xlabel "p' (kPa)"
+# set ylabel "q (kPa)"
+# set parametric
+# set trange [0:pi]
+
+# plot pc0/2*(1+cos(t)), M*pc0/2*sin(t) notitle, \
+#      pc1/2*(1+cos(t)), M*pc1/2*sin(t) notitle, \
+#      pc2/2*(1+cos(t)), M*pc2/2*sin(t) notitle, \
+#      pc3/2*(1+cos(t)), M*pc3/2*sin(t) notitle, \
+#      pc4/2*(1+cos(t)), M*pc4/2*sin(t) notitle, \
+#      pc5/2*(1+cos(t)), M*pc5/2*sin(t) notitle, \
+#      pc6/2*(1+cos(t)), M*pc6/2*sin(t) notitle, \
+#      pc7/2*(1+cos(t)), M*pc7/2*sin(t) notitle, \
+#      pc8/2*(1+cos(t)), M*pc8/2*sin(t) notitle, \
+#      pc9/2*(1+cos(t)), M*pc9/2*sin(t) notitle, \
+#      pc10/2*(1+cos(t)), M*pc10/2*sin(t) notitle, \
+#      pc11/2*(1+cos(t)), M*pc11/2*sin(t) notitle, \
+#      pc12/2*(1+cos(t)), M*pc12/2*sin(t) notitle, \
+#      pc13/2*(1+cos(t)), M*pc13/2*sin(t) notitle, \
+#      t*4e5, M*t*4e5 title "CSL", \
+#      p0+(p1-p0)*t, q0+(q1-q0)*t title "loading path", \
+#      p1+(p2-p1)*t, q1+(q2-q1)*t notitle, \
+#      p2+(p3-p2)*t, q2+(q3-q2)*t notitle, \
+#      p3+(p4-p3)*t, q3+(q4-q3)*t notitle, \
+#      p4+(p5-p4)*t, q4+(q5-q4)*t notitle, \
+#      p5+(p6-p5)*t, q5+(q6-q5)*t notitle, \
+#      p6+(p7-p6)*t, q6+(q7-q6)*t notitle, \
+#      p7+(p8-p7)*t, q7+(q8-q7)*t notitle, \
+#      p8+(p9-p8)*t, q8+(q9-q8)*t notitle, \
+#      p9+(p10-p9)*t, q9+(q10-q9)*t notitle, \
+#      p10+(p11-p10)*t, q10+(q11-q10)*t notitle, \
+#      p11+(p12-p11)*t, q11+(q12-q11)*t notitle, \
+#      p12+(p13-p12)*t, q12+(q13-q12)*t notitle

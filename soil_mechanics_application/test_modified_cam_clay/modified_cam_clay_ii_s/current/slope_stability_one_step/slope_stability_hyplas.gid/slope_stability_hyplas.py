@@ -2,6 +2,7 @@
 import sys
 import os
 import math
+import time as time_module
 ##################################################################
 ##################################################################
 import slope_stability_hyplas_include
@@ -40,7 +41,7 @@ def main(output=True, last_output=False, logging=True, visual=False):
     ############## SYSTEM MODEL ##############
 
     model = slope_stability_hyplas_include.Model('slope_stability_hyplas',os.getcwd()+"/",logging=logging)
-    model.material = "mcc-s"
+    model.material = "mcc-s1"
     model.InitializeModel()
 
     ## set the overconsolidation ratio
@@ -85,15 +86,42 @@ def main(output=True, last_output=False, logging=True, visual=False):
             print("pointA.Id: " + str(pointA.Id))
 
     ##################################################################
+    # delta_load_lists = [1.0]
+    # for i in range(0, 32):
+    #     delta_load_lists.append(0.02)
+    # for i in range(0, 37):
+    #     delta_load_lists.append(0.01)
+    # for i in range(0, 2):
+    #     delta_load_lists.append(0.005)
+    # for i in range(0, 1):
+    #     delta_load_lists.append(0.0025)
+    # for i in range(0, 9):
+    #     delta_load_lists.append(0.0025/16)
+    # for i in range(0, 2):
+    #     delta_load_lists.append(0.0025/32)
+    ##################################################################
     delta_load_lists = [1.0]
-    for i in range(0, 48):
-        delta_load_lists.append(0.02)
-    for i in range(0, 4):
-        delta_load_lists.append(0.01)
-    for i in range(0, 4):
-        delta_load_lists.append(0.005)
     for i in range(0, 2):
-        delta_load_lists.append(0.0025)
+        delta_load_lists.append(0.25)       # 2^-2
+    for i in range(0, 2):
+        delta_load_lists.append(0.125/2)    # 2^-4
+    for i in range(0, 25):
+        delta_load_lists.append(0.125/8)    # 2^-6
+    for i in range(0, 2):
+        delta_load_lists.append(0.125/32)   # 2^-8
+    for i in range(0, 1):
+        delta_load_lists.append(0.125/64)   # 2^-9
+    for i in range(0, 2):
+        delta_load_lists.append(0.125/128)  # 2^-10
+    for i in range(0, 1):
+        delta_load_lists.append(0.125/256)  # 2^-11
+    for i in range(0, 2):
+        delta_load_lists.append(0.125/1024) # 2^-13
+    for i in range(0, 1):
+        delta_load_lists.append(0.125/2048) # 2^-14
+    for i in range(0, 1):
+        delta_load_lists.append(0.125/4096) # 2^-15
+    ##################################################################
 
     if logging:
         ifile = open("settlement_a.txt", "w")
@@ -155,8 +183,16 @@ def main(output=True, last_output=False, logging=True, visual=False):
 
     return model
 
-def test():
-    model = main(output=False, logging=False, visual=False)
+def test1(nprofile=10):
+
+    start = time_module.perf_counter()
+
+    for i in range(0, nprofile):
+        model = main(output=False, logging=False, visual=False)
+
+    end = time_module.perf_counter()
+
+    print("Computational time: %.16e" % ((end - start)/nprofile))
 
     tol = 1.0e-6
     for node in model.model_part.Nodes:
@@ -167,10 +203,13 @@ def test():
     dy = pointA.GetSolutionStepValue(DISPLACEMENT_Y)
     print("dy: %.16e" % (dy))
     # print(dy)
-    ref_disp = -6.3983441420996545e-01
+    ref_disp = -6.5558265603490040e-01
     assert(abs(dy - ref_disp) / abs(ref_disp) < 1e-10)
     #####################
     print("Test passed")
+
+def test():
+    test1(nprofile=1)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

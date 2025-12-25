@@ -3,7 +3,8 @@ import sys
 import simulation_script_block_excavation
 from simulation_script_block_excavation import *
 
-def main(logging=True, output=True, number_of_excavation_layers_per_step=8, number_of_sub_steps=1, viscous_damping=0.0):
+def main(logging=True, output=True, number_of_excavation_layers_per_step=8, sub_steps_range=[1, 1], \
+    viscous_damping=0.0, abs_tol=1e-13, rel_tol=1e-13, local_error_tolerance=1e-6):
     params = {}
     params['path'] = os.getcwd() + '/'
     params['name'] = 'block_excavation'
@@ -21,11 +22,14 @@ def main(logging=True, output=True, number_of_excavation_layers_per_step=8, numb
     params['ground_water_table'] = 16.014
     params['number_of_steps'] = int(8 / number_of_excavation_layers_per_step)
     params['number_of_excavation_layers_per_step'] = number_of_excavation_layers_per_step
-    params['number_of_sub_steps'] = number_of_sub_steps
+    params['sub_steps_range'] = sub_steps_range
     params['viscous_damping'] = viscous_damping
     params['time_excavation'] = 180.0
     params['transfer_method'] = "identical"
     params['account_for_water'] = False
+    params['abs_tol'] = abs_tol
+    params['rel_tol'] = rel_tol
+    params['local_error_tolerance'] = local_error_tolerance
     params['dry_run'] = False
     params['output'] = output
     params['logging'] = logging
@@ -40,27 +44,29 @@ def main(logging=True, output=True, number_of_excavation_layers_per_step=8, numb
 
     return model1
 
-def test_with_params(number_of_excavation_layers_per_step=8, number_of_sub_steps=1, ref_uy=0.0, tol=1e-10):
-    model1 = main(logging=False, output=False, number_of_excavation_layers_per_step=number_of_excavation_layers_per_step, number_of_sub_steps=number_of_sub_steps)
+def test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[1, 1], ref_u=[0.0, 0.0], tol=1e-10, viscous_damping=0.0):
+    model1 = main(logging=False, output=False, number_of_excavation_layers_per_step=number_of_excavation_layers_per_step, sub_steps_range=sub_steps_range, viscous_damping=viscous_damping)
 
     tolp = 1e-6
     for node in model1.model_part.Nodes:
-        if abs(node.X0) < tolp and abs(node.Y0 - 2.0) < tolp:
-            mon_node = node
+        if abs(node.X0 - 2.0) < tolp and abs(node.Y0 - 4.0) < tolp:
+            pointA = node
 
-    uy = mon_node.GetSolutionStepValue(DISPLACEMENT_Y)
-    print(f"uy ({number_of_excavation_layers_per_step}, {number_of_sub_steps}): %.16e" % (uy))
-    assert(abs(uy - ref_uy) < tol)
+    ux = pointA.GetSolutionStepValue(DISPLACEMENT_X)
+    uy = pointA.GetSolutionStepValue(DISPLACEMENT_Y)
+    print(f"u ({number_of_excavation_layers_per_step}, {sub_steps_range}): %.16e, %.16e" % (ux, uy))
+    assert(abs(ux - ref_u[0]) < tol)
+    assert(abs(uy - ref_u[1]) < tol)
 
 def test():
-    test_with_params(number_of_excavation_layers_per_step=8, number_of_sub_steps=1, ref_uy=4.6147390906348673e-02)
-    test_with_params(number_of_excavation_layers_per_step=8, number_of_sub_steps=4, ref_uy=4.7303426581162156e-02)
-    test_with_params(number_of_excavation_layers_per_step=4, number_of_sub_steps=1, ref_uy=4.2410766155600098e-02)
-    test_with_params(number_of_excavation_layers_per_step=4, number_of_sub_steps=4, ref_uy=4.2397059269436710e-02)
-    # test_with_params(number_of_excavation_layers_per_step=2, number_of_sub_steps=1, ref_uy=4.1671666839188409e-02)
-    # test_with_params(number_of_excavation_layers_per_step=2, number_of_sub_steps=4, ref_uy=4.1637795774181662e-02)
-    test_with_params(number_of_excavation_layers_per_step=1, number_of_sub_steps=1, ref_uy=4.1215978910920575e-02)
-    test_with_params(number_of_excavation_layers_per_step=1, number_of_sub_steps=4, ref_uy=4.1149122216637565e-02)
+    test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[1, 16], ref_u=[-2.9738604874050830e-02, -1.4868369795955710e-02])
+    test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[4, 16], ref_u=[-3.0247538776474129e-02, -1.5488647332455039e-02])
+    test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=[1, 4], ref_u=[-2.9465994659607867e-02, -1.5235400872581389e-02])
+    test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=[4, 4], ref_u=[-2.9580675436299067e-02, -1.5382175898611695e-02])
+    #test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=[1, 1000], ref_u=4.1671666839188409e-02, viscous_damping=1e-3)
+    # # test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=[4, 4], ref_u=4.1637795774181662e-02)
+    test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=[1, 2], ref_u=[-2.8586930631622601e-02, -1.4774990705525131e-02])
+    test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=[4, 4], ref_u=[-2.8843927702136962e-02, -1.5104311792992632e-02])
 
     print("Test passed")
 
@@ -75,4 +81,5 @@ if __name__ == '__main__':
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
         # main(logging=True, output=True)
-        main(logging=True, output=True, number_of_excavation_layers_per_step=2, number_of_sub_steps=1, viscous_damping=1e-3)
+        main(logging=True, output=True, number_of_excavation_layers_per_step=2, sub_steps_range=[4, 8], viscous_damping=1e-5, abs_tol=1e-10, rel_tol=1e-10, local_error_tolerance=1e-8)
+        # main(logging=True, output=True, number_of_excavation_layers_per_step=1, sub_steps_range=[4, 8], viscous_damping=0.0)

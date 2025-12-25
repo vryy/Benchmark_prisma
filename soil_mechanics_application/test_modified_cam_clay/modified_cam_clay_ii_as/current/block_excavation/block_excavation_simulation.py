@@ -40,23 +40,25 @@ def main(logging=True, output=True, number_of_excavation_layers_per_step=8, visc
 
     return model1
 
-def test_with_params(number_of_excavation_layers_per_step=8, ref_uy=0.0, tol=1e-10, viscous_damping=0.0):
+def test_with_params(number_of_excavation_layers_per_step=8, ref_u=[0.0, 0.0], tol=1e-10, viscous_damping=0.0):
     model1 = main(logging=False, output=False, number_of_excavation_layers_per_step=number_of_excavation_layers_per_step, viscous_damping=viscous_damping)
 
     tolp = 1e-6
     for node in model1.model_part.Nodes:
-        if abs(node.X0) < tolp and abs(node.Y0 - 2.0) < tolp:
-            mon_node = node
+        if abs(node.X0 - 2.0) < tolp and abs(node.Y0 - 4.0) < tolp:
+            pointA = node
 
-    uy = mon_node.GetSolutionStepValue(DISPLACEMENT_Y)
-    print(f"uy ({number_of_excavation_layers_per_step}): %.16e" % (uy))
-    assert(abs(uy - ref_uy) < tol)
+    ux = pointA.GetSolutionStepValue(DISPLACEMENT_X)
+    uy = pointA.GetSolutionStepValue(DISPLACEMENT_Y)
+    print(f"u ({number_of_excavation_layers_per_step}): %.16e, %.16e" % (ux, uy))
+    assert(abs(ux - ref_u[0]) < tol)
+    assert(abs(uy - ref_u[1]) < tol)
 
 def test():
-    test_with_params(number_of_excavation_layers_per_step=8, ref_uy=4.6488892381070311e-02)
-    test_with_params(number_of_excavation_layers_per_step=4, ref_uy=4.2528857803680938e-02)
-    test_with_params(number_of_excavation_layers_per_step=2, ref_uy=4.1671666839208150e-02)
-    test_with_params(number_of_excavation_layers_per_step=1, ref_uy=4.1346788394070931e-02)
+    test_with_params(number_of_excavation_layers_per_step=8, ref_u=[-2.9052983539840420e-02, -1.6147320689394368e-02])
+    test_with_params(number_of_excavation_layers_per_step=4, ref_u=[-2.8554441710963021e-02, -1.6270708323428546e-02])
+    test_with_params(number_of_excavation_layers_per_step=2, ref_u=[-2.8032541619871839e-02, -1.6149080652976346e-02])
+    test_with_params(number_of_excavation_layers_per_step=1, ref_u=[-2.7840609238153652e-02, -1.6020760319816710e-02])
     print("Test passed")
 
 def tag():
