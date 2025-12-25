@@ -3,7 +3,8 @@ import sys
 import simulation_script_block_excavation
 from simulation_script_block_excavation import *
 
-def main(logging=True, output=True, number_of_excavation_layers_per_step=8, sub_steps_range=[1, 1000]):
+def main(logging=True, output=True, number_of_excavation_layers_per_step=8 \
+        , sub_steps_range=[1, 1000], local_error_tolerance=1e-6, first_yielding_compute_mode=0):
     params = {}
     params['path'] = os.getcwd() + '/'
     params['name'] = 'block_excavation'
@@ -25,6 +26,8 @@ def main(logging=True, output=True, number_of_excavation_layers_per_step=8, sub_
     params['time_excavation'] = 180.0
     params['transfer_method'] = "identical"
     params['account_for_water'] = False
+    params['local_error_tolerance'] = local_error_tolerance
+    params['first_yielding_compute_mode'] = first_yielding_compute_mode
     params['dry_run'] = False
     params['output'] = output
     params['logging'] = logging
@@ -39,8 +42,14 @@ def main(logging=True, output=True, number_of_excavation_layers_per_step=8, sub_
 
     return model1
 
-def test_with_params(logging=False, output=False, number_of_excavation_layers_per_step=8, sub_steps_range=[1, 100], ref_u=[0.0, 0.0], tol=1e-10):
-    model1 = main(logging=logging, output=output, number_of_excavation_layers_per_step=number_of_excavation_layers_per_step, sub_steps_range=sub_steps_range)
+def test_with_params(logging=False, output=False, number_of_excavation_layers_per_step=8 \
+        , sub_steps_range=[1, 100], ref_u=[0.0, 0.0], tol=1e-10 \
+        , local_error_tolerance=1e-6, first_yielding_compute_mode=0):
+
+    model1 = main(logging=logging, output=output \
+        , number_of_excavation_layers_per_step=number_of_excavation_layers_per_step \
+        , sub_steps_range=sub_steps_range, local_error_tolerance=local_error_tolerance \
+        , first_yielding_compute_mode=first_yielding_compute_mode)
 
     tolp = 1e-6
     for node in model1.model_part.Nodes:
@@ -54,52 +63,78 @@ def test_with_params(logging=False, output=False, number_of_excavation_layers_pe
     assert(abs(uy - ref_u[1]) < tol)
 
 def test1(logging=False, output=False):
-    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=8, sub_steps_range=[1, 1], ref_u=[-2.9051121934968786e-02, -1.6145267312155581e-02])
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=8 \
+        , sub_steps_range=[1, 1] \
+        , ref_u=[-2.9051121934968786e-02, -1.6145267312155581e-02] \
+        , local_error_tolerance=1e-8 \
+        , first_yielding_compute_mode=0)
+
+def test1_1(logging=False, output=False):
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=8 \
+        , sub_steps_range=[1, 1] \
+        , ref_u=[-2.9052359257036538e-02, -1.6146571618713308e-02] \
+        , local_error_tolerance=1e-8 \
+        , first_yielding_compute_mode=1)
 
 def test2(logging=False, output=False):
-    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=8, sub_steps_range=[4, 4], ref_u=[-2.9447891242997924e-02, -1.6755546171158212e-02])
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=8 \
+        , sub_steps_range=[4, 4] \
+        , ref_u=[-2.9447891242997924e-02, -1.6755546171158212e-02] \
+        , local_error_tolerance=1e-8 \
+        , first_yielding_compute_mode=0)
+
+def test2_1(logging=False, output=False):
+    # with HANDLE_ZERO_INCREMENT_STATE and COMPUTE_FIRST_YIELD_POINT, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=8 \
+        , sub_steps_range=[4, 4] \
+        , ref_u=[-2.9447089447467059e-02, -1.6753681360607831e-02] \
+        , local_error_tolerance=1e-8 \
+        , first_yielding_compute_mode=1)
 
 def test3(logging=False, output=False):
-    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=4, sub_steps_range=[1, 1], ref_u=[-2.8551663316528295e-02, -1.6267471607158496e-02])
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=4 \
+        , sub_steps_range=[1, 1], ref_u=[-2.8551663316528295e-02, -1.6267471607158496e-02], \
+        local_error_tolerance=1e-8, first_yielding_compute_mode=0)
 
 def test4(logging=False, output=False):
-    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=4, sub_steps_range=[4, 4], ref_u=[-2.8670078763527947e-02, -1.6473494798127628e-02])
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=4, \
+        sub_steps_range=[4, 4], ref_u=[-2.8670078763527947e-02, -1.6473494798127628e-02], \
+        local_error_tolerance=1e-8, first_yielding_compute_mode=0)
 
 def test5(logging=False, output=False):
-    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=2, sub_steps_range=[1, 1], ref_u=[-2.8032541619871839e-02, -1.6149080652976346e-02])
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=2, \
+        sub_steps_range=[1, 1], ref_u=[-2.8032541619871839e-02, -1.6149080652976346e-02], \
+        local_error_tolerance=1e-8, first_yielding_compute_mode=0)
 
 def test6(logging=False, output=False):
-    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=2, sub_steps_range=[4, 4], ref_u=[-2.8180148638021225e-02, -1.6365879577463254e-02])
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=2, \
+        sub_steps_range=[4, 4], ref_u=[-2.8180148638021225e-02, -1.6365879577463254e-02], \
+        local_error_tolerance=1e-8, first_yielding_compute_mode=0)
 
 def test7(logging=False, output=False):
-    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=1, sub_steps_range=[1, 1], ref_u=[-2.7840609238153652e-02, -1.6020760319816710e-02])
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=1, \
+        sub_steps_range=[1, 1], ref_u=[-2.7840609238153652e-02, -1.6020760319816710e-02], \
+        local_error_tolerance=1e-8, first_yielding_compute_mode=0)
 
 def test8(logging=False, output=False):
-    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=1, sub_steps_range=[4, 4], ref_u=[-2.8016577117629032e-02, -1.6252762317854646e-02])
+    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
+    test_with_params(logging=logging, output=output, number_of_excavation_layers_per_step=1, \
+        sub_steps_range=[4, 4], ref_u=[-2.8016577117629032e-02, -1.6252762317854646e-02], \
+        local_error_tolerance=1e-8, first_yielding_compute_mode=0)
 
 def test():
-    # test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=1, ref_uy=4.6490466391350807e-02)
-    # test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=4, ref_uy=4.7326001890955212e-02)
-    # test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=1, ref_uy=4.2529271155825228e-02)
-    # test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=4, ref_uy=4.2509708632310607e-02)
-    # test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=1, ref_uy=4.1671666839188409e-02)
-    # test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=4, ref_uy=4.1637795774181662e-02)
-    # test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=1, ref_uy=4.1346788393986748e-02)
-    # test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=4, ref_uy=4.1302839138054506e-02)
-
-    # with HANDLE_ZERO_INCREMENT_STATE, point (0, 2)
-    # test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[1, 1], ref_uy=4.6490446268247762e-02)
-    # test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[4, 4], ref_uy=4.7326001888868194e-02)
-    # test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=[1, 1], ref_uy=4.2529271155821211e-02)
-    # test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=[4, 4], ref_uy=4.2509708632312571e-02)
-    # test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=[1, 1], ref_uy=4.1671666839208150e-02)
-    # test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=[4, 4], ref_uy=4.1637795774179608e-02)
-    # test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=[1, 1], ref_uy=4.1346788394070931e-02)
-    # test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=[4, 4], ref_uy=4.1302839138019784e-02)
-
-    # with HANDLE_ZERO_INCREMENT_STATE, point (2, 4)
     test1()
+    test1_1()
     test2()
+    test2_1()
     test3()
     test4()
     test5()

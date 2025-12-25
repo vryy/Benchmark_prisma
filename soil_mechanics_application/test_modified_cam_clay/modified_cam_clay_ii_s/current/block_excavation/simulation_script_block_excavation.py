@@ -319,7 +319,7 @@ class BlockExcavationSimulator:
         spu = SystemMaterialPropertiesUtility(params['matfile'])
         spu.search_type = "by_searching"
 
-        # ##### BOUNDARY CONDITION #####
+        ##### BOUNDARY CONDITION #####
         BlockExcavationSimulator.ApplyBC(model1, params, 1.0e-3)
 
         ##### SET UP SOIL PROPERTIES #####
@@ -334,6 +334,13 @@ class BlockExcavationSimulator:
                     model1.soil_elems.append( model1.model_part.Elements[element] )
 
         model1.spu = spu
+
+        ##### SPECIAL FLAGS #####
+
+        if 'first_yielding_compute_mode' in params:
+            first_yielding_compute_mode = params['first_yielding_compute_mode']
+            model1.model_part.Properties[1].SetValue(FIRST_YIELDING_COMPUTE_MODE, first_yielding_compute_mode)
+            model1.model_part.Properties[2].SetValue(FIRST_YIELDING_COMPUTE_MODE, first_yielding_compute_mode)
 
         ###################################
 
