@@ -49,7 +49,7 @@ def SetMaterialProperties(elem):
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
     elem.SetValue(FIX_POROSITY,             False)
 
-def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0):
+def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressure=False, p=0.0):
 
     model_virgin = simulation_include.Model('dewatering_h27_4',os.getcwd()+"/",os.getcwd()+"/virgin_results/",logging=False)
     model_virgin.InitializeModel()
@@ -235,13 +235,14 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0):
     for step in range(0, num_steps):
         time = time + delta_time
 
-        pi = p * (1.0 - math.exp(-time / tau))
-        print(f"*** Applying air pressure p = {pi} ***")
-        # apply the air pressure on top
-        for node in top_nodes:
-            node.SetSolutionStepValue(AIR_PRESSURE, pi)
-            node.SetSolutionStepValue(AIR_PRESSURE_EINS, pi)
-            node.SetSolutionStepValue(AIR_PRESSURE_NULL, pi)
+        if apply_top_air_pressure:
+            pi = p * (1.0 - math.exp(-time / tau))
+            print(f"*** Applying air pressure p = {pi} ***")
+            # apply the air pressure on top
+            for node in top_nodes:
+                node.SetSolutionStepValue(AIR_PRESSURE, pi)
+                node.SetSolutionStepValue(AIR_PRESSURE_EINS, pi)
+                node.SetSolutionStepValue(AIR_PRESSURE_NULL, pi)
 
         model.Solve( time, 0, 0, 0, 0 )
         if output and step%100 == 0:
@@ -254,7 +255,7 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0):
     return model
 
 def test():
-    model = main(logging=False, output=False, dt=1.0, num_steps=100, p=0.0)
+    model = main(logging=False, output=False, dt=1.0, num_steps=100, apply_top_air_pressure=False)
 
     tol = 1.0e-6
     bottom_nodes = []
@@ -282,7 +283,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=True, p=30e3)
+        main(logging=True, output=True, p=30e3, apply_top_air_pressure=True)
 
 ##################################################################
 ###  END OF SIMULATION  ##########################################

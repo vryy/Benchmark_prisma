@@ -222,8 +222,8 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0, analysis_type
         node.Free(WATER_PRESSURE)
         node.Free(AIR_PRESSURE)
 
-    # but fix air pressure at bottom and lateral
-    for node in bottom_nodes + lateral_nodes:
+    # but fix air pressure on top and bottom and lateral
+    for node in top_nodes + bottom_nodes + lateral_nodes:
         node.Fix(AIR_PRESSURE)
         node.SetSolutionStepValue(AIR_PRESSURE, 0.0)
         node.SetSolutionStepValue(AIR_PRESSURE_EINS, 0.0)
@@ -291,8 +291,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=True, dt=10, num_steps=720, p=0.0, analysis_type=2, dissipation_radius=0.1)
-        # main(logging=True, output=True, dt=10, num_steps=720, p=10e3, analysis_type=2, dissipation_radius=0.1)
+        main(logging=True, output=True, dt=10, num_steps=720, p=10e3, analysis_type=2, dissipation_radius=0.1)
         #main(logging=True, output=False, dt=1, num_steps=720, p=10e3, analysis_type=4, dissipation_radius=0.5)
         # main(logging=True, output=False, dt=10, num_steps=2)
 

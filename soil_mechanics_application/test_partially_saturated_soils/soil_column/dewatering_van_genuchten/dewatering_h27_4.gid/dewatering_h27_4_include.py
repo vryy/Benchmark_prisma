@@ -22,7 +22,7 @@ from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.EkateAuxiliaryApplication import *
-from KratosMultiphysics.ExternalConstitutiveLawsApplication import *
+#from KratosMultiphysics.ExternalConstitutiveLawsApplication import *
 from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.SoilMechanicsApplication import *
 kernel = Kernel()   #defining kernel
