@@ -16,12 +16,8 @@ import math
 import time as time_module
 ##################################################################
 ##################################################################
-sys.path.append('./two_beams.gid')
 import two_beams_include
 from two_beams_include import *
-# calculate insitu-stress for geology_virgin.gid
-model = two_beams_include.Model('two_beams',os.getcwd()+"/",os.getcwd()+"/")
-model.InitializeModel()
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
@@ -45,6 +41,9 @@ def SetDisplacement(model_part, factor):
     model_part.Nodes[3].SetSolutionStepValue(DISPLACEMENT_Y, factor*u0)
 
 def main(output=True, logging=True):
+    model = two_beams_include.Model('two_beams',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
+    model.InitializeModel()
+
     model.model_part.CreateNewNode(1, 0.0, 0.0, 0.0)
     model.model_part.CreateNewNode(2, -B2, H, 0.0)
     model.model_part.CreateNewNode(3, B1, H, 0.0)
@@ -64,7 +63,7 @@ def main(output=True, logging=True):
     model.model_part.CreateNewElement("CrisfieldTrussElement3D2N", 2, [1, 2], prop2)
     model.model_part.CreateNewCondition("PointForce2D", 1, [3], prop1)
 
-    if output:
+    if logging:
         print(model.model_part)
 
     model.model_part.Nodes[1].Fix(DISPLACEMENT_Y)
