@@ -14,6 +14,10 @@ from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
+try:
+    from KratosMultiphysics.VisualApplication import *
+except ModuleNotFoundError:
+    print("VisualApplication not found!")
 
 kernel = Kernel()   #defining kernel
 
@@ -329,7 +333,7 @@ class Model:
                 max_dist = dist
         return max_dist
 
-    def Run(self, output=True, logging=True, disp=None, rot=None):
+    def Run(self, output=True, logging=True, visual=False, disp=None, rot=None):
         length_bar = self.length / self.thickness
         radius_bar = self.radius / self.thickness
         p = self.pressure
@@ -502,5 +506,9 @@ class Model:
 
             middle_force_values = self.ExtractForce(model.model_part, x_ref=0.5*self.length, export=False)
             self.ConvertForce(middle_force_values, export=True, filename="force_polar.txt")
+
+        if visual and "KratosVisualApplication" in KratosGlobals.RequestedApplications:
+            gui = IgaGUI(mpatch_orig)
+            gui.Run(globals(), locals())
 
         return model
