@@ -1,27 +1,11 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019            #####
-#####     by Hoang-Giang Bui for SFB837                      #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Mi 17. Jun 17:23:39 CEST 2020 
-##################################################################
 import sys
 import os
 import math
 import time as time_module
 ##################################################################
-##################################################################
-sys.path.append('./two_beams.gid')
 import two_beams_include
 from two_beams_include import *
-# calculate insitu-stress for geology_virgin.gid
-model = two_beams_include.Model('two_beams',os.getcwd()+"/",os.getcwd()+"/")
-model.InitializeModel()
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
@@ -45,6 +29,9 @@ def SetDisplacement(model_part, factor):
     model_part.Nodes[3].SetSolutionStepValue(DISPLACEMENT_Y, factor*u0)
 
 def main(output=True, logging=True):
+    model = two_beams_include.Model('two_beams',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
+    model.InitializeModel()
+
     model.model_part.CreateNewNode(1, 0.0, 0.0, 0.0)
     model.model_part.CreateNewNode(2, -B2, H, 0.0)
     model.model_part.CreateNewNode(3, B1, H, 0.0)
@@ -117,7 +104,7 @@ def main(output=True, logging=True):
     #####################################
 
 def test():
-    main(False, False)
+    main(output=False, logging=False)
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

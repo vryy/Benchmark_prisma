@@ -1,19 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Janosch Stascheit for TUNCONSTRUCT        #####
-##### all rights reserved                                    #####
-##################################################################
-#setting the domain size for the problem to be solved
-domain_size = 3
-##################################################################
-##################################################################
-## ATTENTION: here the order is important                    #####
-##################################################################
-## including kratos path                                     #####
-## ATTENTION: the following lines have to be adapted to      #####
-##            match your acrtual configuration               #####
-##################################################################
 import sys
 import os
 import math
@@ -27,7 +12,7 @@ from strip_footing_include import *
 
 def main(logging=True, output=True):
 
-    model = strip_footing_include.Model('strip_footing',os.getcwd()+"/",logging)
+    model = strip_footing_include.Model('strip_footing',os.getcwd()+"/",logging=logging)
     model.material_type = "j2"
     model.InitializeModel()
 

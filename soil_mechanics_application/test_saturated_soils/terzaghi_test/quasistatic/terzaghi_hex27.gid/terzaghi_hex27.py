@@ -1,38 +1,13 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Janosch Stascheit for TUNCONSTRUCT        #####
-##### all rights reserved                                    #####
-##################################################################
-#setting the domain size for the problem to be solved
-domain_size = 3
-##################################################################
-##################################################################
-## ATTENTION: here the order is important                    #####
-##################################################################
-## including kratos path                                     #####
-## ATTENTION: the following lines have to be adapted to      #####
-##            match your acrtual configuration               #####
-##################################################################
 import sys
 import os
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
-##setting up paths
-kratos_libs_path = kratos_root_path+'libs' ##kratos_root/libs
-kratos_applications_path = kratos_root_path+'applications' ##kratos_root/applications
 ##################################################################
-##################################################################
-sys.path.append(kratos_libs_path)
-sys.path.append(kratos_applications_path)
-
-##################################################################
-##################################################################
-sys.path.append('./terzaghi_hex27.gid')
 import terzaghi_hex27_include
 from terzaghi_hex27_include import *
+##################################################################
 
 def main(output=True, logging=True):
-    model = terzaghi_hex27_include.Model('terzaghi_hex27',os.getcwd()+"/",logging)
+    model = terzaghi_hex27_include.Model('terzaghi_hex27',os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     for e in model.layer_sets['Layer0']:

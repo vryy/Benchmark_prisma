@@ -9,8 +9,6 @@ from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.SoilMechanicsApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
-#from KratosMultiphysics.ConstitutiveLawsApplication import *
-#from KratosMultiphysics.VisualApplication import *
 kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################

@@ -9,9 +9,6 @@ from square_include import *
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
-# =====================
-# | USER SCRIPT FOR CALCULATION OF EKATE.GID |
-# vvvvvvvvvvvvvvvvvvvvv
 
 def ConstructModelPart(p4est_model, order):
     # start to construct the Kratos model_part

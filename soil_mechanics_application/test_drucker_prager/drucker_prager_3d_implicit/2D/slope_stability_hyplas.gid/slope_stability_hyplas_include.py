@@ -1,21 +1,4 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Janosch Stascheit for TUNCONSTRUCT        #####
-##### all rights reserved                                    #####
-##################################################################
-##### note: KRATOS is released under LGPL                    #####
-##################################################################
-##################################################################
-##################################################################
-## ATTENTION: here the order is important                    #####
-##################################################################
-## including kratos path                                     #####
-## ATTENTION: the following lines have to be adapted to      #####
-##            match your acrtual configuration               #####
-##################################################################
 from __future__ import absolute_import
 import sys
 import math
@@ -32,7 +15,7 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, logging ):
+    def __init__( self, problem_name, path, logging=True ):
         #setting the domain size for the problem to be solved
         self.domain_size = 3
         ##################################################################

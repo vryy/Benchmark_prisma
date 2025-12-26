@@ -1,25 +1,7 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Janosch Stascheit for TUNCONSTRUCT        #####
-##### all rights reserved                                    #####
-##################################################################
-##### note: KRATOS is released under LGPL                    #####
-##################################################################
-##################################################################
-##################################################################
-## ATTENTION: here the order is important                    #####
-##################################################################
-## including kratos path                                     #####
-## ATTENTION: the following lines have to be adapted to      #####
-##            match your acrtual configuration               #####
-##################################################################
 import sys
 import math
 import os
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
 ##################################################################
 ##################################################################
 #importing Kratos modules
@@ -28,9 +10,7 @@ from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.SoilMechanicsApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
-#from KratosMultiphysics.ConstitutiveLawsApplication import *
 kernel = Kernel()   #defining kernel
-
 ##################################################################
 ##################################################################
 class Model:

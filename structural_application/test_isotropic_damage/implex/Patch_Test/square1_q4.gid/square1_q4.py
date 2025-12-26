@@ -1,21 +1,8 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014-2022 by Hoang-Giang Bui (SFB837)         #####
-#####          2023-2024 by Hoang-Giang Bui (Hereon)         #####
-#####          2025-2026 by Hoang-Giang Bui (UoB)            #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Thu Mar 27 06:17:40 PM GMT 2025
-##################################################################
 import sys
 import os
 import math
 import time as time_module
-##################################################################
 ##################################################################
 current_dir_ = os.path.dirname(os.path.realpath(__file__)) + "/"
 import square1_q4_include as simulation_include

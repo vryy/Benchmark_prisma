@@ -1,17 +1,6 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Institute for Structural Mechanics, RUB   #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-##################################################################
-##################################################################
 import sys
 import os
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
 ##################################################################
 ##################################################################
 #importing Kratos modules
@@ -23,7 +12,6 @@ from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.FiniteCellApplication import *
 from KratosMultiphysics.FiniteCellStructuralApplication import *
 kernel = Kernel()   #defining kernel
-
 ##################################################################
 ##################################################################
 class Model:

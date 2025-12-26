@@ -1,6 +1,5 @@
 import sys
 import os
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
 
 #importing Kratos modules
 from KratosMultiphysics import *
@@ -9,8 +8,6 @@ from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.ThermalApplication import *
 from KratosMultiphysics.IsogeometricStructuralApplication import *
 from KratosMultiphysics.IsogeometricThermalApplication import *
-# from KratosMultiphysics.ExternalSolversApplication import *
-# from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.MultigridSolversApplication import *
 
 kernel = Kernel()   #defining kernel
@@ -148,7 +145,8 @@ def CreateModels(logging=True):
 #        trans_mat_list.append(trans_tot)
 
     #    print(mpatch)
-        mpatch_export.Export(mpatch, "square_" + str(i) + ".m")
+        if logging:
+            mpatch_export.Export(mpatch, "square_" + str(i) + ".m")
 
         mpatch_mp = CreateModelPart(mpatch)
         mpatch_mp_list.append(mpatch_mp)

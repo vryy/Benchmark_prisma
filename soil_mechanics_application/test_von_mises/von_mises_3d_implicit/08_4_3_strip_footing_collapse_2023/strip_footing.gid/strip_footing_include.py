@@ -1,14 +1,4 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Institute for Structural Mechanics, RUB   #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-##################################################################
-##################################################################
 from __future__ import absolute_import
 import sys
 import os
@@ -24,7 +14,7 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, logging ):
+    def __init__( self, problem_name, path, logging=True ):
         #setting the domain size for the problem to be solved
         self.domain_size = 3
         ##################################################################

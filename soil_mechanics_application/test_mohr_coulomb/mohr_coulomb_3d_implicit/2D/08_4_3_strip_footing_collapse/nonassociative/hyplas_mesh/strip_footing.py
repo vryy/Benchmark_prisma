@@ -1,43 +1,16 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Janosch Stascheit for TUNCONSTRUCT        #####
-##### all rights reserved                                    #####
-##################################################################
-#setting the domain size for the problem to be solved
-domain_size = 3
-##################################################################
-##################################################################
-## ATTENTION: here the order is important                    #####
-##################################################################
-## including kratos path                                     #####
-## ATTENTION: the following lines have to be adapted to      #####
-##            match your acrtual configuration               #####
-##################################################################
 import sys
 import os
 import math
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
-##setting up paths
-kratos_libs_path = kratos_root_path+'libs' ##kratos_root/libs
-kratos_applications_path = kratos_root_path+'applications' ##kratos_root/applications
 ##################################################################
-##################################################################
-sys.path.append(kratos_libs_path)
-sys.path.append(kratos_applications_path)
-
-##################################################################
-##################################################################
-sys.path.append('./strip_footing.gid')
 import strip_footing_include
 from strip_footing_include import *
-
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
 
 def main(output=True, logging=True):
-    model = strip_footing_include.Model('strip_footing',os.getcwd()+"/",logging)
+    model = strip_footing_include.Model('strip_footing',os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     prescribed_nodes = []

@@ -1,27 +1,11 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Janosch Stascheit for TUNCONSTRUCT        #####
-##### all rights reserved                                    #####
-##################################################################
-#setting the domain size for the problem to be solved
-domain_size = 3
-##################################################################
-##################################################################
-## ATTENTION: here the order is important                    #####
-##################################################################
-## including kratos path                                     #####
-## ATTENTION: the following lines have to be adapted to      #####
-##            match your acrtual configuration               #####
-##################################################################
 import sys
 import os
 import math
 ##################################################################
-##################################################################
-sys.path.append('./ironing.gid')
 import ironing_include
 from ironing_include import *
+##################################################################
 
 def main(logging=True, output=True, npush=64, nslide=400):
     model = ironing_include.Model('ironing',os.getcwd()+"/",os.getcwd()+"/",logging=logging)

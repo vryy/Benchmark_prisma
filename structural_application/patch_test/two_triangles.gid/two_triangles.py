@@ -1,45 +1,16 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Janosch Stascheit for TUNCONSTRUCT        #####
-##### all rights reserved                                    #####
-##################################################################
-#setting the domain size for the problem to be solved
-domain_size = 3
-##################################################################
-##################################################################
-## ATTENTION: here the order is important                    #####
-##################################################################
-## including kratos path                                     #####
-## ATTENTION: the following lines have to be adapted to      #####
-##            match your acrtual configuration               #####
-##################################################################
 import sys
 import os
 import math
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
-##setting up paths
-kratos_libs_path = kratos_root_path+'libs' ##kratos_root/libs
-kratos_applications_path = kratos_root_path+'applications' ##kratos_root/applications
 ##################################################################
-##################################################################
-sys.path.append(kratos_libs_path)
-sys.path.append(kratos_applications_path)
-
-##################################################################
-##################################################################
-sys.path.append('./two_triangles.gid')
 import two_triangles_include
 from two_triangles_include import *
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
-# =====================
-# | USER SCRIPT FOR CALCULATION OF EKATE.GID |
-# vvvvvvvvvvvvvvvvvvvvv
 
 def main(output=True, logging=True):
-    model = two_triangles_include.Model('two_triangles',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = two_triangles_include.Model('two_triangles',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     tol = 1.0

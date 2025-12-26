@@ -1,19 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Janosch Stascheit for TUNCONSTRUCT        #####
-##### all rights reserved                                    #####
-##################################################################
-#setting the domain size for the problem to be solved
-domain_size = 3
-##################################################################
-##################################################################
-## ATTENTION: here the order is important                    #####
-##################################################################
-## including kratos path                                     #####
-## ATTENTION: the following lines have to be adapted to      #####
-##            match your acrtual configuration               #####
-##################################################################
 import sys
 import os
 import math
@@ -162,7 +147,7 @@ def test():
     ref_disp_x = 2.0000135799920685e-01
     ref_disp_z = -5.9999509819717622e-01
     assert(abs(disp_x - ref_disp_x) < 1e-10)
-    assert(abs(disp_y - ref_disp_z) < 1e-10)
+    assert(abs(disp_z - ref_disp_z) < 1e-10)
 
     print("Test passed")
 

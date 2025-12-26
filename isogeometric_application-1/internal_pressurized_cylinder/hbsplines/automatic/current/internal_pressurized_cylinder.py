@@ -1,19 +1,7 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Institute for Structural Mechanics, RUB   #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-##################################################################
-##################################################################
 import sys
 import os
 import operator
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
-##################################################################
 ##################################################################
 import pdb
 #importing Kratos modules
@@ -22,10 +10,8 @@ from KratosMultiphysics.IsogeometricApplication import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.IsogeometricStructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
-#from KratosMultiphysics.MKLSolversApplication import *
-#from KratosMultiphysics.MultigridSolversApplication import *
-#from KratosMultiphysics.FiniteCellApplication import *
 kernel = Kernel()   #defining kernel
+##################################################################
 
 import model_iga_include
 from model_iga_include import *

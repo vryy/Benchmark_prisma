@@ -1,15 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019            #####
-#####     by Hoang-Giang Bui for SFB837                      #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Mo 5. Jul 23:39:15 CEST 2021 
-##################################################################
 import sys
 import os
 import math
@@ -17,7 +6,6 @@ import numpy as np
 import time as time_module
 ##################################################################
 ##################################################################
-sys.path.append('./line_250_l3.gid')
 import line_250_l3_include
 from line_250_l3_include import *
 ##################################################################

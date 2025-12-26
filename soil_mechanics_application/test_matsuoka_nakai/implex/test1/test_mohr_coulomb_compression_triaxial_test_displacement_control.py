@@ -6,11 +6,8 @@ import time as time_module
 from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.SoilMechanicsApplication import *
-#from KratosMultiphysics.BRepApplication import *
-#from KratosMultiphysics.EkateAuxiliaryApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
-#from KratosMultiphysics.FreezingSoilApplication import *
 kernel = Kernel()   #defining kernel
 ##################################################################
 # TODO: ADD REFERENCE DIANA TEST PLOT RESULTS AUTOMATICALLY SAMPLE DATA FROM DIANA AN PLAXIS INSIDE THE SCRIPT

@@ -1,14 +1,4 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Institute for Structural Mechanics, RUB   #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-##################################################################
-##################################################################
 from __future__ import absolute_import
 import sys
 import os
@@ -23,7 +13,7 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, results_path ):
+    def __init__( self, problem_name, path, results_path, logging=True ):
         #setting the domain size for the problem to be solved
         self.domain_size = 3
         ##################################################################
@@ -88,6 +78,7 @@ class Model:
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = True
         self.analysis_parameters['list_dof'] = True
+        self.analysis_parameters['log_residuum'] = logging
 
         self.abs_tol =        1e-10
         self.rel_tol =        1e-10

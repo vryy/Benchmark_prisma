@@ -3,16 +3,14 @@
 ### Von Mises
 ### Hoang-Giang Bui, 2018, Ruhr University Bochum
 ################################################
-
 import sys
 import os
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
-##################################################################
 ##################################################################
 #importing Kratos modules
 from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.SoilMechanicsApplication import *
+##################################################################
 
 def main(logging=True):
 
