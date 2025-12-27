@@ -155,7 +155,10 @@ def Run(params):
     sim_params['stop_Newton_Raphson_if_not_converge'] = True
     sim_params['list_dof'] = True
     sim_params['convergence_criteria'] = "multiphase"
-    sim_params['linear_solver'] = MKLPardisoSolver()
+    if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+        sim_params['linear_solver'] = MKLPardisoSolver()
+    else:
+        sim_params['linear_solver'] = SuperLUSolver()
     sim_params['log_residuum'] = True
     sim_params['calculate_reaction'] = False
     model_virgin = model_iga_include.Model('Liakopolous', os.getcwd()+"/", virgin_model_part, sim_params)
@@ -291,7 +294,10 @@ def Run(params):
     sim_params['stop_Newton_Raphson_if_not_converge'] = True
     sim_params['list_dof'] = True
     sim_params['convergence_criteria'] = "multiphase"
-    sim_params['linear_solver'] = MKLPardisoSolver()
+    if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+        sim_params['linear_solver'] = MKLPardisoSolver()
+    else:
+        sim_params['linear_solver'] = SuperLUSolver()
     sim_params['log_residuum'] = True
     sim_params['calculate_reaction'] = False
     model = model_iga_include.Model('Liakopolous', os.getcwd()+"/", model_part, sim_params)
@@ -317,7 +323,7 @@ def Run(params):
     dim = 3
     def WriteOutput(time):
         for var in post_local_varibles:
-            transfer_util.TransferVariablesToNodes(var, model.model_part, MKLPardisoSolver())
+            transfer_util.TransferVariablesToNodes(var, model.model_part, SuperLUSolver())
         mpatch_mp.SynchronizeBackward(0, DISPLACEMENT)
         # mpatch_mp.SynchronizeBackward(1, DAMAGE)
         # mpatch_mp.SynchronizeBackward(1, PLASTICITY)

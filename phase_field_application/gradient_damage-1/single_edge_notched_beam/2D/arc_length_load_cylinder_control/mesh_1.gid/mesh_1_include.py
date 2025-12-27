@@ -144,9 +144,8 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        plinear_solver = MKLRepeatedPardisoSolver()
         if KratosMKLSolversApplication.Has("MKLRepeatedPardisoSolver"):
-            plinear_solver = MKLPardisoSolver()
+            plinear_solver = MKLRepeatedPardisoSolver()
         else:
             plinear_solver = SuperLUSolver()
         self.solver.structure_linear_solver = plinear_solver

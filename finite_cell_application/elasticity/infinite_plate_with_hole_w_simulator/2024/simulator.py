@@ -3,7 +3,7 @@ import pprint
 import time as time_module
 from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
-from KratosMultiphysics.MKLSolversApplication import *
+from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.FiniteCellApplication import *
 from KratosMultiphysics.FiniteCellStructuralApplication import *
@@ -21,7 +21,7 @@ class Simulator(FiniteCellSimulator, object):
         if "write_output_per_each_step" not in self.params:
             self.params["write_output_per_each_step"] = False
         #############variable_transfer_utility############
-        self.variable_transfer_utility = VariableTransferUtility(MKLPardisoSolver())
+        self.variable_transfer_utility = VariableTransferUtility(SuperLUSolver())
 
     ###SIMULATION DRIVER#############
     def Initialize(self, model_solid):
@@ -54,7 +54,7 @@ class Simulator(FiniteCellSimulator, object):
         super(Simulator, self).Initialize(model_solid, self.solid_elements)
         model_solid.solver.solver.MoveMeshFlag = False
 
-        self.variable_projection_utility = VariableProjectionUtility(self.solid_elements, MKLPardisoSolver())
+        self.variable_projection_utility = VariableProjectionUtility(self.solid_elements, SuperLUSolver())
         # self.variable_transfer_utility = VariableAdvancedTransferUtility(self.solid_elements, 0.31, 0.31, 0.31)
 
         E = model_solid.model_part.Properties[1].GetValue(YOUNG_MODULUS)

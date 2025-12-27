@@ -7,7 +7,7 @@ import os
 from KratosMultiphysics import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.StructuralApplication import *
-# from KratosMultiphysics.ExternalSolversApplication import *
+from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.FiniteCellApplication import *
 from KratosMultiphysics.FiniteCellStructuralApplication import *

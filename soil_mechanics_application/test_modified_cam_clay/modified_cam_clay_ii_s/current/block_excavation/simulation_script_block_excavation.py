@@ -268,7 +268,7 @@ class BlockExcavationSimulator:
         print("##### TRANSFERRING INSITU STRESS #####")
         # for node in model_virgin.model_part.Nodes:
         #     print("node " + str(node.Id) + " PRESTRESS: " + str(node.GetSolutionStepValue(PRESTRESS)))
-        vtu = VariableTransferUtility(MKLPardisoSolver())
+        vtu = VariableTransferUtility(SuperLUSolver())
         if params['transfer_method'] == "identical":
             vtu.TransferPrestressIdentically( model_virgin.model_part, model1.model_part )
         elif params['transfer_method'] == "normal":
