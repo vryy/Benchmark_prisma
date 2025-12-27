@@ -2,6 +2,7 @@
 import sys
 import os
 import time as time_module
+import platform
 ##################################################################
 ##################################################################
 #importing Kratos modules
@@ -425,7 +426,13 @@ class Model:
         # mat_params[15] = 1.0    # OCR
         ##
         self.model_part.Properties[1].SetValue(DENSITY,         7620 )
-        self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libephyss.so" )
+        system_os = platform.system()
+        if system_os == "Windows":
+            raise Exception("No DLL on Windows")
+        elif system_os == "Darwin":
+            raise Exception("No dylib on MacOS")
+        elif system_os == "Linux":
+            self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libephyss.so" )
         self.model_part.Properties[1].SetValue(USERMOD_NAME,     "user_mod_" )
         self.model_part.Properties[1].SetValue(SOIL_MODEL_NUMBER,     1 )
         self.model_part.Properties[1].SetValue(IS_UNDRAINED,    False )

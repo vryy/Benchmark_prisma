@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 import sys
 import os
+import platform
 ##################################################################
 ##################################################################
 #importing Kratos modules
@@ -228,7 +229,13 @@ class Model:
         self.model_part.Properties[1].SetValue(DENSITY,         0.0 )
         self.model_part.Properties[1].SetValue(INTEGRATION_ORDER,      2 )
         self.model_part.Properties[1].SetValue(THICKNESS,            1.0 )
-        self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libMCclausen.so")
+        system_os = platform.system()
+        if system_os == "Windows":
+            raise Exception("No DLL on Windows")
+        elif system_os == "Darwin":
+            raise Exception("No dylib on MacOS")
+        elif system_os == "Linux":
+            self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libMCclausen.so")
         self.model_part.Properties[1].SetValue(MATERIAL_PARAMETERS, mat_params)
         self.model_part.Properties[1].SetValue(UMAT_NDI, 3)
         self.model_part.Properties[1].SetValue(UMAT_NSHR, 1)
