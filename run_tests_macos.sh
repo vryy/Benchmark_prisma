@@ -13,6 +13,7 @@ export KRATOS_ROOT_PATH=$HOME/kratos_bundle/kratos_bcn2
 export KRATOS_INSTALL_PREFIX=$HOME/kratos_bundle/kratos_libs/Release314
 export PYTHONPATH=$KRATOS_INSTALL_PREFIX:$KRATOS_INSTALL_PREFIX/libs
 export LD_LIBRARY_PATH=$KRATOS_INSTALL_PREFIX/libs:$HOME/opt/boost_1_86_0/lib:$HOME/kratos_bundle/kratos_libs/Release314/libs:$HOME/opt/hdf5-1.8.21/lib:$HOME/opt/qhull-2020.2/lib:$HOME/opt/adol-c-2.7.2/lib:$HOME/opt/mmg-5.5.2/lib:$HOME/opt/hdf5-1.8.21/lib:$HOME/opt/p4est-vryy/lib:$HOME/opt/petsc-3.22.5/lib:$HOME/opt/petsc-3.22.5/lib:$HOME/opt/openmpi-3.1.2/lib:$HOME/opt/cgal-6.1/lib:$HOME/opt/gmp-6.3.0/lib:$HOME/opt/T-SPLINE/lib/x86/release:$HOME/opt/cddlib-094j/lib:$HOME/opt/mpfr-3.1.2/lib
+export DYLD_LIBRARY_PATH=$KRATOS_INSTALL_PREFIX/libs:$DYLD_LIBRARY_PATH
 export OMP_NUM_THREADS=1
 export PY_COMMAND="python"
 mkdir -p ./ztest_logs
