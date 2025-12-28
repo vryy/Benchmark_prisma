@@ -63,7 +63,7 @@ def test():
     main(logging=False, output=False)
 
 def tag():
-    return "kinematic_linear,linear_elastic"
+    return "kinematic_linear,linear_elastic,umfpack"
 
 def print_tag():
     print("Tag(s): " + tag())

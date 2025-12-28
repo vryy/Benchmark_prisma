@@ -30,7 +30,7 @@ def test():
     test_node = model.model_part.Nodes[1849]
     w = test_node.GetSolutionStepValue(KratosMultiphysics.DISPLACEMENT_Z)
     test = abs(w - ref_w) / abs(w + ref_w)
-    print("w: %e, ref_w: %e, test: %e" % (w, ref_w, test))
+    print("w: %.16e, ref_w: %.16e, test: %.16e" % (w, ref_w, test))
     assert(test < tol)
 
 if __name__ == "__main__":

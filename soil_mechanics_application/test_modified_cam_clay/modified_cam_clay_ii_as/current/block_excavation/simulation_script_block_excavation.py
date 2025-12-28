@@ -21,6 +21,12 @@ from KratosMultiphysics.MKLSolversApplication import *
 kernel = Kernel()   #defining kernel
 ##################################################################
 
+def GetValue(params, name, default_value):
+    if name in params:
+        return params[name]
+    else:
+        return default_value
+
 def FixPressureNodes( model_part, free_node_list_water, free_node_list_air ):
     for node in model_part.Nodes:
         if (node.IsFixed(WATER_PRESSURE)==0):
@@ -262,7 +268,7 @@ class BlockExcavationSimulator:
         print("##### TRANSFERRING INSITU STRESS #####")
         # for node in model_virgin.model_part.Nodes:
         #     print("node " + str(node.Id) + " PRESTRESS: " + str(node.GetSolutionStepValue(PRESTRESS)))
-        vtu = VariableTransferUtility(MKLPardisoSolver())
+        vtu = VariableTransferUtility(SuperLUSolver())
         if params['transfer_method'] == "identical":
             vtu.TransferPrestressIdentically( model_virgin.model_part, model1.model_part )
         elif params['transfer_method'] == "normal":
@@ -289,13 +295,15 @@ class BlockExcavationSimulator:
     @staticmethod
     def PrepareSystem( params ):
         print("##### SET UP MODEL #####")
+
+        viscous_damping = GetValue(params, 'viscous_damping', 0.0)
+        abs_tol = GetValue(params, 'abs_tol', 1e-13)
+        rel_tol = GetValue(params, 'rel_tol', 1e-13)
+        local_error_tolerance = GetValue(params, 'local_error_tolerance', 1e-6)
+
         system_include = __import__(params['name']+"_include")
-        model1 = system_include.Model(params['name'],params['path']+"/"+params['name']+".gid/",params['path']+"/"+params['name']+".gid/",logging=params['logging'])
-        if 'viscous_damping' in params:
-            viscous_damping = params['viscous_damping']
-        else:
-            viscous_damping = 0.0
-        model1.InitializeModel(number_of_sub_steps=params['number_of_sub_steps'], viscous_damping=viscous_damping)
+        model1 = system_include.Model(params['name'],params['path']+"/"+params['name']+".gid/",params['path']+"/"+params['name']+".gid/",logging=params['logging'],abs_tol=abs_tol,rel_tol=rel_tol)
+        model1.InitializeModel(number_of_sub_steps=params['number_of_sub_steps'], viscous_damping=viscous_damping, local_error_tolerance=local_error_tolerance)
 
         ##### INITIALIZE SOIL PROPERTIES UTILITY #####
         soil_type = params['soil_type']
@@ -311,7 +319,7 @@ class BlockExcavationSimulator:
         spu = SystemMaterialPropertiesUtility(params['matfile'])
         spu.search_type = "by_searching"
 
-        # ##### BOUNDARY CONDITION #####
+        ##### BOUNDARY CONDITION #####
         BlockExcavationSimulator.ApplyBC(model1, params, 1.0e-3)
 
         ##### SET UP SOIL PROPERTIES #####
@@ -326,6 +334,13 @@ class BlockExcavationSimulator:
                     model1.soil_elems.append( model1.model_part.Elements[element] )
 
         model1.spu = spu
+
+        ##### SPECIAL FLAGS #####
+
+        if 'first_yielding_compute_mode' in params:
+            first_yielding_compute_mode = params['first_yielding_compute_mode']
+            model1.model_part.Properties[1].SetValue(FIRST_YIELDING_COMPUTE_MODE, first_yielding_compute_mode)
+            model1.model_part.Properties[2].SetValue(FIRST_YIELDING_COMPUTE_MODE, first_yielding_compute_mode)
 
         ###################################
 

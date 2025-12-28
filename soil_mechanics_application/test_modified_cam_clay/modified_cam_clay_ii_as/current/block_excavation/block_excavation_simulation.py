@@ -23,6 +23,7 @@ def main(logging=True, output=True, number_of_excavation_layers_per_step=8, visc
     params['number_of_excavation_layers_per_step'] = number_of_excavation_layers_per_step
     params['number_of_sub_steps'] = 20 # 10 # this parameter is number of levels in adaptive sub-stepping
     params['viscous_damping'] = viscous_damping
+    params['local_error_tolerance'] = 1e-8
     params['time_excavation'] = 180.0
     params['transfer_method'] = "identical"
     params['account_for_water'] = False
