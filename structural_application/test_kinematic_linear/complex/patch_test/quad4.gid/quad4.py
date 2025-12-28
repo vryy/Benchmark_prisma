@@ -53,7 +53,7 @@ def test():
     #####################################
 
 def tag():
-    return "kinematic_linear,linear_elastic,complex"
+    return "kinematic_linear,linear_elastic,complex,skyline-lu"
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

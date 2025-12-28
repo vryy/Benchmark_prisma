@@ -29,7 +29,7 @@ start_time = time_module.time()
 import spectral_utilities
 
 def main(logging=True, output=True, output_time_series=True):
-    model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging)
+    model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging,solver="skyline-lu")
     model.InitializeModel()
 
     # ============================================ #

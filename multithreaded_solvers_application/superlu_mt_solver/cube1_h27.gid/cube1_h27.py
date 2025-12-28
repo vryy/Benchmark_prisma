@@ -63,7 +63,13 @@ def test():
     main(logging=False, output=False)
 
 def tag():
-    return "kinematic_linear,linear_elastic"
+    try:
+        if KratosMultithreadedSolversApplication.Has("SuperLUMTSolver"):
+            return "superlumt"
+        else:
+            return "untested"
+    except Exception as e:
+        return "untested"
 
 def print_tag():
     print("Tag(s): " + tag())

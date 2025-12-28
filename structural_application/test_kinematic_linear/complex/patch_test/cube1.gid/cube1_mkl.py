@@ -6,28 +6,28 @@ import time as time_module
 ##################################################################
 ##################################################################
 current_dir_ = os.path.dirname(os.path.realpath(__file__)) + "/"
-import cube1_h27_include
-from cube1_h27_include import *
+import cube1_include
+from cube1_include import *
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
 ##################################################################
 
-def main(output=True, logging=True):
-    model = cube1_h27_include.Model('cube1_h27',current_dir_,current_dir_,logging)
+def main(output=True, logging=True, solver="mkl-pardiso"):
+    model = cube1_include.Model('cube1',current_dir_,current_dir_,logging=logging,solver=solver)
     model.InitializeModel()
 
     tol = 1e-6
     prescribed_nodes = []
     for node in model.model_part.Nodes:
         if abs(node.X0) < tol:
-            node.Fix(DISPLACEMENT_X)
+            node.Fix(COMPLEX_DISPLACEMENT_X)
         if abs(node.Y0) < tol:
-            node.Fix(DISPLACEMENT_Y)
+            node.Fix(COMPLEX_DISPLACEMENT_Y)
         if abs(node.Z0) < tol:
-            node.Fix(DISPLACEMENT_Z)
+            node.Fix(COMPLEX_DISPLACEMENT_Z)
         if abs(node.X0 - 1.0) < tol:
-            node.Fix(DISPLACEMENT_X)
+            node.Fix(COMPLEX_DISPLACEMENT_X)
             prescribed_nodes.append(node)
 
     time = 0.0
@@ -35,7 +35,7 @@ def main(output=True, logging=True):
 
     time = 1.0
     for node in prescribed_nodes:
-        node.SetSolutionStepValue(DISPLACEMENT_X, 0.1)
+        node.SetSolutionStepValue(COMPLEX_DISPLACEMENT_X, 0.1)
 
     time = 1.0
     model.SolveModel(time)
@@ -44,28 +44,34 @@ def main(output=True, logging=True):
 
     react_p = 0.0
     for node in prescribed_nodes:
-        print("Node %d: react_x = %f, disp_x = %f" % (node.Id, node.GetSolutionStepValue(REACTION_X), node.GetSolutionStepValue(DISPLACEMENT_X)))
-        react_p += node.GetSolutionStepValue(REACTION_X)
-    work_done = 0.5 * react_p * node.GetSolutionStepValue(DISPLACEMENT_X)
-    print("work done = %.10e" % (work_done))
-    strain_energy = model.solver.solver.GetStrainEnergy()
-    print("strain energy = %.10e" % (strain_energy))
+        # print("Node %d: react_x = %f, disp_x = %f" % (node.Id, node.GetSolutionStepValue(COMPLEX_REACTION_X), node.GetSolutionStepValue(COMPLEX_DISPLACEMENT_X)))
+        # print(node.Id)
+        # print(node.GetSolutionStepValue(COMPLEX_DISPLACEMENT))
+        # print(node.GetSolutionStepValue(COMPLEX_REACTION))
+        react_p += node.GetSolutionStepValue(COMPLEX_REACTION_X)
+    work_done = 0.5 * react_p * node.GetSolutionStepValue(COMPLEX_DISPLACEMENT_X)
+    # print("work done = %.10e" % (work_done))
+    print("work_done: ", work_done)
+    # strain_energy = model.solver.solver.GetStrainEnergy()
+    # # print("strain energy = %.10e" % (strain_energy))
+    # print("strain energy: ", strain_energy)
 
     # for node in model.model_part.Nodes:
     #     print(node.GetSolutionStepValue(DISPLACEMENT))
 
     ######### pytesting results #########
-    assert(abs(strain_energy - 10500.0) / strain_energy < 1e-12)
-    assert(abs(work_done - 10500.0) / work_done < 1e-12)
+    # assert(abs(strain_energy - 10500.0) / strain_energy < 1e-12)
+    assert(abs((work_done - 10500.0) / work_done) < 1e-12)
     #####################################
 
 def test():
-    main(logging=False, output=False)
+    main(logging=False, output=False, solver="mkl-pardiso")
+    print("Test passed")
 
 def tag():
     try:
-        if KratosMultithreadedSolversApplication.Has("UmfPackSolver"):
-            return "umfpack"
+        if KratosMKLSolversApplication.Has("MKLComplexPardisoSolver"):
+            return "kinematic_linear,linear_elastic,complex,mkl-pardiso"
         else:
             return "untested"
     except Exception as e:

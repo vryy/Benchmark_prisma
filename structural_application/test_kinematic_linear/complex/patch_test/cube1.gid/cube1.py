@@ -1,15 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019            #####
-#####     by Hoang-Giang Bui for SFB837                      #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Sa 14. Mar 00:15:32 CET 2020
-##################################################################
 import sys
 import os
 import math
@@ -75,20 +64,12 @@ def main(output=True, logging=True, solver="mkl-pardiso"):
     assert(abs((work_done - 10500.0) / work_done) < 1e-12)
     #####################################
 
-def test1():
-    main(logging=False, output=False, solver="mkl-pardiso")
-    print("Test 1 passed")
-
-def test2():
-    main(logging=False, output=False, solver="skyline-lu")
-    print("Test 2 passed")
-
 def test():
-    test1()
-    test2()
+    main(logging=False, output=False, solver="skyline-lu")
+    print("Test passed")
 
 def tag():
-    return "kinematic_linear,linear_elastic,complex,mkl-pardiso,skyline-lu"
+    return "kinematic_linear,linear_elastic,complex,skyline-lu"
 
 def print_tag():
     print("Tag(s): " + tag())

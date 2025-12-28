@@ -8,7 +8,6 @@ import time as time_module
 #importing Kratos modules
 from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
-# from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.LayerApplication import *
@@ -74,7 +73,10 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        plinear_solver = MKLComplexPardisoSolver()
+        if KratosMKLSolversApplication.Has("MKLComplexPardisoSolver"):
+            plinear_solver = MKLComplexPardisoSolver()
+        else:
+            plinear_solver = ComplexSkylineLUFactorizationSolver()
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
