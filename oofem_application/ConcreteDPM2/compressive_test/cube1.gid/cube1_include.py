@@ -233,7 +233,7 @@ class Model:
         self.gid_io.FinalizeResults()
         self.gid_io.Reset()
 
-    def InitializeModel( self ):
+    def InitializeModel( self, integration_order=1 ):
         ##################################################################
         ## STORE LAYER SETS ##############################################
         ##################################################################
@@ -305,7 +305,7 @@ class Model:
         self.model_part.Properties[1].SetValue(IFT_ConcreteDPM2_asoft,         5.0 )
         self.model_part.Properties[1].SetValue(IFT_ConcreteDPM2_softeningType,         1 )
         self.model_part.Properties[1].SetValue(IFT_ConcreteDPM2_kinit,         0.3 )
-        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER, 1 )
+        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER, integration_order )
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, OofemConcreteDPM2() )
         self.model_part.Properties[1].SetValue(MAT_RESPONSE_MODE, 1 ) # 0: tangent; 1: secant; 3: elastic
         # self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, OofemConcreteDPM2DC() )

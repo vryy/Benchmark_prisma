@@ -27,9 +27,9 @@ from cube1_include import *
 start_time = time_module.time()
 ##################################################################
 
-def main(output=True, logging=True):
-    model = cube1_include.Model('cube1',current_dir_,current_dir_,logging)
-    model.InitializeModel()
+def main(output=True, logging=True, integration_order=1):
+    model = cube1_include.Model('cube1',current_dir_,current_dir_,logging=logging)
+    model.InitializeModel(integration_order=integration_order)
 
     tol = 1e-6
     prescribed_nodes = []
@@ -53,7 +53,7 @@ def main(output=True, logging=True):
 
     disp = 0.0
     delta_disp = -3e-6
-    delta_time = 3e6*delta_disp
+    delta_time = abs(3e6*delta_disp)
 
     for i in range(0, 300): #1):
         print("#######################################")
@@ -86,7 +86,7 @@ def main(output=True, logging=True):
     return model
 
 def test():
-    model = main(logging=False, output=False)
+    model = main(logging=False, output=False, integration_order=2)
 
     tol = 1e-6
     prescribed_nodes = []
@@ -99,7 +99,7 @@ def test():
         react_p += node.GetSolutionStepValue(REACTION_X)
     print("%.16e, %.3e %%" % (react_p, abs(react_p + 3e6) / 3e6 * 100))
 
-    ref_reac = -2.9770397441691551e+06
+    ref_reac = -2.9770195362579823e+06
     assert(abs(react_p - ref_reac) / abs(ref_reac) < 1e-8)
 
     print("Test passed")
