@@ -16,7 +16,7 @@ def test():
     print("Test passed")
 
 def tag():
-    return "4C"
+    return "4C,untested"
 
 def print_tag():
     print("Tags: " + tag())
