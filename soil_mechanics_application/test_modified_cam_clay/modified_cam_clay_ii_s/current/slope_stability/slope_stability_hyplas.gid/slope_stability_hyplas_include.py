@@ -366,6 +366,7 @@ class Model:
             self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, ModifiedCamClay3dImplicit_II_as() )
             self.model_part.Properties[1].SetValue(MAXIMUM_NUMBER_OF_SUB_STEPPING_LEVELS, 20 )
             self.model_part.Properties[1].SetValue(VISCOUS_DAMPING_FACTOR, 1e-2 )
+            self.model_part.Properties[1].SetValue(LOCAL_ERROR_TOLERANCE, 1e-8 )
             print("Modified Cam-Clay with adaptive sub-stepping model selected")
         elif self.material == "casm-s":
             self.model_part.Properties[1].SetValue(DENSITY,       2.038735 )

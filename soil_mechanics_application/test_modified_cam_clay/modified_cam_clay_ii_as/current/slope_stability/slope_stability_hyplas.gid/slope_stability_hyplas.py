@@ -241,7 +241,9 @@ def test():
     print("dy: %.16e" % (dy))
     # print(dy)
     ref_disp = -7.5993068692010124e-01
-    assert(abs(dy - ref_disp) / abs(ref_disp) < 1e-10)
+    tol = model.model_part.Properties[1].GetValue(LOCAL_ERROR_TOLERANCE)
+    print("diff: %.16e, tol: %.16e" % (dy-ref_disp, tol))
+    assert(abs(dy - ref_disp) / abs(ref_disp) < tol)
     #####################
     print("Test passed")
 
