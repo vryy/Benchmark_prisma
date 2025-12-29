@@ -9,6 +9,7 @@ from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
+from KratosMultiphysics.MultithreadedSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.EkateAuxiliaryApplication import *
 from KratosMultiphysics.LayerApplication import *
@@ -127,8 +128,13 @@ class Model:
         #defining linear solver
         if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
             plinear_solver = MKLPardisoSolver()
+            print("MKLPardisoSolver is used")
+        elif KratosMultithreadedSolversApplication.Has("SuperLUMTSolver"):
+            plinear_solver = SuperLUMTSolver()
+            print("SuperLUMTSolver is used")
         else:
-            plinear_solver = SuperLUSolver()
+            plinear_solver = SkylineLUFactorizationSolver()
+            print("SkylineLUFactorizationSolver is used")
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
