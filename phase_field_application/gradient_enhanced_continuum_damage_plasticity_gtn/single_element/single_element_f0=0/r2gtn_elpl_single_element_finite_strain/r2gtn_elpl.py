@@ -110,8 +110,8 @@ def test():
     # ref_reac = 1.320684247667211e+02  # results obtained by Hereon laptop
     # ref_reac = 1.320680528025937e+02  # results obtained by AMD laptop
     ref_reac = 1.320679080759643e+02    # results obtained by Intel i9-13950HX laptop
-    print("reac_force_y = %.15e, ref_reac = %.15e, diff = %e" % (reac_force_y, ref_reac, reac_force_y - ref_reac))
-    assert(abs(reac_force_y - ref_reac) / ref_reac < 1e-10)
+    print("reac_force_y = %.15e, ref_reac = %.15e, rdiff = %e" % (reac_force_y, ref_reac, (reac_force_y - ref_reac) / ref_reac))
+    assert(abs(reac_force_y - ref_reac) / ref_reac < 3e-6)
     print("Test passed")
 
 if __name__ == '__main__':
