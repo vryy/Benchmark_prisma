@@ -12,11 +12,11 @@ def main(params):
 
     ###
 
-    start_time = time_module.time()
+    start_time = time_module.perf_counter()
 
     test_files, untest_files, untag_files = prunner.collect_tests_parallel(origin_path, pytest_py=pytest_py, max_workers=num_cores)
 
-    end_time = time_module.time()
+    end_time = time_module.perf_counter()
 
     # print("test files:")
     # for f in test_files:
@@ -51,9 +51,9 @@ def main(params):
         if len(all_test_files) > 0:
             print("Number of matching tag files: %d" % (len(all_test_files)))
 
-    start_time = time_module.time()
+    start_time = time_module.perf_counter()
     log, result = prunner.run(all_test_files, pytest_py=pytest_py, num_proc=num_cores)
-    end_time = time_module.time()
+    end_time = time_module.perf_counter()
 
     print(log)
     # print(result)

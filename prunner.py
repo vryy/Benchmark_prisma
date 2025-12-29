@@ -102,7 +102,7 @@ def run_file(file_info, shared_log, shared_result, progress_counter, lock, pytes
     try:
         # 2. Run the test
         # Note: we use 'result' here to match the variable name below
-        start_time = time_module.process_time()
+        start_time = time_module.perf_counter()
 
         if not dry_run:
             proc = subprocess.Popen([pytest_py, file_name, "test"], cwd=dir_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
@@ -110,7 +110,7 @@ def run_file(file_info, shared_log, shared_result, progress_counter, lock, pytes
             proc = DummyProcess()
         tmp_stdout, tmp_stderr = proc.communicate()
 
-        end_time = time_module.process_time()
+        end_time = time_module.perf_counter()
 
         if proc.returncode == 0:
             output += " -> passed\n"
