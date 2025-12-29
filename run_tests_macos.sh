@@ -20,9 +20,9 @@ mkdir -p ./ztest_logs
 if [ "$#" -eq 0 ] ; then
     echo "Run all tests"
     export OUTPUT="./ztest_logs/$(whoami)_$(hostname)_"$(date +%Y_%m_%d)".log"
-    python run_tests.py $PY_COMMAND | tee $OUTPUT
+    python run_tests_parallel.py $PY_COMMAND | tee $OUTPUT
 elif [ "$#" -ge 1 ] ; then
     echo "Run tests with arguments:" $@
     export OUTPUT="./ztest_logs/$(whoami)_$(hostname)_"$(date +%Y_%m_%d)"-$1.log"
-    python run_tests.py $PY_COMMAND $@ | tee $OUTPUT
+    python run_tests_parallel.py $PY_COMMAND $@ | tee $OUTPUT
 fi
