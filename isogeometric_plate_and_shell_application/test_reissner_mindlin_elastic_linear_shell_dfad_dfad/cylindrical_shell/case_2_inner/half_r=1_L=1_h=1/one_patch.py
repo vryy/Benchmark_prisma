@@ -22,6 +22,7 @@ if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
 else:
     plinear_solver = SuperLUSolver()
 drill_stiff = 1e-3 # set drill stiff to 0 to have optimal convergence
+ref_result_file = os.environ['BENCHMARK_PRISMA'] + "/isogeometric_plate_and_shell_application/test_reissner_mindlin_elastic_linear_fast_shell/cylindrical_shell/case_2_inner/case2_sol_r=1-3.txt"
 
 def test():
     l2_error_list = convergence(n=4, logging = False)
@@ -148,7 +149,7 @@ def convergence(n=5, logging=True):
     h_list = []
     l2_error_list = []
 
-    ana_sol = analytical_solution.CylindricalShellSolution("/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1-3.txt", wscale=R/h)
+    ana_sol = analytical_solution.CylindricalShellSolution(ref_result_file, wscale=R/h)
 
     if logging:
         ifile = open("convergence.log", "w")
@@ -197,12 +198,12 @@ if __name__ == "__main__":
         #
         model1 = simulation_include.Model(E, nu, R, L, h, p, order=order, nsampling=nsampling, plinear_solver=plinear_solver, drill_stiff=drill_stiff)
         model1.mode = 1
-        model = model1.Run(output=True)
+        model = model1.Run(output=True, visual=True)
 
         # ana_sol = analytical_solution.CylindricalShellSolution("/home/buih/workspace/matlab/FSDT/case2_sol_r=1-2.txt")
         # ana_sol = analytical_solution.CylindricalShellSolution("/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1.txt")
         # ana_sol = analytical_solution.CylindricalShellSolution("/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1-2.txt")
-        ana_sol = analytical_solution.CylindricalShellSolution("/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1-3.txt")
+        ana_sol = analytical_solution.CylindricalShellSolution(ref_result_file)
         l2_error = simulation_include.ComputeL2Error(model.model_part, ana_sol)
         print("Mesh size: %.10e" % (model1.h))
         print("Global displacement (L2) error: %.10e" % (l2_error))

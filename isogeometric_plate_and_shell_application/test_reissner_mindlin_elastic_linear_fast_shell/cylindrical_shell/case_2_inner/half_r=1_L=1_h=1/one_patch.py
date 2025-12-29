@@ -47,7 +47,7 @@ def convergence(n=5, logging=True):
     h_list = []
     l2_error_list = []
 
-    ana_sol = analytical_solution.CylindricalShellSolution("/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1-3.txt", wscale=R/h)
+    ana_sol = analytical_solution.CylindricalShellSolution("../case2_sol_r=1-3.txt", wscale=R/h)
 
     if logging:
         ifile = open("convergence.log", "w")
@@ -101,7 +101,7 @@ if __name__ == "__main__":
         # ana_sol = analytical_solution.CylindricalShellSolution("/home/buih/workspace/matlab/FSDT/case2_sol_r=1-2.txt")
         # ana_sol = analytical_solution.CylindricalShellSolution("/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1.txt")
         # ana_sol = analytical_solution.CylindricalShellSolution("/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1-2.txt")
-        ana_sol = analytical_solution.CylindricalShellSolution("/home/hbui/workspace/matlab/FSDT/2025/case2_sol_r=1-3.txt")
+        ana_sol = analytical_solution.CylindricalShellSolution("../case2_sol_r=1-3.txt")
         l2_error = simulation_include.ComputeL2Error(model.model_part, ana_sol)
         print("Mesh size: %.10e" % (model1.h))
         print("Global displacement (L2) error: %.10e" % (l2_error))
