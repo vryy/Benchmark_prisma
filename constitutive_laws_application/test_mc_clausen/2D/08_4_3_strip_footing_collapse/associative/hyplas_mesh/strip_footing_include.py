@@ -233,7 +233,7 @@ class Model:
         if system_os == "Windows":
             raise Exception("No DLL on Windows")
         elif system_os == "Darwin":
-            raise Exception("No dylib on MacOS")
+            self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libMCclausen.dylib")
         elif system_os == "Linux":
             self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libMCclausen.so")
         self.model_part.Properties[1].SetValue(MATERIAL_PARAMETERS, mat_params)
