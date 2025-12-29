@@ -34,10 +34,10 @@ def write_values(ifile, data):
         ifile.write("%-*.6e" % (20, data[i]))
     ifile.write("%.6e\n" % (data[-1]))
 
-def main(output=True, logging=True, paxial = -450.0, nsteps_axial=40):
+def main(output=True, logging=True, paxial = -450.0, nsteps_axial=40, integration_order=1):
 
     model = cube1_include.Model('cube1',os.getcwd()+"/",os.getcwd()+"/",logging)
-    model.InitializeModel()
+    model.InitializeModel(integration_order=integration_order)
 
     ## boundary condition
     tol = 1.0e-6
@@ -219,8 +219,8 @@ def main(output=True, logging=True, paxial = -450.0, nsteps_axial=40):
 
     return model, last_ezz
 
-def test():
-    model, last_ezz = main(logging=False, output=False, paxial=-450.0, nsteps_axial=40)
+def test1():
+    model, last_ezz = main(logging=False, output=False, paxial=-450.0, nsteps_axial=40, integration_order=1)
 
     ###### pytesting results
 
@@ -244,6 +244,29 @@ def test():
     print("dezz: %.15e, ref_dezz: %.15e, diff: %.15e" % (dezz, ref_dezz, dezz - ref_dezz))
     assert(abs(last_ezz - ref_last_ezz) < 1e-10)
     assert(abs(dezz - ref_dezz) < 1e-10)
+
+def test2():
+    model, last_ezz = main(logging=False, output=False, paxial=-450.0, nsteps_axial=40, integration_order=2)
+
+    ###### pytesting results
+
+    ## test results on Intel i9-13950HX laptop and with more stringent tolerance and two integration point
+    ref_last_ezz = -5.088148240559875e-03
+    ref_dezz = -2.302649770988828e-02
+
+    elem = model.model_part.Elements[1]
+    strain = elem.CalculateOnIntegrationPoints(STRAIN, model.model_part.ProcessInfo)
+    dezz = strain[0][2] - last_ezz
+    print("last_ezz: %.15e" % (last_ezz))
+    print("dezz: %.15e, ref_dezz: %.15e, diff: %.15e" % (dezz, ref_dezz, dezz - ref_dezz))
+    assert(abs(last_ezz - ref_last_ezz) < 1e-10)
+    assert(abs(dezz - ref_dezz) < 2e-6)
+
+def test():
+    if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+        # only enable this test since only MKLPardisoSolver can deal with one-point integration rule
+        test1()
+    test2()
     ########################
     print("Test passed")
 

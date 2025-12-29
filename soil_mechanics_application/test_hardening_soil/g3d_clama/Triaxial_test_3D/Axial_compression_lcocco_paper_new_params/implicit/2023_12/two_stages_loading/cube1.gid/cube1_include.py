@@ -306,7 +306,7 @@ class Model:
         self.gid_io.FinalizeResults()
         self.gid_io.Reset()
 
-    def InitializeModel( self ):
+    def InitializeModel( self, integration_order=1 ):
         ##################################################################
         ## STORE LAYER SETS ##############################################
         ##################################################################
@@ -390,7 +390,7 @@ class Model:
         ##
         self.model_part.Properties[1].SetValue(DENSITY,         0.0 )
         self.model_part.Properties[1].SetValue(THICKNESS,            1.0 )
-        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER,            1 ) #2 )
+        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER,   integration_order )
         self.model_part.Properties[1].SetValue(MATERIAL_PARAMETERS, mat_params)
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, HardeningSoilG3dImplicitClama() )
         self.model_part.Properties[1].SetValue(YIELD_TOLERANCE, 1e-8 )
