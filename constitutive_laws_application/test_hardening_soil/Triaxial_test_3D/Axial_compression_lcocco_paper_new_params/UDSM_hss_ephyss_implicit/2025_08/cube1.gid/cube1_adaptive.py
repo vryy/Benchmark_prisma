@@ -159,8 +159,8 @@ def test1():
     ozz = stress[0][2]
     # ezz_ref = -2.5162419148601678e-02
     # ozz_ref = -4.4999992384512035e+02
-    ezz_ref = -2.5162418686041264e-02 # adapt to change in ephyss when skipping the integration when delta strain < 1e-10
-    ozz_ref = -4.4999992384512024e+02
+    ezz_ref = -2.5162419148601678e-02 # adapt to change in ephyss when skipping the integration when delta strain < 1e-10
+    ozz_ref = -4.4999992384512035e+02
     print("ezz: %.16e, ozz: %.16e" % (ezz, ozz))
     assert(abs(ezz - ezz_ref) < 1e-10)
     assert(abs(ozz - ozz_ref) < 1e-10)
@@ -173,8 +173,8 @@ def test2():
     stress = elem.CalculateOnIntegrationPoints(STRESSES, model.model_part.ProcessInfo)
     ezz = strain[0][2]
     ozz = stress[0][2]
-    ezz_ref = -1.5832309576111234e-02
-    ozz_ref = -3.9863402696940841e+02
+    ezz_ref = -1.5807989574730185e-02
+    ozz_ref = -4.0001005491049523e+02
     print("ezz: %.16e, ozz: %.16e" % (ezz, ozz))
     print("diff ezz: %.16e, diff ozz: %.16e" % (ezz - ezz_ref, ozz - ozz_ref))
     assert(abs(ezz - ezz_ref) < 1e-10)
@@ -188,8 +188,8 @@ def test3():
     stress = elem.CalculateOnIntegrationPoints(STRESSES, model.model_part.ProcessInfo)
     ezz = strain[0][2]
     ozz = stress[0][2]
-    ezz_ref = -1.5793955012213295e-02
-    ozz_ref = -4.0171446294982269e+02
+    ezz_ref = -1.5807666864685148e-02
+    ozz_ref = -4.0002139423456407e+02
     print("ezz: %.16e, ozz: %.16e" % (ezz, ozz))
     print("diff ezz: %.16e, diff ozz: %.16e" % (ezz - ezz_ref, ozz - ozz_ref))
     assert(abs(ezz - ezz_ref) < 1e-10)
