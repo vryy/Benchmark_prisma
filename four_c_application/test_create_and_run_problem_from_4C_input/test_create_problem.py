@@ -2,9 +2,16 @@ import sys
 
 from KratosMultiphysics import *
 from KratosMultiphysics.mpi import *
-from KratosMultiphysics.FourCApplication import *
+try:
+    from KratosMultiphysics.FourCApplication import *
+    four_c_application_is_available = True
+except Exception as e:
+    four_c_application_is_available = False
 
 def main():
+    if not four_c_application_is_available:
+        sys.exit(1)
+
     # create 4C model
     fourc_problem = FourCProblem(["contact2D_self_saddlepoint.4C.yaml", "xxx"])
     fourc_problem.Run()
@@ -16,7 +23,10 @@ def test():
     print("Test passed")
 
 def tag():
-    return "4C,untested"
+    if four_c_application_is_available:
+        return "4C"
+    else:
+        return "4C,untested"
 
 def print_tag():
     print("Tags: " + tag())
