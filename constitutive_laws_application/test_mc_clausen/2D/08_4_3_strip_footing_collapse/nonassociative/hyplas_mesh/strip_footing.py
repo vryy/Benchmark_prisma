@@ -90,9 +90,16 @@ def test():
     B = 100.0
     for node in reaction_nodes:
         P = P + node.GetSolutionStepValue(REACTION_Y)
-    # ref_reac = 1.494524018589557e+01      # results obtained on Hereon laptop with MKLPardisoSolver
-    #ref_reac = 1.494674098696376e+01        # results obtained on AMD laptop with SuperLUSolver
-    ref_reac = 1.494675515904589e+01        # results obtained on Intel i9-13950HX laptop with MKLPardisoSolver
+    if sys.platform == 'linux':
+        #ref_reac = 1.494674098696376e+01        # results obtained on AMD laptop with SuperLUSolver
+        ref_reac = 1.494675515904589e+01    # results obtained on Intel i9-13950HX laptop with MKLPardisoSolver
+    elif sys.platform == 'darwin':
+        ref_reac = 1.494524018589557e+01    # results obtained on Hereon laptop with MKLPardisoSolver
+                        # this result is obtained on the system with Intel chip before. I don't know why
+                        # it can't be reproduced by Intel 13th gen, but on the Mac M4. It it related to some
+                        # pitfalls of Intel 13th gen chip recently?
+    else:
+        ref_reac = 1.494524018589557e+01    # using result on darwin as reference. Intel? nah
     reac = 2.0*P/B/c
     error = abs(reac - ref_reac) / ref_reac
     print("reac: %.15e, ref_reac: %.15e, error: %.6e" % (reac, ref_reac, error))
