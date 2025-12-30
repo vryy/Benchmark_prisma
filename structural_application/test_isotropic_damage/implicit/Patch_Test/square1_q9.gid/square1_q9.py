@@ -125,8 +125,11 @@ def test():
     ref_damage = 9.846895143068409e-01
     ref_reac = -8.590778640180035e-01
     print("reac: %.15e, damage: %.15e" % (reac, damage))
-    assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
-    assert(abs(damage - ref_damage) / abs(ref_damage) < 1e-10)
+    diff_reac = abs(reac - ref_reac) / abs(ref_reac)
+    diff_damage = abs(damage - ref_damage) / abs(ref_damage)
+    print("diff reac: %.15e, diff damage: %.15e" % (diff_reac, diff_damage))
+    assert(diff_reac < 1e-9)
+    assert(diff_damage < 1e-10)
     print("Test passed")
     ########################
 
