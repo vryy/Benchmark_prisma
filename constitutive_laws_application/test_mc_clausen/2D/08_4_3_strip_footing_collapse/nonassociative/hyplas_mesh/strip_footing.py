@@ -91,11 +91,12 @@ def test():
     for node in reaction_nodes:
         P = P + node.GetSolutionStepValue(REACTION_Y)
     # ref_reac = 1.494524018589557e+01      # results obtained on Hereon laptop with MKLPardisoSolver
-    ref_reac = 1.494674098696376e+01        # results obtained on AMD laptop with SuperLUSolver
+    #ref_reac = 1.494674098696376e+01        # results obtained on AMD laptop with SuperLUSolver
+    ref_reac = 1.494675515904589e+01        # results obtained on Intel i9-13950HX laptop with MKLPardisoSolver
     reac = 2.0*P/B/c
     error = abs(reac - ref_reac) / ref_reac
     print("reac: %.15e, ref_reac: %.15e, error: %.6e" % (reac, ref_reac, error))
-    assert(error < 1e-10)
+    assert(error < 1e-6)
     print("Test passed")
 
 if __name__ == '__main__':
