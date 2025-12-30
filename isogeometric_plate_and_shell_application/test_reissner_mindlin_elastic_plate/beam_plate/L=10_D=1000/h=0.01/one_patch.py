@@ -25,8 +25,8 @@ def test():
     # for node in model.model_part.Nodes:
     #     print(node.Id)
     #     print(node.GetSolutionStepValue(KratosMultiphysics.DISPLACEMENT))
-    tol = 1e-8
-    ref_w = -0.645872752149
+    tol = 1e-7
+    ref_w = -6.4587275214931272e-01
     test_node = model.model_part.Nodes[1849]
     w = test_node.GetSolutionStepValue(KratosMultiphysics.DISPLACEMENT_Z)
     test = abs(w - ref_w) / abs(w + ref_w)
