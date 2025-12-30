@@ -13,6 +13,7 @@ import sys
 import os
 import time as time_module
 import six
+import platform
 ##################################################################
 ##################################################################
 #importing Kratos modules
@@ -346,7 +347,13 @@ class Model:
         mat_params[1] = 0.25
         self.model_part.Properties[1].SetValue(DENSITY,         7620 )
         self.model_part.Properties[1].SetValue(THICKNESS,            1.0 )
-        self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libOpenHS.so")
+        system_os = platform.system()
+        if system_os == "Windows":
+            raise Exception("No DLL on Windows")
+        elif system_os == "Darwin":
+            self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libOpenHS.dylib")
+        elif system_os == "Linux":
+            self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libOpenHS.so")
         self.model_part.Properties[1].SetValue(MATERIAL_PARAMETERS, mat_params)
         self.model_part.Properties[1].SetValue(UMAT_NDI, 3)
         self.model_part.Properties[1].SetValue(UMAT_NSHR, 3)

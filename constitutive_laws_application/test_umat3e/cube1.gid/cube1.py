@@ -3,6 +3,7 @@ import sys
 import os
 import math
 import time as time_module
+import platform
 ##################################################################
 ##################################################################
 import cube1_include
@@ -26,7 +27,13 @@ def main(output=True, logging=True):
             node.Fix(DISPLACEMENT_Z)
 
     import soil_properties_utility
-    spl = soil_properties_utility.SoilPropertiesUtility("matfile.dat.umat.le")
+    system_os = platform.system()
+    if system_os == "Windows":
+        raise Exception("No DLL on Windows")
+    elif system_os == "Darwin":
+        spl = soil_properties_utility.SoilPropertiesUtility("matfile.dat.umat.le.darwin")
+    elif system_os == "Linux":
+        spl = soil_properties_utility.SoilPropertiesUtility("matfile.dat.umat.le")
     spl.search_type = "by_searching"
     spl.SetMaterialProperties(model.model_part, model.model_part.Elements[1])
 

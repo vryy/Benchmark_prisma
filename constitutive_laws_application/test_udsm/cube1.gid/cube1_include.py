@@ -13,6 +13,7 @@ import sys
 import os
 import time as time_module
 import six
+import platform
 ##################################################################
 ##################################################################
 #importing Kratos modules
@@ -345,7 +346,13 @@ class Model:
         mat_params[0] = 2.1e7
         mat_params[1] = 0.25
         self.model_part.Properties[1].SetValue(DENSITY,         7620 )
-        self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libOpenHS.so" )
+        system_os = platform.system()
+        if system_os == "Windows":
+            raise Exception("No DLL on Windows")
+        elif system_os == "Darwin":
+            self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libOpenHS.dylib" )
+        elif system_os == "Linux":
+            self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libOpenHS.so" )
         self.model_part.Properties[1].SetValue(USERMOD_NAME,     "udsm_" )
         self.model_part.Properties[1].SetValue(SOIL_MODEL_NUMBER,     1 )
         self.model_part.Properties[1].SetValue(IS_UNDRAINED,    False )

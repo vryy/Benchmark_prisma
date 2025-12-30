@@ -1,0 +1,37 @@
+begin material soil_1
+begin polygon
+-1000.0 0 -1000.0
+1000.0 0 -1000.0
+1000.0 0 1000.0
+-1000.0 0 1000.0
+end polygon
+begin parameters
+model_type udsm
+library_name ./libOpenHS.dylib
+name udsm_
+model_number 1
+udsm_params 2.1e7,0.25
+is_undr 0
+bulk_w 1.0e9
+density 1732.0
+density_water 1000.0
+thickness 1.0
+K0 -1.0
+porosity 0.4
+fix_porosity true
+permeability 1.0e-4
+end parameters
+end material
+begin material grouting
+begin parameters
+model_type  isotropic3d
+youngs_modulus 5.0e7
+density 2000.0
+density_water 1000.0
+poisson_ratio 0.3
+permeability 4e-4
+porosity 0.4
+fix_porosity true
+K0 -1.0
+end parameters
+end material
