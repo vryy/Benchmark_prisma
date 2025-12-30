@@ -8,7 +8,6 @@ import os
 from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.SoilMechanicsApplication import *
-from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 kernel = Kernel()   #defining kernel
 ##################################################################
@@ -105,7 +104,7 @@ class Model:
         if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
             plinear_solver = MKLPardisoSolver()
         else:
-            plinear_solver = SuperLUSolver()
+            plinear_solver = SkylineLUFactorizationSolver()
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2);
