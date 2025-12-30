@@ -37,7 +37,7 @@ def WriteLog(ifile, time, disp, prescribed_nodes, elem, process_info):
     ifile.flush()
 
 def main(output=True, logging=True):
-    model = r2gtn_elpl_include.Model('r2gtn_elpl',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = r2gtn_elpl_include.Model('r2gtn_elpl',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     tol = 1e-06
