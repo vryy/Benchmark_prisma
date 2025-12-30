@@ -349,6 +349,7 @@ class Model:
             self.model_part.Properties[1].SetValue(SWELL_INDEX,      0.0077 )
             self.model_part.Properties[1].SetValue(FIX_VOID_RATIO, False )
             self.model_part.Properties[1].SetValue(FIRST_YIELDING_COMPUTE_MODE, 1 )
+            self.model_part.Properties[1].SetValue(LOCAL_ERROR_TOLERANCE, 1e-10 )
             self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, ModifiedCamClay3dImplicit_II_s() )
             self.model_part.Properties[1].SetValue(MINIMUM_NUMBER_OF_SUB_STEPS, 1 )
             self.model_part.Properties[1].SetValue(MAXIMUM_NUMBER_OF_SUB_STEPS, 1 )

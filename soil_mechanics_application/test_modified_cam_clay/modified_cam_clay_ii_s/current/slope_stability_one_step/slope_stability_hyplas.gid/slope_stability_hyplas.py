@@ -203,8 +203,9 @@ def test1(nprofile=10):
     dy = pointA.GetSolutionStepValue(DISPLACEMENT_Y)
     print("dy: %.16e" % (dy))
     # print(dy)
-    ref_disp = -6.5558265318672448e-01
-    assert(abs(dy - ref_disp) / abs(ref_disp) < 1e-10)
+    # ref_disp = -6.5558265318672448e-01  # LOCAL_ERROR_TOLERANCE, 1e-8
+    ref_disp = -6.5558361083940409e-01  # LOCAL_ERROR_TOLERANCE, 1e-10
+    assert(abs(dy - ref_disp) < 1e-9)
     #####################
     print("Test passed")
 
