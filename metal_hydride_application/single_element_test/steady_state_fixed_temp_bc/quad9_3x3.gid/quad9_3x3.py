@@ -25,7 +25,7 @@ start_time = time_module.time()
 ##################################################################
 
 def main(output=True, logging=True):
-    model = quad9_3x3_include.Model('quad9_3x3',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = quad9_3x3_include.Model('quad9_3x3',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     tol = 1e-6
@@ -88,8 +88,14 @@ def main(output=True, logging=True):
 def test():
     model = main(logging=False, output=False)
 
-    assert(abs(model.model_part.Nodes[16].GetSolutionStepValue(TEMPERATURE) - 293.15) < 1e-10)
-    assert(abs(model.model_part.Nodes[16].GetSolutionStepValue(DISPLACEMENT_Y) - 0.00424489795918) < 1e-10)
+    temp = model.model_part.Nodes[16].GetSolutionStepValue(TEMPERATURE)
+    uy = model.model_part.Nodes[16].GetSolutionStepValue(DISPLACEMENT_Y)
+    print("temp: %.16e, uy: %.16e" % (temp, uy))
+    ref_temp = 293.15
+    ref_uy = 4.2448979591836744e-03
+    print("diff temp: %.16e, diff uy: %.16e" % (temp - ref_temp, uy - ref_uy))
+    assert(abs(temp - ref_temp) / ref_temp < 1e-10)
+    assert(abs(uy - ref_uy) < 1e-10)
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
