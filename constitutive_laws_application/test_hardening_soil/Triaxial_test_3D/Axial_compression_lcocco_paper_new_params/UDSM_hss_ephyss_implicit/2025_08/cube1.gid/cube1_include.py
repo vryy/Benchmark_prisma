@@ -433,7 +433,7 @@ class Model:
         if system_os == "Windows":
             raise Exception("No DLL on Windows")
         elif system_os == "Darwin":
-            raise Exception("No dylib on MacOS")
+            self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libephyss.dylib" )
         elif system_os == "Linux":
             self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libephyss.so" )
         self.model_part.Properties[1].SetValue(USERMOD_NAME,     "user_mod_" )

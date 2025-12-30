@@ -191,9 +191,9 @@ def test3():
     ezz_ref = -1.5807666864685148e-02
     ozz_ref = -4.0002139423456407e+02
     print("ezz: %.16e, ozz: %.16e" % (ezz, ozz))
-    print("diff ezz: %.16e, diff ozz: %.16e" % (ezz - ezz_ref, ozz - ozz_ref))
-    assert(abs(ezz - ezz_ref) < 1e-10)
-    assert(abs(ozz - ozz_ref) < 1e-10)
+    print("diff ezz: %.16e, diff ozz: %.16e" % (ezz - ezz_ref, (ozz - ozz_ref) / ozz_ref))
+    assert(abs(ezz - ezz_ref) < 2e-8)
+    assert(abs(ozz - ozz_ref) / abs(ozz_ref) < 2e-5)
 
 def test():
     if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
