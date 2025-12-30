@@ -11,10 +11,10 @@ from cube1_include import *
 start_time = time_module.time()
 ##################################################################
 
-def main(output=True, logging=True):
+def main(output=True, logging=True, linear_solver="mkl-pardiso", integration_order=1, paxial = -450.0, nsteps_axial=200):
 
-    model = cube1_include.Model('cube1',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
-    model.InitializeModel()
+    model = cube1_include.Model('cube1',os.getcwd()+"/",os.getcwd()+"/",logging=logging,linear_solver=linear_solver)
+    model.InitializeModel(integration_order=integration_order)
 
     ## boundary condition
     tol = 1.0e-6
@@ -33,7 +33,12 @@ def main(output=True, logging=True):
     piso = -100.0 # final value of isotropic loading state
 
     # setting the prestress
-    values = [[-piso, -piso, -piso, 0.0, 0.0, 0.0]]
+    if integration_order == 1:
+        npoints = 1
+    elif integration_order == 2:
+        npoints = 8
+
+    values = [[-piso, -piso, -piso, 0.0, 0.0, 0.0]]*npoints
     for elem in model.model_part.Elements:
         elem.SetValuesOnIntegrationPoints(PRESTRESS, values, 6, model.model_part.ProcessInfo)
         elem.ResetConstitutiveLaw()
@@ -92,8 +97,7 @@ def main(output=True, logging=True):
         ifile.write("%f\t%f\t%f\t%f\t%f\t%f\n" % (0.0, last_sxx, last_syy, last_szz, piso, 0.0))
         ifile.flush()
 
-    nsteps = 200
-    paxial = -450.0
+    nsteps = nsteps_axial
     dp = (paxial - piso) / nsteps
     time = 2*time
     timeold = time
@@ -145,8 +149,8 @@ def main(output=True, logging=True):
 
     return model
 
-def test():
-    model = main(logging=False, output=False)
+def test1():
+    model = main(logging=False, output=False, linear_solver="mkl-pardiso", integration_order=1)
 
     elem = model.model_part.Elements[1]
     strain = elem.CalculateOnIntegrationPoints(STRAIN, model.model_part.ProcessInfo)
@@ -160,7 +164,49 @@ def test():
     print("ezz: %.16e, ozz: %.16e" % (ezz, ozz))
     assert(abs(ezz - ezz_ref) < 1e-10)
     assert(abs(ozz - ozz_ref) < 1e-10)
+
+def test2():
+    model = main(logging=False, output=False, linear_solver="mkl-pardiso", integration_order=2, paxial=-400.0, nsteps_axial=150)
+
+    elem = model.model_part.Elements[1]
+    strain = elem.CalculateOnIntegrationPoints(STRAIN, model.model_part.ProcessInfo)
+    stress = elem.CalculateOnIntegrationPoints(STRESSES, model.model_part.ProcessInfo)
+    ezz = strain[0][2]
+    ozz = stress[0][2]
+    ezz_ref = -1.5832309576111234e-02
+    ozz_ref = -3.9863402696940841e+02
+    print("ezz: %.16e, ozz: %.16e" % (ezz, ozz))
+    print("diff ezz: %.16e, diff ozz: %.16e" % (ezz - ezz_ref, ozz - ozz_ref))
+    assert(abs(ezz - ezz_ref) < 1e-10)
+    assert(abs(ozz - ozz_ref) < 1e-10)
+
+def test3():
+    model = main(logging=False, output=False, linear_solver="superlu", integration_order=2, paxial=-400.0, nsteps_axial=150)
+
+    elem = model.model_part.Elements[1]
+    strain = elem.CalculateOnIntegrationPoints(STRAIN, model.model_part.ProcessInfo)
+    stress = elem.CalculateOnIntegrationPoints(STRESSES, model.model_part.ProcessInfo)
+    ezz = strain[0][2]
+    ozz = stress[0][2]
+    ezz_ref = -1.5793955012213295e-02
+    ozz_ref = -4.0171446294982269e+02
+    print("ezz: %.16e, ozz: %.16e" % (ezz, ozz))
+    print("diff ezz: %.16e, diff ozz: %.16e" % (ezz - ezz_ref, ozz - ozz_ref))
+    assert(abs(ezz - ezz_ref) < 1e-10)
+    assert(abs(ozz - ozz_ref) < 1e-10)
+
+def test():
+    if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+        test1() # only do test1 and test2 when there is MKLPardisoSolver since it can deal with one-point integration rule
+        test2()
+    test3()
     print("Test passed")
+
+def tag():
+    return "udsm,hsm"
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

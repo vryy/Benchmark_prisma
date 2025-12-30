@@ -12,13 +12,14 @@ from KratosMultiphysics.ConstitutiveLawsApplication import *
 from KratosMultiphysics.SoilMechanicsApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
+from KratosMultiphysics.MultithreadedSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.LayerApplication import *
 kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, results_path, logging = True ):
+    def __init__( self, problem_name, path, results_path, logging = True, linear_solver="mkl-pardiso" ):
         #setting the domain size for the problem to be solved
         self.domain_size = 3
         ##################################################################
@@ -135,10 +136,12 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+        if linear_solver == "mkl-pardiso":
             plinear_solver = MKLPardisoSolver()
-        else:
+        elif linear_solver == "superlu":
             plinear_solver = SuperLUSolver()
+        else:
+            plinear_solver = SkylineLUFactorizationSolver()
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
@@ -288,7 +291,7 @@ class Model:
         self.gid_io.FinalizeResults()
         self.gid_io.Reset()
 
-    def InitializeModel( self ):
+    def InitializeModel( self, integration_order=1 ):
         ##################################################################
         ## STORE LAYER SETS ##############################################
         ##################################################################
@@ -344,7 +347,7 @@ class Model:
         # self.model_part.Properties[1].SetValue(YOUNG_MODULUS,      2.e4 )
         # self.model_part.Properties[1].SetValue(POISSON_RATIO,          0.2 )
         # self.model_part.Properties[1].SetValue(THICKNESS, 1.0 )
-        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER, 1 )
+        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER, integration_order )
         # self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, Isotropic3D() )
         # print("Linear elastic model selected for Isotropic3D, description: Soil")
 

@@ -23,10 +23,10 @@ from cube1_include import *
 start_time = time_module.time()
 ##################################################################
 
-def main(output=True, logging=True):
+def main(output=True, logging=True, integration_order=1):
 
-    model = cube1_include.Model('cube1',os.getcwd()+"/",os.getcwd()+"/",logging)
-    model.InitializeModel()
+    model = cube1_include.Model('cube1',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
+    model.InitializeModel(integration_order=integration_order)
 
     ## boundary condition
     tol = 1.0e-6
