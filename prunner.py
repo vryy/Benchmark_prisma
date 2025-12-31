@@ -168,6 +168,9 @@ def get_file_tag(file_info, shared_lists, progress_counter, lock):
             if ("Tag(s):" in t) or ("Tags" in t):
                 words = t.replace(",", " ").split()
                 tags_of_test.extend(words[1:])
+    else:
+        # if the test is failed to load, then it is not marked for testing
+        tags_of_test.append('untested')
 
     # Thread-safe appending to shared lists
     if len(tags_of_test) == 0:

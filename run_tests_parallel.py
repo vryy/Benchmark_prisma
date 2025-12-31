@@ -71,6 +71,10 @@ def main(params):
             if r[1] > 1.0:
                 print(f"  %s: %.3e s" % (r[0], r[1]))
 
+    print("List of untested files:")
+    for f in untest_files:
+        print(f"  %s" % (f))
+
 if __name__ == "__main__":
     tags        = []
     verbose     = 0
