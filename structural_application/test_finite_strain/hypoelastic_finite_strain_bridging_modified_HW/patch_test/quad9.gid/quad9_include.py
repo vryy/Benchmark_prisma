@@ -1,14 +1,4 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Institute for Structural Mechanics, RUB   #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-##################################################################
-##################################################################
 from __future__ import absolute_import
 import sys
 import os
@@ -94,7 +84,7 @@ class Model:
         self.analysis_parameters['log_residuum'] = logging
 
         self.abs_tol =        1e-10
-        self.rel_tol =        1e-10
+        self.rel_tol =        1e-12
 
         ## generating solver
         import structural_solver_advanced
