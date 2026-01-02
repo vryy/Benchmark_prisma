@@ -11,5 +11,6 @@ __pycache__
 *.pdf
 *.png
 *.post.vv
+fort.*
 log_*
 results_*
