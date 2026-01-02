@@ -29,7 +29,7 @@ def main(output=True, logging=True):
     import soil_properties_utility
     system_os = platform.system()
     if system_os == "Windows":
-        raise Exception("No DLL on Windows")
+        spl = soil_properties_utility.SoilPropertiesUtility("matfile.dat.udsm.le.windows")
     elif system_os == "Darwin":
         spl = soil_properties_utility.SoilPropertiesUtility("matfile.dat.udsm.le.darwin")
     elif system_os == "Linux":

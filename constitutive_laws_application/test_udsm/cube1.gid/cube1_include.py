@@ -348,12 +348,14 @@ class Model:
         self.model_part.Properties[1].SetValue(DENSITY,         7620 )
         system_os = platform.system()
         if system_os == "Windows":
-            raise Exception("No DLL on Windows")
+            self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "OpenHS.dll" )
+            self.model_part.Properties[1].SetValue(USERMOD_NAME,     "UDSM" )
         elif system_os == "Darwin":
             self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libOpenHS.dylib" )
+            self.model_part.Properties[1].SetValue(USERMOD_NAME,     "udsm_" )
         elif system_os == "Linux":
             self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libOpenHS.so" )
-        self.model_part.Properties[1].SetValue(USERMOD_NAME,     "udsm_" )
+            self.model_part.Properties[1].SetValue(USERMOD_NAME,     "udsm_" )
         self.model_part.Properties[1].SetValue(SOIL_MODEL_NUMBER,     1 )
         self.model_part.Properties[1].SetValue(IS_UNDRAINED,    False )
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, UDSMImplicit() )

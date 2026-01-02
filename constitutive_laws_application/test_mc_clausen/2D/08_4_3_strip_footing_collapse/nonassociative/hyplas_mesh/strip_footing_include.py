@@ -234,16 +234,18 @@ class Model:
         self.model_part.Properties[1].SetValue(THICKNESS,            1.0 )
         system_os = platform.system()
         if system_os == "Windows":
-            raise Exception("No DLL on Windows")
+            self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./MCclausen.dll")
+            self.model_part.Properties[1].SetValue(UMAT_NAME, "UMAT_MC_CLAUSEN")
         elif system_os == "Darwin":
             self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libMCclausen.dylib")
+            self.model_part.Properties[1].SetValue(UMAT_NAME, "umat_mc_clausen_")
         elif system_os == "Linux":
             self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libMCclausen.so")
+            self.model_part.Properties[1].SetValue(UMAT_NAME, "umat_mc_clausen_")
         self.model_part.Properties[1].SetValue(MATERIAL_PARAMETERS, mat_params)
         self.model_part.Properties[1].SetValue(UMAT_NDI, 3)
         self.model_part.Properties[1].SetValue(UMAT_NSHR, 1)
         self.model_part.Properties[1].SetValue(UMAT_NSTATV, 5)
-        self.model_part.Properties[1].SetValue(UMAT_NAME, "umat_mc_clausen_")
         self.model_part.Properties[1].SetValue(UMAT_CMNAME, "")
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, Umat3() ) # Abaqus Umat
         print("Umat3 model selected, description: Mohr-Coulomb (J. Clausen implementation)")

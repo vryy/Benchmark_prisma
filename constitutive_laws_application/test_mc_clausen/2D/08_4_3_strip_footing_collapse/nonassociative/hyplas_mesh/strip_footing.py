@@ -2,9 +2,14 @@
 import sys
 import os
 import math
+import platform
 ##################################################################
 import strip_footing_include
-from strip_footing_include import *
+try:
+    from strip_footing_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
@@ -105,6 +110,15 @@ def test():
     print("reac: %.15e, ref_reac: %.15e, error: %.6e" % (reac, ref_reac, error))
     assert(error < 1e-6)
     print("Test passed")
+
+def tag():
+    tags = "umat"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

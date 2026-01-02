@@ -431,12 +431,14 @@ class Model:
         self.model_part.Properties[1].SetValue(DENSITY,         7620 )
         system_os = platform.system()
         if system_os == "Windows":
-            raise Exception("No DLL on Windows")
+            self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./ephyss.dll" )
+            self.model_part.Properties[1].SetValue(USERMOD_NAME,     "USER_MOD" )
         elif system_os == "Darwin":
             self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libephyss.dylib" )
+            self.model_part.Properties[1].SetValue(USERMOD_NAME,     "user_mod_" )
         elif system_os == "Linux":
             self.model_part.Properties[1].SetValue(PLAXIS_LIBRARY_NAME,    "./libephyss.so" )
-        self.model_part.Properties[1].SetValue(USERMOD_NAME,     "user_mod_" )
+            self.model_part.Properties[1].SetValue(USERMOD_NAME,     "user_mod_" )
         self.model_part.Properties[1].SetValue(SOIL_MODEL_NUMBER,     1 )
         self.model_part.Properties[1].SetValue(IS_UNDRAINED,    False )
         # self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, UDSMImplicit() )

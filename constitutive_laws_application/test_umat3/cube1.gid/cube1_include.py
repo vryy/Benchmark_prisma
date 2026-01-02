@@ -349,16 +349,18 @@ class Model:
         self.model_part.Properties[1].SetValue(THICKNESS,            1.0 )
         system_os = platform.system()
         if system_os == "Windows":
-            raise Exception("No DLL on Windows")
+            self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "OpenHS.dll")
+            self.model_part.Properties[1].SetValue(UMAT_NAME, "UMAT")
         elif system_os == "Darwin":
             self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libOpenHS.dylib")
+            self.model_part.Properties[1].SetValue(UMAT_NAME, "umat_")
         elif system_os == "Linux":
             self.model_part.Properties[1].SetValue(ABAQUS_LIBRARY_NAME, "./libOpenHS.so")
+            self.model_part.Properties[1].SetValue(UMAT_NAME, "umat_")
         self.model_part.Properties[1].SetValue(MATERIAL_PARAMETERS, mat_params)
         self.model_part.Properties[1].SetValue(UMAT_NDI, 3)
         self.model_part.Properties[1].SetValue(UMAT_NSHR, 3)
         self.model_part.Properties[1].SetValue(UMAT_NSTATV, 0)
-        self.model_part.Properties[1].SetValue(UMAT_NAME, "umat_")
         self.model_part.Properties[1].SetValue(UMAT_CMNAME, "OHS_EL")
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, Umat3() ) # Abaqus Umat
         print("Umat3 model selected, description: Linear Elastic")
