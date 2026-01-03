@@ -32,7 +32,7 @@ def WriteNode(ifile, step, time, node):
     ifile.write(str(step) + "\t" + str(time) + "\t" + str(dx) + "\t" + str(dy) + "\t" + str(dz) + "\t" + str(vx) + "\t" + str(vy) + "\t" + str(vz) + "\t" + str(ax) + "\t" + str(ay) + "\t" + str(az) + "\n")
 ##################################################################
 
-def main(output=True, logging=True):
+def main(output=True, logging=True, nsteps=1000):
     model = beam_hex8_include.Model('beam_hex8',os.getcwd()+"/",os.getcwd()+"/", analysis_type=0, logging=logging)
     model.InitializeModel()
 
@@ -139,7 +139,6 @@ def main(output=True, logging=True):
         # print("fix node: ", dnode.Id)
         dnode.Free(DISPLACEMENT_Y)
 
-    nsteps = 1000
     # nsteps = 20
     for i in range(0, nsteps):
         step += 1

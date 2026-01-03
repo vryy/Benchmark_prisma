@@ -1,22 +1,10 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020,     #####
-#####     2021, 2022 by Hoang-Giang Bui for SFB837           #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Do 10. Mar 13:16:44 CET 2022 
-##################################################################
 import sys
 import os
 import math
 import time as time_module
 ##################################################################
 ##################################################################
-sys.path.append('./mesh_200.gid')
 import mesh_200_include
 from mesh_200_include import *
 ##################################################################
@@ -24,7 +12,7 @@ from mesh_200_include import *
 start_time = time_module.time()
 ##################################################################
 def main(output=True, logging=True, nsteps=210):
-    model = mesh_200_include.Model('mesh_200',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = mesh_200_include.Model('mesh_200',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     if logging:
@@ -124,6 +112,7 @@ def test():
     ref_reac = 5.542115893935718e+02
     print("%.15e" % reac_force_y)
     assert(abs(reac_force_y - ref_reac) / ref_reac < 1e-10)
+    print("Test passed")
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

@@ -16,7 +16,7 @@ def main(output=True, last_output=False, logging=True, visual=False, delta_load_
 
     ############## INSITU MODEL ##############
 
-    model_insitu = slope_stability_hyplas_include.Model('slope_stability_hyplas',os.getcwd()+"/",logging=False)
+    model_insitu = slope_stability_hyplas_include.Model('slope_stability_hyplas',os.getcwd()+"/",logging=logging)
     model_insitu.material = "linear-elastic"
     model_insitu.InitializeModel()
 

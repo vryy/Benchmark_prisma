@@ -10,9 +10,6 @@ from mesh_40x80_include import *
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
-# =====================
-# | USER SCRIPT FOR CALCULATION OF EKATE.GID |
-# vvvvvvvvvvvvvvvvvvvvv
 
 def write_log(ifile, du, prescribed_nodes):
     reac_force_y = 0.0

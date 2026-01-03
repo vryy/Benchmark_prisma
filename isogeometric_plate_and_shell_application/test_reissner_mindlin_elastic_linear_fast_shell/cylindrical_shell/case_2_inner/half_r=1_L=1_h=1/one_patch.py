@@ -8,7 +8,8 @@ import KratosMultiphysics
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 
-sys.path.append(os.environ['BENCHMARK_PRISMA'] + "/plate_and_shell_application/test_reissner_mindlin_elastic_linear_shell_dfad_dfad/cylindrical_shell")
+ana_path = os.path.normpath(os.environ['BENCHMARK_PRISMA'] + "/plate_and_shell_application/test_reissner_mindlin_elastic_linear_shell_dfad_dfad/cylindrical_shell")
+sys.path.append(ana_path)
 import analytical_solution
 
 E = 2.6

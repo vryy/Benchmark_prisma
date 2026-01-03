@@ -127,8 +127,10 @@ class Model:
         #defining linear solver
         if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
             plinear_solver = MKLPardisoSolver()
+            print('MKLPardisoSolver is used')
         else:
             plinear_solver = SuperLUSolver()
+            print('SuperLUSolver is used')
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
@@ -168,8 +170,10 @@ class Model:
         #defining linear solver
         if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
             plinear_solver = MKLPardisoSolver()
+            print('MKLPardisoSolver is used')
         else:
             plinear_solver = SuperLUSolver()
+            print('SuperLUSolver is used')
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
