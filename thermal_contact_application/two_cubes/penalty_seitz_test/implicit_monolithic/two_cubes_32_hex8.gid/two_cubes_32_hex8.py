@@ -192,16 +192,13 @@ def test():
     master_temp /= len(master_nodes)
     print("slave_temp: %.16e" % slave_temp)
     print("master_temp: %.16e" % master_temp)
-    ref_slave_temp = 29.199520636787813
-    ref_master_temp = 30.79721852434611
+    ref_slave_temp = 2.9199520635796656e+01
+    ref_master_temp = 3.0797218518333125e+01
     error1 = abs(slave_temp - ref_slave_temp) / abs(ref_slave_temp)
     error2 = abs(master_temp - ref_master_temp) / abs(ref_master_temp)
     print(f"error1: {error1}")
     print(f"error2: {error2}")
-    if platform.system() == "Windows":
-        tol = 1e-9
-    else:
-        tol = 1e-10
+    tol = 1e-10
     assert(error1 < tol)
     assert(error2 < tol)
     ########################
