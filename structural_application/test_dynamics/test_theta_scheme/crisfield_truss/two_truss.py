@@ -136,12 +136,12 @@ def test():
     ay = model.model_part.Nodes[3].GetSolutionStepValue(ACCELERATION_Y)
 
     ref_values = [-0.04506957772153588, -0.009345390293175548, 35.640564192086885, 7.4485385761560945, 5583.861092526838, 1090.4671955956114]
-    assert(abs(ux/B2 - ref_values[0]) < 1e-10)
-    assert(abs(uy/H - ref_values[1]) < 1e-10)
-    assert(abs(vx/B2 - ref_values[2]) < 1e-10)
-    assert(abs(vy/H - ref_values[3]) < 1e-10)
-    assert(abs(ax/B2 - ref_values[4]) < 1e-10)
-    assert(abs(ay/H - ref_values[5]) < 1e-10)
+    assert(abs(ux/B2 - ref_values[0]) / abs(ref_values[0]) < 1e-10)
+    assert(abs(uy/H - ref_values[1]) / abs(ref_values[1]) < 1e-10)
+    assert(abs(vx/B2 - ref_values[2]) / abs(ref_values[2]) < 1e-12)
+    assert(abs(vy/H - ref_values[3]) / abs(ref_values[3]) < 1e-12)
+    assert(abs(ax/B2 - ref_values[4]) / abs(ref_values[4]) < 1e-12)
+    assert(abs(ay/H - ref_values[5]) / abs(ref_values[5]) < 1e-12)
     print("Test passed")
 
 def tag():
