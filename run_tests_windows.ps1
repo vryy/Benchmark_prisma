@@ -8,6 +8,7 @@ Clear-Host
 
 # Set environment variable
 $env:OMP_NUM_THREADS = 1
+$env:BENCHMARK_PRISMA = $PWD.Path
 $PY_COMMAND = "python"  # change to "python3" if needed
 
 # Ensure log directory exists
@@ -26,12 +27,13 @@ if ($args.Count -eq 0) {
     Write-Host "Logging to $output"
 
     # Run the tests and log output
-    & $PY_COMMAND "run_tests.py" $PY_COMMAND 2>&1 | Tee-Object -FilePath $output
+    # & "$PY_COMMAND" "run_tests_parallel.py" "$PY_COMMAND" --numcores=10 2>&1 | Tee-Object -FilePath $output
+    cmd /c "$PY_COMMAND -u run_tests_parallel.py $PY_COMMAND --numcores=10 2>&1" | Tee-Object -FilePath $output
 } else {
     Write-Host "Run tests with arguments: $args"
     $output = Join-Path $logDir ("$env:USERNAME" + "_" + "$env:COMPUTERNAME" + "_" + "$timestamp-$($args[0]).log")
     Write-Host "Logging to $output"
 
     # Run the tests with arguments and log output
-    & $PY_COMMAND "run_tests.py" $PY_COMMAND @args 2>&1 | Tee-Object -FilePath $output
+    & "$PY_COMMAND" "run_tests_parallel.py" "$PY_COMMAND" --numcores=10 @args 2>&1 | Tee-Object -FilePath $output
 }
