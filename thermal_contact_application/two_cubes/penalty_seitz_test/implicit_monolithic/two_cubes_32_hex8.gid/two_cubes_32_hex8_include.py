@@ -88,7 +88,7 @@ class Model:
         self.analysis_parameters['log_residuum'] = logging
 
         self.abs_tol =        1e-10
-        self.rel_tol =        1e-06
+        self.rel_tol =        1e-10
 
         ## generating solver
         import mortar_gpts_element_based_active_set_penalty_contact_strategy as  mortar_gpts_contact_strategy
