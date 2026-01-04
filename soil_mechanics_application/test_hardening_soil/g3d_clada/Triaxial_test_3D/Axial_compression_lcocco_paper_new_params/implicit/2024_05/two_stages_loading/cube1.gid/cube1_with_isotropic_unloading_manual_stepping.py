@@ -1,22 +1,10 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019            #####
-#####     by Hoang-Giang Bui for SFB837                      #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Fr 28. Jan 19:26:47 CET 2022
-##################################################################
 import sys
 import os
 import math
 import time as time_module
 ##################################################################
 ##################################################################
-sys.path.append('./cube1.gid')
 import cube1_include
 from cube1_include import *
 ##################################################################
@@ -36,7 +24,7 @@ def write_values(ifile, data):
 
 def main(output=True, logging=True, paxial = -250.0):
 
-    model = cube1_include.Model('cube1',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = cube1_include.Model('cube1',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     ## boundary condition
@@ -247,6 +235,14 @@ def test():
     print("%.10e" % dezz)
     assert(abs(dezz - ref_dezz) / abs(ref_dezz) < 1e-10)
     ########################
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
