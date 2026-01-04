@@ -1,22 +1,9 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020,     #####
-#####     2021, 2022 by Hoang-Giang Bui for SFB837           #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Mo 28. Aug 14:29:34 CEST 2023
-##################################################################
 import sys
 import os
 import math
 import time as time_module
 ##################################################################
-##################################################################
-sys.path.append('./mesh10x10.gid')
 import mesh10x10_include
 from mesh10x10_include import *
 ##################################################################
@@ -25,7 +12,7 @@ start_time = time_module.time()
 ##################################################################
 
 def main(output=True, logging=True):
-    model = mesh10x10_include.Model('mesh10x10',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = mesh10x10_include.Model('mesh10x10',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     ## boundary condition
@@ -75,8 +62,15 @@ def test():
     print("%.15e" % disp_z)
     ref_disp_z = -3.049448122614655e-01
     assert(abs(disp_z - ref_disp_z) < 1e-10)
-    print("Test passed")
     ###########################
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

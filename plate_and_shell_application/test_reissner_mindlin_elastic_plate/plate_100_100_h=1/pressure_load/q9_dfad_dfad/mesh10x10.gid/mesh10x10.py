@@ -1,15 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014-2022 by Hoang-Giang Bui (SFB837)         #####
-#####          2023-2024 by Hoang-Giang Bui (Hereon)         #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Fr 21. Jun 11:32:20 CEST 2024
-##################################################################
 import sys
 import os
 import math
@@ -25,7 +14,7 @@ start_time = time_module.time()
 ##################################################################
 
 def main(output=True, logging=True):
-    model = mesh10x10_include.Model('mesh10x10',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = mesh10x10_include.Model('mesh10x10',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     ## boundary condition
@@ -76,8 +65,15 @@ def test():
     ref_disp_z = -6.713149224870795e+02
     error = abs(disp_z - ref_disp_z) / abs(ref_disp_z)
     assert(error < 1e-10)
-    print("Test passed")
     ###########################
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

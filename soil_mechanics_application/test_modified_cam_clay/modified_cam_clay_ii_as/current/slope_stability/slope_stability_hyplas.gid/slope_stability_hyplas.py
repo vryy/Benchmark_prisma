@@ -3,6 +3,7 @@ import sys
 import os
 import math
 import time as time_module
+import platform
 ##################################################################
 ##################################################################
 import slope_stability_hyplas_include
@@ -246,6 +247,15 @@ def test():
     assert(abs(dy - ref_disp) / abs(ref_disp) < tol)
     #####################
     print("Test passed")
+
+def tag():
+    tags = "mcc"
+    if platform.system() == "Windows":
+        tags += ",untested"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

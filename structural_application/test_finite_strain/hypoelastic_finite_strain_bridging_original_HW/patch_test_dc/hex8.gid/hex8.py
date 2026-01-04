@@ -1,15 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014-2022 by Hoang-Giang Bui (SFB837)         #####
-#####          2023-2024 by Hoang-Giang Bui (Hereon)         #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Sa 27. Apr 00:42:30 CEST 2024
-##################################################################
 import sys
 import os
 import math
@@ -32,7 +21,7 @@ def WriteLog(ifile, time, disp, detF, prescribed_nodes):
     ifile.flush()
 
 def main(output=True, logging=True):
-    model = hex8_include.Model('hex8',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = hex8_include.Model('hex8',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     tol = 1e-06
@@ -103,6 +92,14 @@ def test():
     print("reac: %.10e" % (reac))
     assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
     #####################################
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

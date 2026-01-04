@@ -1,15 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020,     #####
-#####     2021, 2022 by Hoang-Giang Bui for SFB837           #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Di 29. Aug 11:14:37 CEST 2023
-##################################################################
 import sys
 import os
 import math
@@ -19,14 +8,15 @@ import time as time_module
 current_dir_ = os.path.dirname(os.path.realpath(__file__)) + "/"
 import quad4_2_include
 from quad4_2_include import *
-model = quad4_2_include.Model('quad4_2',current_dir_,current_dir_)
-model.InitializeModel()
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
 ##################################################################
 
-def main():
+def main(output=True, logging=True):
+    model = quad4_2_include.Model('quad4_2',current_dir_,current_dir_,logging=logging)
+    model.InitializeModel()
+
     tol = 1e-06
     prescribed_nodes = []
     for node in model.model_part.Nodes:
@@ -58,15 +48,23 @@ def main():
     test = abs(react_y - ref_reac_y) / abs(ref_reac_y)
     assert(test < 1e-12)
     #####################################
+    print("Test passed")
 
 def test():
-    main()
+    main(output=False, logging=False)
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main()
+        main(output=True, logging=True)
 
 ##################################################################
 ###  END OF SIMULATION  ##########################################

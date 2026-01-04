@@ -44,7 +44,8 @@ def test():
     print("Test passed")
 
 def tag():
-    return "FELA"
+    tags = "FELA"
+    return tags
 
 def print_tag():
     print("Tag(s): " + tag())

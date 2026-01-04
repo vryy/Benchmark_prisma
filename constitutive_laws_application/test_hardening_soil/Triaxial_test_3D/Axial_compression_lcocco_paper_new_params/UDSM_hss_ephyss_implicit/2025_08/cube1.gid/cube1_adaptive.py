@@ -1,7 +1,7 @@
 ##################################################################
 import sys
 import os
-import math
+import platform
 import time as time_module
 ##################################################################
 import cube1_include
@@ -203,7 +203,10 @@ def test():
     print("Test passed")
 
 def tag():
-    return "udsm,hsm"
+    tags = "udsm,hsm"
+    if platform.system().lower() == "windows":
+        tags += ",untested"
+    return tags
 
 def print_tag():
     print("Tag(s): " + tag())

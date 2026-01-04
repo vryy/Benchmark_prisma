@@ -75,7 +75,8 @@ def test():
     print("Test passed")
 
 def tag():
-    return "ssd"
+    tags = "ssd"
+    return tags
 
 def print_tag():
     print("Tag(s): " + tag())

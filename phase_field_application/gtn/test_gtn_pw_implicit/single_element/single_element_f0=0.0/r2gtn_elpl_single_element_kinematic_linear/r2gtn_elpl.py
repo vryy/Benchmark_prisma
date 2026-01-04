@@ -84,6 +84,14 @@ def test():
     ref_reac = 4.330127018922124e+02
     print("%.15e" % reac_force_y)
     assert(abs(reac_force_y - ref_reac) / ref_reac < 1e-10)
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

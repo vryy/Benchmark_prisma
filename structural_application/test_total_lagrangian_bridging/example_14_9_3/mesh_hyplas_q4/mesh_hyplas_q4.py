@@ -19,7 +19,7 @@ def WriteLog(ifile, disp, nodes):
     ifile.flush()
 
 def main(logging=True,output=True):
-    model = mesh_hyplas_q4_include.Model('mesh_hyplas_q4',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = mesh_hyplas_q4_include.Model('mesh_hyplas_q4',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     ## boundary condition
@@ -95,9 +95,17 @@ def main(logging=True,output=True):
     print(test)
     assert(test < 1e-7)
     #####################################
+    print("Test passed")
 
 def test():
     main(False, False)
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

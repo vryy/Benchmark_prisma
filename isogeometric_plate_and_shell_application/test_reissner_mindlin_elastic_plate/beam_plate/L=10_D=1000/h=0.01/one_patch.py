@@ -32,6 +32,14 @@ def test():
     test = abs(w - ref_w) / abs(w + ref_w)
     print("w: %.16e, ref_w: %.16e, test: %.16e" % (w, ref_w, test))
     assert(test < tol)
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

@@ -1,11 +1,8 @@
 ##################################################################
-## This file is generated on Do 30. Jun 20:03:30 CEST 2022 
-##################################################################
 import sys
 import os
 import math
 import time as time_module
-##################################################################
 ##################################################################
 current_dir_ = os.path.dirname(os.path.realpath(__file__)) + "/"
 import quad9_include
@@ -80,10 +77,17 @@ def main(logging=True):
     print(test)
     assert(test < 1e-11)
     #####################################
+    print("Test passed")
 
 def test():
     main(False)
-    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

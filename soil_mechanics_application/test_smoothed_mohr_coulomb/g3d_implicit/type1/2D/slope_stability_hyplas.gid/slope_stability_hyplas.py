@@ -66,11 +66,19 @@ def main(output=True, logging=True):
     ref_disp = -1.481813082425050e+00
     assert(abs(dy - ref_disp) / abs(ref_disp) < 1e-8)
     #####################
+    print("Test passed")
 
     print("ANALYSIS COMPLETED")
 
 def test():
     main(output=False, logging=False)
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

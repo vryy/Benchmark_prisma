@@ -49,11 +49,15 @@ def test():
     disp_y = mon_node.GetSolutionStepValue(COMPLEX_DISPLACEMENT_Y).real
     print("%.16e" % (disp_y))
     assert(abs(disp_y - ref_disp_y) < 1e-12)
-    print("Test passed")
     #####################################
+    print("Test passed")
 
 def tag():
-    return "kinematic_linear,linear_elastic,complex,skyline-lu"
+    tags = "kinematic_linear,linear_elastic,complex,skyline-lu"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

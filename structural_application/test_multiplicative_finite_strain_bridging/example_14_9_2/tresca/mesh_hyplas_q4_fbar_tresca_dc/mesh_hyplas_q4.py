@@ -1,20 +1,8 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019            #####
-#####     by Hoang-Giang Bui for SFB837                      #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Mi 4. Aug 11:38:04 CEST 2021
-##################################################################
 import sys
 import os
 import math
 import time as time_module
-##################################################################
 ##################################################################
 import mesh_hyplas_q4_include
 from mesh_hyplas_q4_include import *
@@ -120,6 +108,13 @@ def test():
     assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
     #####################################
     print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

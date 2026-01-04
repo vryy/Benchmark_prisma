@@ -1,15 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014-2022 by Hoang-Giang Bui (SFB837)         #####
-#####          2023-2024 by Hoang-Giang Bui (Hereon)         #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Mi 7. Feb 09:14:14 CET 2024
-##################################################################
 import sys
 import os
 import math
@@ -25,7 +14,7 @@ start_time = time_module.time()
 ##################################################################
 
 def main(logging=True, output=True):
-    model = mesh_30x10_mean_disp_include.Model('mesh_30x10_mean_disp',current_dir_,current_dir_,logging)
+    model = mesh_30x10_mean_disp_include.Model('mesh_30x10_mean_disp',current_dir_,current_dir_,logging=logging)
     model.InitializeModel()
 
     # user-defined script is used (will be appended automatically)
@@ -68,6 +57,13 @@ def test():
     ref_strain_energy = 7.4769903640e-02
     assert(abs(strain_energy - ref_strain_energy) / ref_strain_energy < 1e-10)
     #####################################
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

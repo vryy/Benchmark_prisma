@@ -16,7 +16,7 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, results_path, logging ):
+    def __init__( self, problem_name, path, results_path, logging=True ):
         #setting the domain size for the problem to be solved
         self.domain_size = 2
         ##################################################################

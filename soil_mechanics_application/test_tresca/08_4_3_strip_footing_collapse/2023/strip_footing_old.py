@@ -83,9 +83,17 @@ def main(output=True, logging=True):
     ref_reac = 5.18604012937
     assert(abs(reac_force_y_normalized - ref_reac) / abs(ref_reac) < 1e-10)
     #####################################
+    print("Test passed")
 
 def test():
     main(logging=False, output=False)
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

@@ -1,15 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020,     #####
-#####     2021, 2022 by Hoang-Giang Bui for SFB837           #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Do 30. Jun 20:03:30 CEST 2022 
-##################################################################
 import sys
 import os
 import math
@@ -89,9 +78,17 @@ def main(logging=True):
     # print(test)
     assert(test < 1e-11)
     #####################################
+    print("Test passed")
 
 def test():
     main(False)
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

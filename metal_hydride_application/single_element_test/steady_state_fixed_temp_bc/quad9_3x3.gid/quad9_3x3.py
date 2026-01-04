@@ -1,22 +1,9 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020,     #####
-#####     2021, 2022 by Hoang-Giang Bui for SFB837           #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Do 3. Aug 15:41:35 CEST 2023
-##################################################################
 import sys
 import os
 import math
 import time as time_module
 ##################################################################
-##################################################################
-sys.path.append('./quad9_3x3.gid')
 import quad9_3x3_include
 from quad9_3x3_include import *
 ##################################################################
@@ -96,6 +83,14 @@ def test():
     print("diff temp: %.16e, diff uy: %.16e" % (temp - ref_temp, uy - ref_uy))
     assert(abs(temp - ref_temp) / ref_temp < 1e-10)
     assert(abs(uy - ref_uy) < 1e-10)
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

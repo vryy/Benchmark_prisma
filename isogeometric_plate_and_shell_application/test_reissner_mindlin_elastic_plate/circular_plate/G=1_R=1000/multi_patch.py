@@ -32,6 +32,7 @@ def test():
     test = abs(w - ref_w) / abs(w + ref_w)
     # print(test)
     assert(test < tol)
+    print("Test passed")
 
 def full():
 
@@ -43,6 +44,13 @@ def full():
         print("***Analysis with order %d and nsampling = %d***" % (order, ns))
         model1 = simulation_include.Model(E, nu, r, h, f, order, ns, plinear_solver)
         model1.Run()
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

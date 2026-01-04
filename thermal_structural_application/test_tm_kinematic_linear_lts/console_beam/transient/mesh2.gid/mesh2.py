@@ -119,6 +119,13 @@ def test():
     # print("tip disp: %.15e" % (monitor_node.GetSolutionStepValue(DISPLACEMENT_Y)))
     assert((monitor_node2.GetSolutionStepValue(DISPLACEMENT_Y) - tip_disp) < 1e-10)
 
+def tag():
+    tags = "thermal-mechanical"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test

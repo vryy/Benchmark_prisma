@@ -207,6 +207,13 @@ def test():
     assert(abs(master_temp - ref_master_temp) / abs(ref_master_temp) < 1e-10)
     ########################
 
+def tag():
+    tags = "thermal-contact"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test

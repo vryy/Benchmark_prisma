@@ -79,7 +79,8 @@ def test():
     print("Test passed")
 
 def tag():
-    return "thermal-mechanical"
+    output = "thermal-mechanical"
+    return output
 
 def print_tag():
     print("Tag(s): " + tag())

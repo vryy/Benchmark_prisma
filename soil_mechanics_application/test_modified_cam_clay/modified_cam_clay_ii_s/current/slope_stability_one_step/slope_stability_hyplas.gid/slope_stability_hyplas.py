@@ -209,6 +209,13 @@ def test1(nprofile=10):
     #####################
     print("Test passed")
 
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 def test():
     test1(nprofile=1)
 

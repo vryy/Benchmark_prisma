@@ -125,6 +125,13 @@ def main(output=True, output_more=False, logging=True, to_continue=True):
 
     return model
 
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 def test():
     model = main(logging=False, output=False, output_more=False, to_continue=False)
 
@@ -138,8 +145,8 @@ def test():
     print("reac_1: %.15e, reac_2: %.15e" % (reac_1, reac_2))
     assert(abs(reac_1 - ref_reac_1) / abs(ref_reac_1) < 1e-10)
     assert(abs(reac_2 - ref_reac_2) / abs(ref_reac_2) < 1e-10)
-    print("Test passed")
     ########################
+    print("Test passed")
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

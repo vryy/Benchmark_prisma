@@ -193,6 +193,13 @@ def test():
     assert(abs(y_disp - ref_disp) / abs(ref_disp) < 1e-10)
     print("Test passed")
 
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test

@@ -106,6 +106,14 @@ def main(order, output=True):
 def test():
     main(1, False)
     main(2, False)
+    print("Test passed")
+
+def tag():
+    tags = "mfem"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

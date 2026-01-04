@@ -155,6 +155,15 @@ def main(output=True, logging=True, integration_order=1):
 def test():
     main(logging=False, output=False)
 
+def tag():
+    tags = "udsm,hsm"
+    if platform.system() == "Windows":
+        tags += ",untested"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test

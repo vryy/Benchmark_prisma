@@ -1,21 +1,8 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020,     #####
-#####     2021, 2022 by Hoang-Giang Bui for SFB837           #####
-#####     2023 by Hoang-Giang Bui                            #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Di 19. Sep 13:01:59 CEST 2023
-##################################################################
 import sys
 import os
 import math
 import time as time_module
-##################################################################
 ##################################################################
 current_dir_ = os.path.dirname(os.path.realpath(__file__)) + "/"
 import quad4_include
@@ -33,7 +20,7 @@ def WriteLog(ifile, time, disp, prescribed_nodes):
     ifile.flush()
 
 def main(logging=True,output=True):
-    model = quad4_include.Model('quad4',current_dir_,current_dir_,logging)
+    model = quad4_include.Model('quad4',current_dir_,current_dir_,logging=logging)
     model.InitializeModel()
 
     tol = 1e-06
@@ -88,9 +75,17 @@ def main(logging=True,output=True):
     test = abs(reac_force_y - ref_reac) / (abs(reac_force_y) + abs(ref_reac))
     assert(test < 1e-11)
     #####################################
+    print("Test passed")
 
 def test():
     main(logging=False, output = False)
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

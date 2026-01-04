@@ -4,8 +4,6 @@ import os
 import math
 import time as time_module
 ##################################################################
-##################################################################
-sys.path.append('./quad9.gid')
 import quad9_include
 from quad9_include import *
 ##################################################################
@@ -111,6 +109,13 @@ def test():
     print("%.15e" % reac_force_x)
     assert(abs(reac_force_x - ref_reac) / ref_reac < 1e-10)
     print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

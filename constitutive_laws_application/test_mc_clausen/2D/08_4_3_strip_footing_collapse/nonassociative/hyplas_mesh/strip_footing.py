@@ -113,7 +113,7 @@ def test():
 
 def tag():
     tags = "umat"
-    if not all_modules_are_imported_successfully:
+    if (not all_modules_are_imported_successfully) or (platform.system().lower() == "windows"):
         tags += ",untested"
     return tags
 

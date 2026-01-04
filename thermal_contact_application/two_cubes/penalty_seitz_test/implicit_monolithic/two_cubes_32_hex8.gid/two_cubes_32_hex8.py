@@ -1,7 +1,7 @@
 ##################################################################
 import sys
 import os
-import math
+import platform
 import time as time_module
 ##################################################################
 ##################################################################
@@ -11,7 +11,6 @@ from two_cubes_32_hex8_include import *
 ###  SIMULATION  #################################################
 start_time = time_module.time()
 ##################################################################
-
 
 def WriteAnalyticalSolution(n, max_contact_force, ac, k):
     ifile = open("analytical_solution.txt", "w")
@@ -191,13 +190,21 @@ def test():
     for node in master_nodes:
         master_temp += node.GetSolutionStepValue(TEMPERATURE)
     master_temp /= len(master_nodes)
-    print("slave_temp: ", slave_temp)
-    print("master_temp: ", master_temp)
+    print("slave_temp: %.16e" % slave_temp)
+    print("master_temp: %.16e" % master_temp)
     ref_slave_temp = 29.199520636787813
     ref_master_temp = 30.79721852434611
     assert(abs(slave_temp - ref_slave_temp) / abs(ref_slave_temp) < 1e-10)
     assert(abs(master_temp - ref_master_temp) / abs(ref_master_temp) < 1e-10)
     ########################
+    print("Test passed")
+
+def tag():
+    tags = "thermal-contact"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

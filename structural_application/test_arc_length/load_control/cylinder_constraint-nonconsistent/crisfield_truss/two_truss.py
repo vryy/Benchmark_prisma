@@ -97,9 +97,17 @@ def main(output=True, logging=True):
     assert(abs(ux/B2 - ref_ux) < 1e-11)
     assert(abs(uy/H - ref_uy) < 1e-11)
     #####################################
+    print("Test passed")
 
 def test():
     main(False, False)
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

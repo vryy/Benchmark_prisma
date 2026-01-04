@@ -176,6 +176,14 @@ def test():
     ref_disp_y = -6.4968886978e-04
     print("%.10e" % disp_y)
     assert(abs((disp_y - ref_disp_y) / ref_disp_y) < 1e-10)
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

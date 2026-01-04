@@ -1,22 +1,9 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020,     #####
-#####     2021, 2022 by Hoang-Giang Bui for SFB837           #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Do 30. Jun 20:03:30 CEST 2022
-##################################################################
 import sys
 import os
 import math
 import time as time_module
 ##################################################################
-##################################################################
-sys.path.append('./quad9.gid')
 import quad9_include
 from quad9_include import *
 ##################################################################
@@ -32,7 +19,7 @@ def WriteLog(ifile, time, disp, detF, prescribed_nodes):
     ifile.flush()
 
 def main(output=True, logging=True, output_last=False, total_disp=0.75):
-    model = quad9_include.Model('quad9',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = quad9_include.Model('quad9',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     tol = 1e-06
@@ -104,6 +91,14 @@ def test():
     print("reac: %.15e" % (reac))
     assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
     #####################################
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

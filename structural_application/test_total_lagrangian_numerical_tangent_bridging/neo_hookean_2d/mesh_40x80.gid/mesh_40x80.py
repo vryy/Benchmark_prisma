@@ -88,7 +88,8 @@ def test():
     assert(abs(reac_force_y - ref_reac) / ref_reac < 1e-10)
 
 def tag():
-    return "Neo-Hookean,Total-Lagrangian"
+    tags = "Neo-Hookean,Total-Lagrangian"
+    return tags
 
 def print_tag():
     print("Tag(s): " + tag())

@@ -36,6 +36,13 @@ def test():
     assert(abs(uy - ref_uy) / abs(uy + ref_uy) < tol)
     print("Test passed")
 
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]()

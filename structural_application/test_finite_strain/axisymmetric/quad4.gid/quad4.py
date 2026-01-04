@@ -10,7 +10,7 @@ from quad4_include import *
 ##################################################################
 
 def main(logging=True, output=True):
-    model = quad4_include.Model('quad4',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = quad4_include.Model('quad4',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     tol = 1.0e-6
@@ -37,9 +37,17 @@ def main(logging=True, output=True):
             disp_x = node.GetSolutionStepValue(DISPLACEMENT_X)
             assert(abs(disp_x - ref_disp_x) < 1e-12)
     #####################################
+    print("Test passed")
 
 def test():
     main(output=False, logging=False)
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

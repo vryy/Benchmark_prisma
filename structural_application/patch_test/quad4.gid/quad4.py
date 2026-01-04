@@ -44,8 +44,15 @@ def test():
         if abs(node.X0 - 1.0) < tol:
             disp_x = node.GetSolutionStepValue(DISPLACEMENT_X)
             assert(abs(disp_x - ref_disp_x) < 1e-12)
-    print("Test passed")
     #####################################
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

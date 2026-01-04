@@ -58,6 +58,14 @@ def test():
     assert(abs(strain_energy - ref_energy) < 1e-12)
     assert(abs(work_done - ref_energy) < 1e-12)
     #####################################
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

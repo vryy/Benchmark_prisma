@@ -1,23 +1,9 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019, 2020,     #####
-#####     2021, 2022 by Hoang-Giang Bui for SFB837           #####
-#####     2023 by Hoang-Giang Bui                            #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Mi 30. Aug 14:44:00 CEST 2023
-##################################################################
 import sys
 import os
 import math
 import time as time_module
 ##################################################################
-##################################################################
-sys.path.append('./r2gtn_elpl.gid')
 import r2gtn_elpl_include
 from r2gtn_elpl_include import *
 ##################################################################
@@ -33,7 +19,7 @@ def WriteLog(ifile, time, disp, prescribed_nodes):
     ifile.flush()
 
 def main(output=True, output_last=False, logging=True):
-    model = r2gtn_elpl_include.Model('r2gtn_elpl',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = r2gtn_elpl_include.Model('r2gtn_elpl',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     ## boundary condition
@@ -110,6 +96,14 @@ def test():
     ref_reac = 0.000000000000000e+00
     print("%.15e" % reac_force_y)
     assert(abs(reac_force_y - ref_reac) < 1e-10)
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

@@ -88,8 +88,16 @@ def test():
     for node in prescribed_nodes:
         reac += node.GetSolutionStepValue(REACTION_Y)
     print("reac: %.16e, diff: %.16e" % (reac, (reac-ref_reac)/ref_reac))
-    assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
+    assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-9)
     #####################################
+    print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

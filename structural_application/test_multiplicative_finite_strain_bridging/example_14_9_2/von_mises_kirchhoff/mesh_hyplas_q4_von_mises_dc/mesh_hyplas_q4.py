@@ -19,7 +19,7 @@ def WriteLog(ifile, disp, nodes):
     ifile.flush()
 
 def main(output=True,logging=True):
-    model = mesh_hyplas_q4_include.Model('mesh_hyplas_q4',os.getcwd()+"/",os.getcwd()+"/",logging)
+    model = mesh_hyplas_q4_include.Model('mesh_hyplas_q4',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     ## boundary condition
@@ -89,6 +89,12 @@ def main(output=True,logging=True):
     if logging:
         ifile.close()
 
+    print("Analysis completed")
+    return model, prescribed_nodes
+
+def test():
+    model, prescribed_nodes = main(output=False, logging=False)
+
     ######### pytesting results #########
     ref_reac = 7.485017568723921e+01
     reac = 0.0
@@ -96,11 +102,14 @@ def main(output=True,logging=True):
         reac += node.GetSolutionStepValue(REACTION_Y)
     assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-12)
     #####################################
+    print("Test passed")
 
-    print("Analysis completed")
+def tag():
+    tags = ""
+    return tags
 
-def test():
-    main(output=False, logging=False)
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

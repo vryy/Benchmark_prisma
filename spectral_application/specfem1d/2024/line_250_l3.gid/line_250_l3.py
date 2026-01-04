@@ -151,7 +151,15 @@ def test():
     assert(abs(a - ref_a) / abs(ref_a) < 1e-12)
     assert(abs(v - ref_v) / abs(ref_v) < 1e-12)
     assert(abs(u - ref_u) / abs(ref_u) < 1e-12)
+    #####################################
     print("Test passed")
+
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

@@ -177,6 +177,13 @@ def main(logging=True, output=True, nsteps_phase = [150, 50, 150]):
 
     return model
 
+def tag():
+    tags = ""
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 def test():
     model = main(logging=False, output=False)
 
@@ -188,8 +195,8 @@ def test():
     print("reac: %.15e, damage: %.15e" % (reac, damage))
     assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
     assert(abs(damage - ref_damage) / abs(ref_damage) < 1e-10)
-    print("Test passed")
     ########################
+    print("Test passed")
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

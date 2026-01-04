@@ -100,6 +100,13 @@ def main(logging=True,output=True):
 def test():
     main(False, False)
 
+def tag():
+    tags = "Total-Lagrangian"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test

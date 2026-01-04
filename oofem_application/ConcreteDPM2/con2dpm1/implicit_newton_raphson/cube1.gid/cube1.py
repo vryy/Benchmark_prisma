@@ -1,21 +1,10 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014, 2015, 2016, 2017, 2018, 2019            #####
-#####     by Hoang-Giang Bui for SFB837                      #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-## This file is generated on Sa 14. Mar 00:15:32 CET 2020
-##################################################################
 # This example tests the tensile part of C-DPM2. The stress will
 # reach and bounded by ft
 ##################################################################
 import sys
 import os
-import math
+import platform
 import time as time_module
 ##################################################################
 ##################################################################
@@ -106,7 +95,10 @@ def test():
     print("Test passed")
 
 def tag():
-    return "oofem,concrete,cdpm2"
+    tags = "oofem,concrete,cdpm2"
+    if platform.system().lower() == "windows":
+        tags += ",untested"
+    return tags
 
 def print_tag():
     print("Tag(s): " + tag())

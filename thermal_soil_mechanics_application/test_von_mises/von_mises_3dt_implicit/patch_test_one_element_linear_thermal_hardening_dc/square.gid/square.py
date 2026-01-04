@@ -90,6 +90,13 @@ def test():
     assert(abs(t - ref_t) / abs(ref_t) < 1e-10)
     #####################
 
+def tag():
+    tags = "thermal-soil"
+    return tags
+
+def print_tag():
+    print("Tag(s): " + tag())
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]()
