@@ -1,7 +1,9 @@
+import sys
 import os
 import time as time_module
 import subprocess
 import multiprocessing
+import platform
 from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
 
@@ -152,25 +154,32 @@ def get_file_tag(file_info, shared_lists, progress_counter, lock):
     test_files, untest_files, untag_files = shared_lists
     link_path = os.path.join(root, f)
 
-    # Run the subprocess
-    proc = subprocess.Popen(
-        [pytest_py, f, "print_tag"],
-        cwd=root,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
-    tmp_stdout, _ = proc.communicate()
-
     tags_of_test = []
-    if proc.returncode == 0:
-        tmp = tmp_stdout.decode('ascii').splitlines()
-        for t in tmp:
-            if ("Tag(s):" in t) or ("Tags" in t):
-                words = t.replace(",", " ").split()
-                tags_of_test.extend(words[1:])
+
+    if (platform.system() == "Windows") and (len(link_path) > 260):
+        # On Windows, if the path is long, even with the registry adjustment, the test
+        # still cannot be run, so it will be simply skipped
+        tags_of_test.append("untested")
     else:
-        # if the test is failed to load, then it is not marked for testing
-        tags_of_test.append('untested')
+        # Run the subprocess to obtain tags
+        proc = subprocess.Popen(
+            [pytest_py, f, "print_tag"],
+            cwd=root,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        tmp_stdout, tmp_stderr = proc.communicate()
+
+        if proc.returncode == 0:
+            tmp = tmp_stdout.decode('ascii').splitlines()
+            for t in tmp:
+                if ("Tag(s):" in t) or ("Tags" in t):
+                    words = t.replace(",", " ").split()
+                    tags_of_test.extend(words[1:])
+        else:
+            print(f"Error loading {link_path}, error message = {tmp_stderr}")
+            # if the test is failed to load, then it is not marked for testing
+            tags_of_test.append('untested')
 
     # Thread-safe appending to shared lists
     if len(tags_of_test) == 0:
