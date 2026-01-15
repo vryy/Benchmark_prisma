@@ -5,10 +5,8 @@ import math
 import time as time_module
 ##################################################################
 ##################################################################
-current_dir_ = os.path.dirname(os.path.realpath(__file__)) + "/"
-import dewatering_h27_4_include as simulation_include
-from dewatering_h27_4_include import *
-model_name_ = 'dewatering_h27_4'
+import dewatering_h27_include
+from dewatering_h27_include import *
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
@@ -37,9 +35,9 @@ def SetMaterialProperties(elem):
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
     elem.SetValue(FIX_POROSITY,             False)
 
-def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressure=False, p=0.0):
+def main(output=True, logging=True, dt=1.0, num_steps=7200):
 
-    model_virgin = simulation_include.Model('dewatering_h27_4',os.getcwd()+"/",os.getcwd()+"/virgin_results/",logging=False)
+    model_virgin = dewatering_h27_include.Model('dewatering_h27',os.getcwd()+"/",os.getcwd()+"/virgin_results/",logging=False)
     model_virgin.InitializeModel()
 
     # print(HARDENING_LAW)
@@ -116,7 +114,7 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
 
     ## solve the system
 
-    model = simulation_include.Model('dewatering_h27_4',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
+    model = dewatering_h27_include.Model('dewatering_h27',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     # material parameters
@@ -200,10 +198,8 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
         node.Free(WATER_PRESSURE)
         node.Free(AIR_PRESSURE)
 
-    # but fix air pressure at bottom and lateral
-    # we do not fix air pressure on top create a smooth distribution of AIR_PRESSURE in the center
-    # In terms of the experiment, it's in line with closing the water and air flow in on top
-    for node in bottom_nodes + lateral_nodes:
+    # but fix air pressure on top and bottom and lateral
+    for node in top_nodes + bottom_nodes + lateral_nodes:
         node.Fix(AIR_PRESSURE)
         node.SetSolutionStepValue(AIR_PRESSURE, 0.0)
         node.SetSolutionStepValue(AIR_PRESSURE_EINS, 0.0)
@@ -219,19 +215,8 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
     model.model_part.ProcessInfo[FIRST_TIME_STEP] = 0
 
     delta_time = dt
-    tau = 0.5*num_steps*dt
     for step in range(0, num_steps):
         time = time + delta_time
-
-        if apply_top_air_pressure:
-            pi = p * (1.0 - math.exp(-time / tau))
-            print(f"*** Applying air pressure p = {pi} ***")
-            # apply the air pressure on top
-            for node in top_nodes:
-                node.SetSolutionStepValue(AIR_PRESSURE, pi)
-                node.SetSolutionStepValue(AIR_PRESSURE_EINS, pi)
-                node.SetSolutionStepValue(AIR_PRESSURE_NULL, pi)
-
         model.Solve( time, 0, 0, 0, 0 )
         if output and step%100 == 0:
             model.WriteOutput( time )
@@ -243,7 +228,7 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
     return model
 
 def test():
-    model = main(logging=False, output=False, dt=1.0, num_steps=100, apply_top_air_pressure=False)
+    model = main(logging=False, output=False, dt=1.0, num_steps=100)
 
     tol = 1.0e-6
     bottom_nodes = []
@@ -255,8 +240,9 @@ def test():
     vtu.TransferVariablesToNodes(model.model_part, WATER_FLOW)
     wf = bottom_nodes[0].GetSolutionStepValue(WATER_FLOW)
     wf2 = wf[2]*60.0/0.01
-    print("%.10e" % (wf2))
-    ref_wf2 = -2.4615729267e-02 # for num_steps = 100
+    print("%.16e" % (wf2))
+    # ref_wf2 = -1.9866135389e-03 # for num_steps = 7200
+    ref_wf2 = -2.4921044964631472e-02 # for num_steps = 100
     assert(abs(wf2 - ref_wf2) < 1e-6)
 
     print("Test passed")
@@ -271,7 +257,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=True, p=30e3, apply_top_air_pressure=True)
+        main(logging=True, output=False)
 
 ##################################################################
 ###  END OF SIMULATION  ##########################################
