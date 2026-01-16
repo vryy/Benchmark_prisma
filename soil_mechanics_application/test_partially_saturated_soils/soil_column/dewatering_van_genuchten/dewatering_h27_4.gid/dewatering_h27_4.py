@@ -104,7 +104,8 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0, analysis_type
 
         time = time + delta_time
         model_virgin.SolveModel(time)
-        # model_virgin.WriteOutput(time)
+        if output:
+            model_virgin.WriteOutput(time)
 
     isu = InSituStressUtility()
     isu.SetPreStressFromCurrentStress(model_virgin.model_part, model_virgin.model_part.ProcessInfo)
@@ -113,7 +114,8 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0, analysis_type
 
     time = time + delta_time
     model_virgin.SolveModel(time)
-    # model_virgin.WriteOutput(time)
+    if output:
+        model_virgin.WriteOutput(time)
 
     max_disp = 0.0
     for node in model_virgin.model_part.Nodes:
@@ -262,9 +264,9 @@ def test():
     vtu.TransferVariablesToNodes(model.model_part, WATER_FLOW)
     wf = bottom_nodes[0].GetSolutionStepValue(WATER_FLOW)
     wf2 = wf[2]*60.0/0.01
-    print("%.10e" % (wf2))
+    print("%.16e" % (wf2))
     #ref_wf2 = -3.3704912428e-01
-    ref_wf2 = -3.3705173068e-01
+    ref_wf2 = -3.3705173067971966e-01
     assert(abs(wf2 - ref_wf2) < 1e-6)
 
     print("Test passed")

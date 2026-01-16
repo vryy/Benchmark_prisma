@@ -12,7 +12,6 @@ __pycache__
 *.png
 *.post.vv
 *.grf
-*.so
 *.fort.*
 log_*
 results_*

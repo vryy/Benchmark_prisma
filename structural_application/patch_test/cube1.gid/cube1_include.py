@@ -280,6 +280,8 @@ class Model:
         print("nodal TEMPERATURE written")
         self.gid_io.PrintOnGaussPoints(STRESSES, self.model_part, time)
         print("gauss point STRESSES written")
+        self.gid_io.PrintOnGaussPoints(STRAIN_ENERGY, self.model_part, time)
+        print("gauss point STRAIN_ENERGY written")
         self.gid_io.FinalizeResults()
         self.gid_io.Reset()
         print("write results to vtm")
