@@ -427,8 +427,10 @@ class Model:
             ## post processing
 
             patch_orig_elems, mpatch_mp_orig = self.CreateModel(mpatch_orig)
+            sim_params_post = model_iga_include.StaticParameters()
+            sim_params_post['log_residuum'] = False
             model_part_orig = mpatch_mp_orig.GetModelPart()
-            model_orig = model_iga_include.Model('one_patch', os.getcwd()+"/", model_part_orig, model_iga_include.StaticParameters())
+            model_orig = model_iga_include.Model('one_patch', os.getcwd()+"/", model_part_orig, sim_params_post)
             model_orig.InitializeModel()
 
             for node_orig in model_part_orig.Nodes:
