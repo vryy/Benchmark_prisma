@@ -1,0 +1,19 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set output "monitoring.pdf"
+set xlabel "t [s]"
+set ylabel "Temperature (K)"
+#set xtics 0.5
+#set ytics 1.0
+#set title "Temperature"
+plot "monitoring.log" using ($1):($2) with lines title "point A", \
+     "monitoring.log" using ($1):($3) with lines title "point B", \
+     "monitoring.log" using ($1):($4) with lines title "point C", \
+     "monitoring.log" using ($1):($5) with lines title "point T", \
