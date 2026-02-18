@@ -1,1 +1,1 @@
-../../../test_partially_saturated_soils/celia_problem/design_data/gmsh/ground_l2_layers.py
+../../../test_passive_partially_saturated_soils/celia_problem/design_data/gmsh/ground_l2_layers.py
