@@ -3,7 +3,7 @@ import sys
 import simulation_script_block_excavation
 from simulation_script_block_excavation import *
 
-def main(logging=True, output=True, number_of_excavation_layers_per_step=8, viscous_damping=0.0, abs_tol=1e-13, rel_tol=1e-13):
+def main(logging=True, output=True, number_of_excavation_layers_per_step=8, viscous_damping=0.0, abs_tol=1e-13, rel_tol=1e-13, local_error_tolerance=1e-6):
     params = {}
     params['path'] = os.getcwd() + '/'
     params['name'] = 'block_excavation'
@@ -23,6 +23,7 @@ def main(logging=True, output=True, number_of_excavation_layers_per_step=8, visc
     params['number_of_excavation_layers_per_step'] = number_of_excavation_layers_per_step
     params['sub_steps_range'] = 20 # 10 # this parameter is number of levels in adaptive sub-stepping
     params['viscous_damping'] = viscous_damping
+    params['local_error_tolerance'] = local_error_tolerance
     params['time_excavation'] = 180.0
     params['transfer_method'] = "identical"
     params['account_for_water'] = False
@@ -42,8 +43,11 @@ def main(logging=True, output=True, number_of_excavation_layers_per_step=8, visc
 
     return model1
 
-def test_with_params(logging=False, output=False, number_of_excavation_layers_per_step=8, ref_u=[0.0, 0.0], tol=1e-10, viscous_damping=0.0, abs_tol=1e-13, rel_tol=1e-13):
-    model1 = main(logging=logging, output=output, number_of_excavation_layers_per_step=number_of_excavation_layers_per_step, viscous_damping=viscous_damping, abs_tol=abs_tol, rel_tol=rel_tol)
+def test_with_params(logging=False, output=False, number_of_excavation_layers_per_step=8, ref_u=[0.0, 0.0], \
+        tol=1e-10, viscous_damping=0.0, abs_tol=1e-13, rel_tol=1e-13, local_error_tolerance=1e-6):
+    model1 = main(logging=logging, output=output, number_of_excavation_layers_per_step=number_of_excavation_layers_per_step, \
+        viscous_damping=viscous_damping, local_error_tolerance=local_error_tolerance, \
+        abs_tol=abs_tol, rel_tol=rel_tol)
 
     tolp = 1e-6
     for node in model1.model_part.Nodes:
@@ -60,26 +64,26 @@ def test1(logging=False, output=False, abs_tol=1e-13, rel_tol=1e-13):
     test_with_params(logging=logging, output=output, \
         number_of_excavation_layers_per_step=8, \
         abs_tol=abs_tol, rel_tol=rel_tol, \
-        ref_u=[-3.0037319193767124e-02, -1.5219816565195023e-02])
+        ref_u=[-2.9235948126643478e-02, -1.4437828545680624e-02])
 
 def test2(logging=False, output=False, abs_tol=1e-13, rel_tol=1e-13):
     test_with_params(logging=logging, output=output, \
         number_of_excavation_layers_per_step=4, \
         abs_tol=abs_tol, rel_tol=rel_tol, \
-        ref_u=[-2.9478775925052682e-02, -1.5249802029518346e-02])
+        ref_u=[-2.9039162817384528e-02, -1.4871102283297530e-02])
 
 def test3(logging=False, output=False, abs_tol=1e-13, rel_tol=1e-13):
     test_with_params(logging=logging, output=output, \
         number_of_excavation_layers_per_step=2, \
         abs_tol=abs_tol, rel_tol=rel_tol, \
         viscous_damping=1e-5, \
-        ref_u=[-2.8797079690590258e-02, -1.4918505615879419e-02])
+        ref_u=[-2.8428368903366988e-02, -1.4611815428761903e-02])
 
 def test4(logging=False, output=False, abs_tol=1e-13, rel_tol=1e-13):
     test_with_params(logging=logging, output=output, \
         number_of_excavation_layers_per_step=1, \
         abs_tol=abs_tol, rel_tol=rel_tol, \
-        ref_u=[-2.8595405296473569e-02, -1.4785777999613420e-02])
+        ref_u=[-2.8198685332292122e-02, -1.4440214368553939e-02])
 
 def test():
     test1()

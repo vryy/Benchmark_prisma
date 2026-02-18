@@ -276,7 +276,7 @@ class BlockExcavationSimulator:
             vtu.TransferSpecificVariableWithComponents( model_virgin.model_part, model1.model_part, PRESTRESS, 6 )
 
 #        isu.SetInSituStressFromCurrentStress(model1.model_part, model1.model_part.ProcessInfo)
-        model1.WriteOutput(0.0)
+        # model1.WriteOutput(0.0)
 
         soil_type = params['soil_type']
         if soil_type == "critical state":

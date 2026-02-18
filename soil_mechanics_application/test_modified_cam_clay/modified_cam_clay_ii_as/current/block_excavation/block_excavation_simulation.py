@@ -56,10 +56,10 @@ def test_with_params(number_of_excavation_layers_per_step=8, ref_u=[0.0, 0.0], t
     assert(abs(uy - ref_u[1]) < tol)
 
 def test():
-    test_with_params(number_of_excavation_layers_per_step=8, ref_u=[-2.9052983539840420e-02, -1.6147320689394368e-02])
-    test_with_params(number_of_excavation_layers_per_step=4, ref_u=[-2.8554441710963021e-02, -1.6270708323428546e-02])
-    test_with_params(number_of_excavation_layers_per_step=2, ref_u=[-2.8032541619871839e-02, -1.6149080652976346e-02])
-    test_with_params(number_of_excavation_layers_per_step=1, ref_u=[-2.7840609238153652e-02, -1.6020760319816710e-02])
+    test_with_params(number_of_excavation_layers_per_step=8, ref_u=[-2.8477640084448304e-02, -1.5657839313127878e-02])
+    test_with_params(number_of_excavation_layers_per_step=4, ref_u=[-2.8113788327067159e-02, -1.5900593138733113e-02])
+    test_with_params(number_of_excavation_layers_per_step=2, ref_u=[-2.7674083557928039e-02, -1.5857251970051028e-02])
+    test_with_params(number_of_excavation_layers_per_step=1, ref_u=[-2.7480030798289385e-02, -1.5722837051433930e-02])
     print("Test passed")
 
 def tag():

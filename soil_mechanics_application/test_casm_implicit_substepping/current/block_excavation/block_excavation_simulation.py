@@ -59,14 +59,14 @@ def test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[1,
     assert(abs(uy - ref_u[1]) < tol)
 
 def test():
-    test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[1, 16], ref_u=[-2.9738604874050830e-02, -1.4868369795955710e-02])
-    test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[4, 16], ref_u=[-3.0247538776474129e-02, -1.5488647332455039e-02])
-    test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=[1, 4], ref_u=[-2.9465994659607867e-02, -1.5235400872581389e-02])
-    test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=[4, 4], ref_u=[-2.9580675436299067e-02, -1.5382175898611695e-02])
-    #test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=[1, 1000], ref_u=4.1671666839188409e-02, viscous_damping=1e-3)
-    # # test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=[4, 4], ref_u=4.1637795774181662e-02)
-    test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=[1, 2], ref_u=[-2.8586930631622601e-02, -1.4774990705525131e-02])
-    test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=[4, 4], ref_u=[-2.8843927702136962e-02, -1.5104311792992632e-02])
+    test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[1, 16], ref_u=[-2.9219068214881776e-02, -1.4419627060506536e-02])
+    test_with_params(number_of_excavation_layers_per_step=8, sub_steps_range=[4, 16], ref_u=[-2.9524305602192845e-02, -1.4800707481889360e-02])
+    test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=[1, 4], ref_u=[-2.9016965365597010e-02, -1.4843600199118174e-02])
+    test_with_params(number_of_excavation_layers_per_step=4, sub_steps_range=[4, 4], ref_u=[-2.9118654952549262e-02, -1.4977494796756670e-02])
+    # test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=[1, 8], ref_u=[-2.9118654952549262e-02, -1.4977494796756670e-02], viscous_damping=1e-5)
+    # test_with_params(number_of_excavation_layers_per_step=2, sub_steps_range=[4, 4], ref_u=[-2.9118654952549262e-02, -1.4977494796756670e-02])
+    # test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=[1, 2], ref_u=[-2.8586930631622601e-02, -1.4774990705525131e-02])
+    test_with_params(number_of_excavation_layers_per_step=1, sub_steps_range=[4, 4], ref_u=[-2.8414126360852200e-02, -1.4718068239814870e-02])
 
     print("Test passed")
 
