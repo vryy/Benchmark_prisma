@@ -57,7 +57,7 @@ def SetMaterialProperties(elem):
     elem.SetValue(USE_DISTRIBUTED_PROPERTIES, 1)
     elem.SetValue(PERMEABILITY_WATER,       Ks)
     aux_util.SetValue(SWCC_LAW, VanGenuchtenSWCC(s1, s2, pr, Smin, Smax), elem)
-    aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, HaverkampRelativePermeabilityWaterLaw2(A, gamma), elem)
+    aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, HaverkampRelativePermeabilityWaterHeadLaw(A, gamma), elem)
 
 def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
     solution_strategy="implicit_Newton_Raphson", analysis_type=2, dissipation_radius=0.9):
@@ -85,12 +85,7 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
     tol = 1.0e-6
     top_nodes = []
     bottom_nodes = []
-    lateral_nodes = []
     for node in model.model_part.Nodes:
-        if abs(node.X0 - 0.0) < tol or abs(node.X0 - 1.0) < tol:
-            lateral_nodes.append(node)
-        if abs(node.Y0 - 0.0) < tol or abs(node.Y0 - 1.0) < tol:
-            lateral_nodes.append(node)
         if abs(node.Z0 - 0.0) < tol:
             bottom_nodes.append(node)
         if abs(node.Z0 - 40.0) < tol:
@@ -180,7 +175,7 @@ def test():
 
     p = node.GetSolutionStepValue(WATER_PRESSURE)
     print("%.16e" % (p))
-    ref_p = 3.6730290376072297e+01
+    ref_p = 3.6619148488141356e+01
     assert(abs(p - ref_p) < 1e-10)
 
     print("Test passed")

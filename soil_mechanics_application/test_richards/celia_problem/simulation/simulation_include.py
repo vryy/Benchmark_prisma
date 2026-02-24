@@ -154,7 +154,10 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        if KratosMultithreadedSolversApplication.Has("SuperLUMTSolver"):
+        if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+            plinear_solver = MKLPardisoSolver()
+            print("MKLPardisoSolver is used")
+        elif KratosMultithreadedSolversApplication.Has("SuperLUMTSolver"):
             plinear_solver = SuperLUMTSolver()
             print("SuperLUMTSolver is used")
         elif KratosMultithreadedSolversApplication.Has("UmfPackSolver"):
@@ -295,6 +298,7 @@ class Model:
         #set material parameters
         self.model_part.Properties[1].SetValue(THICKNESS, 1.0 )
         self.model_part.Properties[1].SetValue(GRAVITY, [0.0, 0.0, -1.0] )
+        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER, 2 )
         print("Material properties are selected for Properties 1")
         ##################################################################
         ## ACTIVATION ####################################################
