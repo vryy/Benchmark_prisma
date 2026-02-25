@@ -1,0 +1,13 @@
+topopt_proc = model.solver.attached_processes[0]
+
+time = 0.0
+delta_time = 1.0
+
+for step in range(0, 94):
+    time = time + delta_time
+    model.Solve(time, 0, 0, 0, 0)
+    model.WriteOutput(time)
+    print("***********************************************************************")
+    print("*****Step " + str(step+1) + ", Objective: " + str(topopt_proc.GetObjective()) + ", Density change: " + str(topopt_proc.GetTopologyChange()))
+    print("***********************************************************************")
+
