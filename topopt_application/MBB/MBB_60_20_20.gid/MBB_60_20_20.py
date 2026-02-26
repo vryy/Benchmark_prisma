@@ -13,11 +13,11 @@ from KratosMultiphysics.TopOptApplication import *
 
 def main(logging=True, output=True, nsteps=94, parallel_type = 'shared'):
     if(parallel_type == 'shared'):
-        import quad_60_20_structural_include
-        model = quad_60_20_structural_include.Model('quad_60_20',current_dir_,current_dir_, logging=logging)
+        import MBB_60_20_20_structural_include
+        model = MBB_60_20_20_structural_include.Model('MBB_60_20_20',current_dir_,current_dir_,logging=logging)
     elif(parallel_type == 'distributed'):
-        import quad_60_20_structural_parallel_include
-        model = quad_60_20_structural_parallel_include.Model('quad_60_20',current_dir_,current_dir_,logging=logging)
+        import MBB_60_20_20_structural_parallel_include
+        model = MBB_60_20_20_structural_parallel_include.Model('MBB_60_20_20',current_dir_,current_dir_,logging=logging)
 
     ##################################################################
     ## TOPOLOGY OPTIMIZATION SETUP ###################################
@@ -58,12 +58,12 @@ def main(logging=True, output=True, nsteps=94, parallel_type = 'shared'):
     return model
 
 def test():
-    model = main(logging=False, output=False)
+    model = main(logging=False, output=False, nsteps=2)
 
     topopt_proc = model.topopt_proc
 
     obj = topopt_proc.GetObjective()
-    ref_obj = 2.0319245466199612e+02
+    ref_obj = 1.1011948347047752e+07
 
     assert(abs(obj - ref_obj) / ref_obj < 1e-10)
 

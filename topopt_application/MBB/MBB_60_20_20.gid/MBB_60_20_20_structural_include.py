@@ -169,6 +169,15 @@ class Model:
         ##################################################################
         #restart_utility= RestartUtility( self.problem_name )
 
+        ##################################################################
+        ## TOPOLOG OPTIMIZATION SETUP ####################################
+        ##################################################################
+        volfrac =          0.5
+        rmin =          1.5
+        ft = 1
+        self.topopt_proc = TopologyUpdateProcess(self.model_part, volfrac, rmin, ft)
+        self.solver.solver.attached_processes.append(self.topopt_proc)
+
     def AddDofsForNodes(self, nodes):
         import structural_solver_advanced
         structural_solver_advanced.AddDofsForNodes( nodes )
@@ -238,10 +247,11 @@ class Model:
         ## INITIALISE CONSTITUTIVE LAWS ##################################
         ##################################################################
         #set material parameters
+        self.model_part.Properties[1].SetValue(DENSITY,            0 )
         self.model_part.Properties[1].SetValue(YOUNG_MODULUS,            1 )
         self.model_part.Properties[1].SetValue(POISSON_RATIO,          0.3 )
-        self.model_part.Properties[1].SetValue(THICKNESS,            1 )
-        self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, PlaneStress() )
+        self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, Isotropic3D() )
+        print("Linear elastic (Saint-Venant Kirschoff) is set")
         ##################################################################
         ## ACTIVATION ####################################################
         ##################################################################
