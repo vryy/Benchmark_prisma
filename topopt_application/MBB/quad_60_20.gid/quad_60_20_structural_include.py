@@ -24,7 +24,7 @@ class Model:
             stop_Newton_Raphson_if_not_converge=True, \
             solution_strategy="implicit_Newton_Raphson"):
         #setting the domain size for the problem to be solved
-        self.domain_size = 3
+        self.domain_size = 2
         ##################################################################
         ## DEFINE MODELPART ##############################################
         ##################################################################
@@ -36,56 +36,15 @@ class Model:
         ## DEFINE SOLVER #################################################
         ##################################################################
         # reading simulation parameters
-        number_of_time_steps = 1
         self.analysis_parameters = {}
-        # content of analysis_parameters:
-        # perform_contact_analysis_flag
-        # penalty value for normal contact
-        # maximum number of uzawa iterations
-        # friction coefficient
-        # penalty value for frictional contact
-        # contact_double_check_flag
-        # contact_ramp_penalties_flag
-        # maximum penalty value for normal contact
-        # ramp criterion for normal contact
-        # ramp factor for normal contact
-        # maximum penalty value for frictional contact
-        # ramp criterion for frictional contact
-        # ramp factor for frictional contact
         # analysis type: static (0), quasi-static (1) or dynamic (2)
-        perform_contact_analysis_flag = False
-        penalty = 0.0
-        maxuzawa = 0.0
-        friction = 0.0
-        frictionpenalty = 0.0
-        contact_double_check_flag = False
-        contact_ramp_penalties_flag = False
-        maxpenalty = 0.0
-        rampcriterion = 0.0
-        rampfactor = 0.0
-        fricmaxpenalty = 0.0
-        fricrampcriterion = 0.0
-        fricrampfactor = 0.0
         self.analysis_parameters['dimension'] = self.domain_size # 3
-        self.analysis_parameters['perform_contact_analysis_flag'] = perform_contact_analysis_flag
-        self.analysis_parameters['penalty'] = penalty
-        self.analysis_parameters['maxuzawa'] = maxuzawa
-        self.analysis_parameters['friction'] = friction
-        self.analysis_parameters['frictionpenalty'] = frictionpenalty
-        self.analysis_parameters['contact_double_check_flag'] = contact_double_check_flag
-        self.analysis_parameters['contact_ramp_penalties_flag'] = contact_ramp_penalties_flag
-        self.analysis_parameters['maxpenalty'] = maxpenalty
-        self.analysis_parameters['rampcriterion'] = rampcriterion
-        self.analysis_parameters['rampfactor'] = rampfactor
-        self.analysis_parameters['fricmaxpenalty'] = fricmaxpenalty
-        self.analysis_parameters['fricrampcriterion'] = fricrampcriterion
-        self.analysis_parameters['fricrampfactor'] = fricrampfactor
+        self.analysis_parameters['perform_contact_analysis_flag'] = False
         self.analysis_parameters['print_sparsity_info_flag'] = False
         self.analysis_parameters['solution_strategy'] = solution_strategy
         self.analysis_parameters['analysis_type'] = analysis_type
         self.analysis_parameters['dissipation_radius'] = dissipation_radius
         self.analysis_parameters['decouple_build_and_solve'] = True
-        self.analysis_parameters['nonlinear_mass_damping'] = True
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = stop_Newton_Raphson_if_not_converge
         self.analysis_parameters['list_dof'] = True
@@ -96,7 +55,7 @@ class Model:
 
         ## generating solver
         import structural_solver_advanced
-        self.solver = structural_solver_advanced.SolverAdvanced( self.model_part, self.domain_size, number_of_time_steps, self.analysis_parameters, self.abs_tol, self.rel_tol )
+        self.solver = structural_solver_advanced.SolverAdvanced( self.model_part, self.domain_size, 1, self.analysis_parameters, self.abs_tol, self.rel_tol )
         #import ekate_solver_parallel
         #self.solver = ekate_solver_parallel.EkateSolver( self.model_part, self.domain_size, number_of_time_steps, self.analysis_parameters, self.abs_tol, self.rel_tol )
         self.AddVariables( self.model_part )
