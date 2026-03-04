@@ -6,9 +6,13 @@ current_dir_ = os.path.dirname(os.path.realpath(__file__)) + os.sep
 if current_dir_ not in sys.path:
     sys.path.append(current_dir_)
 ##################################################################
-from KratosMultiphysics import *
-from KratosMultiphysics.StructuralApplication import *
-from KratosMultiphysics.TopOptApplication import *
+try:
+    from KratosMultiphysics import *
+    from KratosMultiphysics.StructuralApplication import *
+    from KratosMultiphysics.TopOptApplication import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 
 def main(logging=True, output=True, nsteps=94, parallel_type = 'shared'):
