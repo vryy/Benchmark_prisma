@@ -1,7 +1,7 @@
 import sys
-from KratosMultiphysics import *
-from KratosMultiphysics.mpi import *
 try:
+    from KratosMultiphysics import *
+    from KratosMultiphysics.mpi import *
     from KratosMultiphysics.FourCApplication import *
     four_c_application_is_available = True
 except Exception as e:
