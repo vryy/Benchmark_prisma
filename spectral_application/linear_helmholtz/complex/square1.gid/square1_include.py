@@ -18,8 +18,6 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 class Model:
     def __init__( self, problem_name, path, results_path, logging=True, solver="mkl-pardiso" ):
-        #setting the domain size for the problem to be solved
-        self.domain_size = 3
         ##################################################################
         ## DEFINE MODELPART ##############################################
         ##################################################################
@@ -36,7 +34,7 @@ class Model:
 
         ## generating solver
         import structural_solver_static
-        self.solver = structural_solver_static.StaticStructuralSolver( self.model_part, self.domain_size, abs_tol=self.abs_tol, rel_tol=self.rel_tol )
+        self.solver = structural_solver_static.StaticStructuralSolver( self.model_part, abs_tol=self.abs_tol, rel_tol=self.rel_tol )
         self.solver.CalculateReactionFlag = True
         self.solver.ReformDofSetAtEachStep = True
         self.solver.MoveMeshFlag = False
