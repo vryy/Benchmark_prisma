@@ -177,7 +177,7 @@ def get_file_tag(file_info, shared_lists, progress_counter, lock):
                     words = t.replace(",", " ").split()
                     tags_of_test.extend(words[1:])
         else:
-            print(f"Error loading {link_path}, error message = {tmp_stderr}")
+            # print(f"Error loading {link_path}, error message = {tmp_stderr}")
             # if the test is failed to load, then it is not marked for testing
             tags_of_test.append('untested')
 
@@ -244,7 +244,7 @@ def get_file_tag(file_info, shared_lists, progress_counter, lock):
 #         # Convert managed lists back to standard python lists before returning
 #         return list(test_files), list(untest_files), list(untag_files)
 
-def collect_tests_parallel(origin_path, exclude=[], pytest_py="python2", max_workers=4):
+def collect_tests_parallel(origin_path, exclude=[], pytest_py="python2", max_workers=4, application="all"):
     # 1. Quickly crawl the directories to find all files
     files_to_process = []
     skip_dirs = {"__pycache__", ".git"}
@@ -255,9 +255,16 @@ def collect_tests_parallel(origin_path, exclude=[], pytest_py="python2", max_wor
         if any(os.path.commonpath([root, os.path.join(origin_path, p)]) == os.path.join(origin_path, p) for p in exclude):
             continue
 
-        for f in f_names:
-            if f.startswith("pytest_") and f.endswith(".py"):
-                files_to_process.append((root, f, pytest_py))
+        if application == "all":
+            for f in f_names:
+                if f.startswith("pytest_") and f.endswith(".py"):
+                    files_to_process.append((root, f, pytest_py))
+        else:
+            app_name = application + "_application"
+            if app_name in root.split(os.sep):
+                for f in f_names:
+                    if f.startswith("pytest_") and f.endswith(".py"):
+                        files_to_process.append((root, f, pytest_py))
 
     total_files = len(files_to_process)
     if total_files == 0:

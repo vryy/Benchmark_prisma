@@ -9,12 +9,16 @@ def main(params):
     num_cores   = params['num_cores']
     pytest_py   = params['pytest_py']
     tags        = params['tags']
+    application = params['application']
 
     ###
 
     start_time = time_module.perf_counter()
 
-    test_files, untest_files, untag_files = prunner.collect_tests_parallel(origin_path, pytest_py=pytest_py, max_workers=num_cores)
+    test_files, untest_files, untag_files = prunner.collect_tests_parallel(origin_path, \
+        pytest_py=pytest_py, \
+        max_workers=num_cores, \
+        application=application)
 
     end_time = time_module.perf_counter()
 
@@ -59,27 +63,29 @@ def main(params):
     # print(result)
     result.sort(key=lambda x: x[1])
 
-    print("Test completed, %d/%d passed. Total time = %.3e s." % (len(result), len(all_test_files), end_time - start_time))
     num_long_tests = 0
     for r in result:
         if r[1] > 1.0:
             num_long_tests += 1
 
     if num_long_tests > 0:
-        print("%d tests take more than one second to run" % num_long_tests)
+        print("%d long tests were performed (taking more than one second to run)" % num_long_tests)
         for r in result:
             if r[1] > 1.0:
                 print(f"  %s: %.3e s" % (r[0], r[1]))
 
-    print("List of untested files:")
-    for f in untest_files:
-        print(f"  %s" % (f))
+    if len(untest_files) > 0:
+        print("List of untested files:")
+        for f in untest_files:
+            print(f"  %s" % (f))
+    print("Test completed, %d/%d passed. Total time = %.3e s." % (len(result), len(all_test_files), end_time - start_time))
 
 if __name__ == "__main__":
     tags        = []
     verbose     = 0
     cache       = 0
     num_cores   = os.cpu_count() - 1
+    application = "all"
     if len(sys.argv) > 2:
       for i in range(2, len(sys.argv)):
         if sys.argv[i] == "--verbose": # allow verbose by command line argument --verbose
@@ -88,13 +94,15 @@ if __name__ == "__main__":
           cache = 1
         elif "--numcores=" in sys.argv[i]: # specify the number of processes to run tests
           num_cores = int(sys.argv[i].split('=')[-1])
+        elif "--application=" in sys.argv[i]: # specify the tests in an application
+          application=sys.argv[i].split('=')[-1]
         else:
           tags.append(sys.argv[i])
 
     if len(tags) > 0:
-        print(f"Tags to be tested: {tags}, verbose = {verbose}")
+        print(f"Tags to be tested: {tags}, application={application}, verbose = {verbose}")
     else:
-        print(f"Tags to be tested: all, verbose = {verbose}")
+        print(f"Tags to be tested: all, application={application}, verbose = {verbose}")
 
     # Check if the file exists
     exclude_file = ".appignore"
@@ -113,6 +121,7 @@ if __name__ == "__main__":
     params['verbose']   = verbose
     params['cache']     = cache
     params['exclude']   = exclude_names
+    params['application']   = application
     params['dry_run']   = False # enable this to NOT run the actual test (assume passing)
 
     ######
