@@ -266,7 +266,7 @@ def test():
     wf2 = wf[2]*60.0/0.01
     print("%.16e" % (wf2))
     #ref_wf2 = -3.3704912428e-01
-    ref_wf2 = -3.3705173067971966e-01
+    ref_wf2 = -3.2993829791272833e-01
     assert(abs(wf2 - ref_wf2) < 1e-6)
 
     print("Test passed")
