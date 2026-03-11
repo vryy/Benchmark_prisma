@@ -98,7 +98,7 @@ def test():
     print("Test passed")
 
 def tag():
-    tags = ""
+    tags = "hypoelastic"
     return tags
 
 def print_tag():

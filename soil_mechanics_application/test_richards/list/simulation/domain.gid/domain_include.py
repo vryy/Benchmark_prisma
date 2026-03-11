@@ -87,7 +87,6 @@ class Model:
         self.analysis_parameters['analysis_type'] = analysis_type
         self.analysis_parameters['dissipation_radius'] = dissipation_radius
         self.analysis_parameters['decouple_build_and_solve'] = True
-        self.analysis_parameters['nonlinear_mass_damping'] = True
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = stop_Newton_Raphson_if_not_converge
         self.analysis_parameters['list_dof'] = True

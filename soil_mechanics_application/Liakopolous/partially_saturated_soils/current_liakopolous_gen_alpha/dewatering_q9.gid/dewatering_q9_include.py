@@ -80,7 +80,6 @@ class Model:
         self.analysis_parameters['print_sparsity_info_flag'] = False
         self.analysis_parameters['analysis_type'] = 2
         self.analysis_parameters['dissipation_radius'] = 0.9
-        self.analysis_parameters['nonlinear_mass_damping'] = False
         self.analysis_parameters['decouple_build_and_solve'] = True
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = True
