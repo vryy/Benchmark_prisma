@@ -252,7 +252,7 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0, analysis_type
     return model
 
 def test():
-    model = main(logging=False, output=False, dt=10.0, num_steps=10, p=0.0, analysis_type=1, dissipation_radius=0.1)
+    model = main(logging=False, output=False, dt=1.0, num_steps=100, p=0.0, analysis_type=1, dissipation_radius=0.9)
 
     tol = 1.0e-6
     bottom_nodes = []
