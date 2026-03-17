@@ -110,9 +110,6 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
     #     node.SetSolutionStepValue(WATER_PRESSURE_EINS, p)
     #     node.SetSolutionStepValue(WATER_PRESSURE_NULL, p)
 
-    ## reset the material one more time to account for new information
-    for element in model.model_part.Elements:
-        element.ResetConstitutiveLaw()
 
     # release the water pressure on the model
     for node in model.model_part.Nodes:
@@ -124,8 +121,13 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
 
     model.model_part.ProcessInfo[FIRST_TIME_STEP] = 1
 
+    if logging:
+        wfile = open("water_content.txt", "w")
+        wfile.write("time\twater_content\twater_content_change\tflow_diff\tdS/dQ\n")
+
     time = 0.0
     nsteps = int(total_time / delta_time)
+    water_content_old = 0.0
     for i in range(0, nsteps):
 
         time += delta_time
@@ -146,6 +148,33 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
         #     node.SetSolutionStepValue(WATER_PRESSURE_EINS, h_top)
         #     node.SetSolutionStepValue(WATER_PRESSURE_NULL, h_bottom)
 
+        # compute the water content
+        if logging:
+            water_content = 0.0
+            for elem in model.model_part.Elements:
+                qw = elem.CalculateOnIntegrationPoints(INTEGRATION_WEIGHT, model.model_part.ProcessInfo)
+                jac = elem.CalculateOnIntegrationPoints(JACOBIAN_0, model.model_part.ProcessInfo)
+                sac = elem.CalculateOnIntegrationPoints(SATURATION, model.model_part.ProcessInfo)
+                for i in range(0, len(qw)):
+                    water_content += sac[i][0]*qw[i][0]*jac[i][0]
+
+            for elem in model.model_part.Elements:
+                wf = elem.CalculateOnIntegrationPoints(WATER_FLOW, model.model_part.ProcessInfo)
+                # print("Element %d water flow: %e" % (elem.Id, wf[0][0]))
+                if elem.Id == 3:
+                    wf_bottom = wf[0][0]
+                elif elem.Id == 42:
+                    wf_top = wf[0][0]
+
+            dS = water_content - water_content_old
+            dQ = (wf_top - wf_bottom)*delta_time
+            print("Difference in water content: %e" % (dS))
+            print("Difference in in/out flow: %e" % (dQ))
+
+            wfile.write("%e\t%.16e\t%.16e\t%.16e\t%.16e\n" % (time, water_content, dS, dQ, dS/dQ))
+
+            water_content_old = water_content
+
     if logging:
         ifile = open("pressure_head.txt", "w")
         ifile.write("depth\tpressure_head\twater_flow\n")
@@ -158,9 +187,11 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
 
         sorted_values = sorted(values, key=lambda item: item[0])
         for v in sorted_values:
-            ifile.write("%.16e\t%.16e\t%.16e\n" % (v[0], v[1], v[2][2]))
+            ifile.write("%.16e\t%.16e\t%.16e\n" % (v[0], v[1], v[2][0]))
 
         ifile.close()
+
+        wfile.close()
 
     return model
 

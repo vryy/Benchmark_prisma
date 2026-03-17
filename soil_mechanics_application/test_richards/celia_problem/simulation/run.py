@@ -113,9 +113,6 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
     #     node.SetSolutionStepValue(WATER_PRESSURE_EINS, p)
     #     node.SetSolutionStepValue(WATER_PRESSURE_NULL, p)
 
-    ## reset the material one more time to account for new information
-    for element in model.model_part.Elements:
-        element.ResetConstitutiveLaw()
 
     # release the water pressure on the model
     for node in model.model_part.Nodes:
@@ -127,6 +124,10 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
 
     model.model_part.ProcessInfo[FIRST_TIME_STEP] = 1
 
+    if logging:
+        wfile = open("water_content.txt", "w")
+        wfile.write("time\twater_content\n")
+
     time = 0.0
     nsteps = int(total_time / delta_time)
     for i in range(0, nsteps):
@@ -136,6 +137,18 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
         print(f"### Time step {time} s", flush=True)
 
         model.SolveModel(time)
+
+        if logging:
+            # compute the water content
+            water_content = 0.0
+            for elem in model.model_part.Elements:
+                qw = elem.CalculateOnIntegrationPoints(INTEGRATION_WEIGHT, model.model_part.ProcessInfo)
+                jac = elem.CalculateOnIntegrationPoints(JACOBIAN_0, model.model_part.ProcessInfo)
+                sac = elem.CalculateOnIntegrationPoints(SATURATION, model.model_part.ProcessInfo)
+                for i in range(0, len(qw)):
+                    water_content += sac[i][0]*qw[i][0]*jac[i][0]
+            # print("Water content: %e" % (water_content))
+            wfile.write("%.6e\t%.16e\n" % (time, water_content))
 
         vtu.TransferVariablesToNodes(model.model_part, WATER_FLOW)
 
@@ -165,6 +178,8 @@ def main(output=True, logging=True, total_time=360.0, delta_time=1.0, \
             ifile.write("%.16e\t%.16e\t%.16e\n" % (v[0], v[1], v[2][2]))
 
         ifile.close()
+
+        wfile.close()
 
     return model
 
