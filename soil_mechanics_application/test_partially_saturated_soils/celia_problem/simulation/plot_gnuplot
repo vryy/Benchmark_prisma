@@ -1,0 +1,17 @@
+set output "pressure_head.pdf"
+set terminal pdf enhanced
+set view equal xy
+#set size ratio -1
+set key right top
+#set nokey
+#set yrange [0:0.8]
+set xlabel "depth"
+set ylabel "pressure head"
+
+plot "pressure_head.txt" using (40-$1):($2) with lines title "Theta scheme (0.5)", \
+     "~/workspace2/openRE/celiaproblem/celiasolution/ModifiedPicard/output/psi_dt1-0.csv" using ($1):($2) with linespoints title "Modified Picard", \
+     "~/workspace2/openRE/celiaproblem/celiasolution/Picard/output/psi_dt1-0.csv" using ($1):($2) with linespoints title "Picard", \
+     "~/workspace2/openRE/celiaproblem/iresonsolution/output/psi_dt1-0.csv" using ($1):($2) with linespoints title "ATS", \
+
+#plot "pressure_head.txt" using (40-$1):($2) with lines title "Theta scheme (0.5)", \
+#     "~/workspace2/openRE/celiaproblem/celiasolution/Picard1/output/psi_dt1-0.csv" using ($1):($2) with linespoints title "Picard", \
