@@ -37,7 +37,7 @@ def SetMaterialProperties(elem):
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
     elem.SetValue(FIX_POROSITY,             False)
 
-def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressure=False, p=0.0):
+def main(output=True, logging=True, log_pressure=False, dt=1.0, num_steps=7200, apply_top_air_pressure=False, p=0.0):
 
     model_virgin = simulation_include.Model('dewatering_h27_4',os.getcwd()+"/",os.getcwd()+"/virgin_results/",logging=False)
     model_virgin.InitializeModel()
@@ -130,6 +130,7 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
     top_nodes = []
     bottom_nodes = []
     lateral_nodes = []
+    vertical_middle_nodes = []
     for node in model.model_part.Nodes:
         if abs(node.X0 - 0.0) < tol or abs(node.X0 - 0.2) < tol:
             node.Fix(DISPLACEMENT_X)
@@ -145,6 +146,8 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
             bottom_nodes.append(node)
         if abs(node.Z0 - 1.0) < tol:
             top_nodes.append(node)
+        if abs(node.X0 - 0.1) < tol and abs(node.Y0 - 0.1) < tol:
+            vertical_middle_nodes.append(node)
 
         node.Fix(WATER_PRESSURE)
         node.Fix(AIR_PRESSURE)
@@ -163,9 +166,23 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
         ifile.write("%.10e\t%.10e\n" % (time, wf[2]))
         ifile.flush()
 
+    def Record1(ifile, nodes, time):
+        ifile.write("%.10e" % time)
+        for node in nodes:
+            ifile.write("\t%.10e" % (node.GetSolutionStepValue(AIR_PRESSURE)))
+        ifile.write("\n")
+        ifile.flush()
+
     if logging:
         ifile = open("bottom_water_flow.log", "w")
         ifile.write("time\tflow\n")
+
+    if log_pressure:
+        ifile1 = open("air_pressure.log", "w")
+        ifile1.write("time\\z")
+        for node in vertical_middle_nodes:
+            ifile1.write("\t%f" % (node.Z0))
+        ifile1.write("\n")
 
     ## reset the material one more time to account for new information
     for element in model.model_part.Elements:
@@ -186,6 +203,8 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
             model.WriteOutput(time)
         if logging:
             Record(ifile, time)
+        if log_pressure:
+            Record1(ifile1, vertical_middle_nodes, time)
     max_disp = 0.0
     for node in model.model_part.Nodes:
         for direction in range(0,3):
@@ -237,13 +256,19 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200, apply_top_air_pressu
             model.WriteOutput( time )
         if logging:
             Record(ifile, time)
+        if log_pressure:
+            Record1(ifile1, vertical_middle_nodes, time)
 
     #print(model.model_part.Nodes[1].GetSolutionStepValue(DISPLACEMENT_Z))
+    if logging:
+        ifile.close()
+    if log_pressure:
+        ifile1.close()
 
     return model
 
 def test():
-    model = main(logging=False, output=False, dt=1.0, num_steps=100, apply_top_air_pressure=False)
+    model = main(logging=False, output=False, log_pressure=False, dt=1.0, num_steps=100, apply_top_air_pressure=False)
 
     tol = 1.0e-6
     bottom_nodes = []
@@ -255,9 +280,9 @@ def test():
     vtu.TransferVariablesToNodes(model.model_part, WATER_FLOW)
     wf = bottom_nodes[0].GetSolutionStepValue(WATER_FLOW)
     wf2 = wf[2]*60.0/0.01
-    print("%.10e" % (wf2))
-    ref_wf2 = -2.4615729267e-02 # for num_steps = 100
-    assert(abs(wf2 - ref_wf2) < 1e-6)
+    ref_wf2 = -2.4616007510950097e-02
+    print("%.16e, diff: %.16e" % (wf2, wf2 - ref_wf2))
+    assert(abs(wf2 - ref_wf2) < 1e-8)
 
     print("Test passed")
 

@@ -242,10 +242,9 @@ def test():
     vtu.TransferVariablesToNodes(model.model_part, WATER_FLOW)
     wf = bottom_nodes[0].GetSolutionStepValue(WATER_FLOW)
     wf2 = wf[2]*60.0/0.01
-    print("%.10e" % (wf2))
-    # ref_wf2 = -1.9866135389e-03 # for num_steps = 7200
-    ref_wf2 = -2.4674391143e-02 # for num_steps = 100
-    assert(abs(wf2 - ref_wf2) < 1e-6)
+    ref_wf2 = -2.4674596050546695e-02
+    print("%.16e, diff: %.6e" % (wf2, wf2 - ref_wf2))
+    assert(abs(wf2 - ref_wf2) < 1e-10)
 
     print("Test passed")
 
@@ -259,7 +258,8 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=True)
+        # main(logging=True, output=True)
+        main(logging=True, output=False, dt=1.0, num_steps=1)
 
 ##################################################################
 ###  END OF SIMULATION  ##########################################

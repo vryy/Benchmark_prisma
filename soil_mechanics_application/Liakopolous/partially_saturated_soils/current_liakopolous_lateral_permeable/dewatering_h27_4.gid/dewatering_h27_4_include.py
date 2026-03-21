@@ -84,7 +84,7 @@ class Model:
         self.analysis_parameters['list_dof'] = True
         self.analysis_parameters['log_residuum'] = logging
 
-        self.abs_tol =        1e-6
+        self.abs_tol =        1e-10
         self.rel_tol =        1e-10
 
         ## generating solver
@@ -134,6 +134,7 @@ class Model:
         (self.solver.solver).SetEchoLevel(2)
         (self.solver.solver).max_iter = 10 #control the maximum iterations of Newton Raphson loop
         (self.solver.solver).MoveMeshFlag = True
+        (self.solver.solver).convergence_criteria.SetType(3)
 
         ##################################################################
         ## INITIALISE RESTART UTILITY ####################################
