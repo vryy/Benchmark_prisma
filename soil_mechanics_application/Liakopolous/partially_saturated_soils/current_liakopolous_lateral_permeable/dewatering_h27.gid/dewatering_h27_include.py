@@ -90,8 +90,6 @@ class Model:
         ## generating solver
         import structural_solver_advanced
         self.solver = structural_solver_advanced.SolverAdvanced( self.model_part, self.domain_size, number_of_time_steps, self.analysis_parameters, self.abs_tol, self.rel_tol )
-        #import ekate_solver_parallel
-        #self.solver = ekate_solver_parallel.EkateSolver( self.model_part, self.domain_size, number_of_time_steps, self.analysis_parameters, self.abs_tol, self.rel_tol )
         structural_solver_advanced.AddVariables( self.model_part )
         self.model_part.AddNodalSolutionStepVariable(WATER_FLOW)
         ##################################################################
