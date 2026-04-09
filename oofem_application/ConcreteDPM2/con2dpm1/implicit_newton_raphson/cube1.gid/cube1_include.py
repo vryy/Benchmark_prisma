@@ -295,7 +295,7 @@ class Model:
         self.model_part.Properties[1].SetValue(IFT_ConcreteDPM2_asoft,         5.0 )
         self.model_part.Properties[1].SetValue(IFT_ConcreteDPM2_softeningType,         1 )
         self.model_part.Properties[1].SetValue(IFT_ConcreteDPM2_kinit,         0.3 )
-        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER, 1 )
+        self.model_part.Properties[1].SetValue(INTEGRATION_ORDER, 2 )
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, OofemConcreteDPM2() )
         self.model_part.Properties[1].SetValue(MAT_RESPONSE_MODE, 1 ) # 0: tangent; 1: secant; 3: elastic
         # self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, OofemConcreteDPM2DC() )

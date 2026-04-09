@@ -16,7 +16,7 @@ from cube1_include import *
 start_time = time_module.time()
 ##################################################################
 
-def main(output=True, logging=True):
+def main(output=True, logging=True, nsteps=300):
     model = cube1_include.Model('cube1',current_dir_,current_dir_,logging)
     model.InitializeModel()
 
@@ -44,7 +44,7 @@ def main(output=True, logging=True):
     delta_disp = 1e-6
     delta_time = 1e6*delta_disp
 
-    for i in range(0, 300): #1):
+    for i in range(0, nsteps):
         print("#######################################")
         print(f"##########LOADING STEP {i+1} STARTED##############")
         print("#######################################")
@@ -75,7 +75,7 @@ def main(output=True, logging=True):
     return model
 
 def test():
-    model = main(logging=False, output=False)
+    model = main(logging=False, output=False, nsteps=300)
 
     tol = 1e-6
     prescribed_nodes = []
