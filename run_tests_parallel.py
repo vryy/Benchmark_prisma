@@ -1,8 +1,33 @@
 import sys
 import os
 import time as time_module
+import subprocess
+from datetime import datetime
+import socket
 
 import prunner
+
+def send_email(recipient, subject, body):
+    # Construct a basic RFC 822 message
+    message = f"To: {recipient}\nSubject: {subject}\n\n{body}"
+
+    try:
+        # Run msmtp command
+        # -t tells msmtp to read the recipient from the message headers
+        process = subprocess.Popen(
+            ['msmtp', '-t'],
+            stdin=subprocess.PIPE,
+            text=True
+        )
+        process.communicate(input=message)
+
+        if process.returncode == 0:
+            print(f"Test results sent successfully to {recipient}")
+        else:
+            print(f"Error: msmtp exited with code {process.returncode}")
+
+    except FileNotFoundError:
+        print("Error: msmtp is not installed or not in your PATH.")
 
 def main(params):
     origin_path = params['origin']
@@ -10,6 +35,8 @@ def main(params):
     pytest_py   = params['pytest_py']
     tags        = params['tags']
     application = params['application']
+    recipient   = params['recipient']
+    runner      = params['runner']
 
     ###
 
@@ -59,7 +86,8 @@ def main(params):
     log, result = prunner.run(all_test_files, pytest_py=pytest_py, num_proc=num_cores)
     end_time = time_module.perf_counter()
 
-    print(log)
+    test_message = log
+    test_message += "\n"
     # print(result)
     result.sort(key=lambda x: x[1])
 
@@ -69,16 +97,32 @@ def main(params):
             num_long_tests += 1
 
     if num_long_tests > 0:
-        print("%d long tests were performed (taking more than one second to run)" % num_long_tests)
+        test_message += ("%d long tests were performed (taking more than one second to run)\n" % num_long_tests)
         for r in result:
             if r[1] > 1.0:
-                print(f"  %s: %.3e s" % (r[0], r[1]))
+                test_message += (f"  %s: %.3e s\n" % (r[0], r[1]))
 
     if len(untest_files) > 0:
-        print("List of untested files:")
+        test_message += ("List of untested files:\n")
         for f in untest_files:
-            print(f"  %s" % (f))
-    print("Test completed, %d/%d passed. Total time = %.3e s." % (len(result), len(all_test_files), end_time - start_time))
+            test_message += (f"  %s\n" % (f))
+    test_message += ("Test completed, %d/%d passed. Total time = %.3e s.\n" % (len(result), len(all_test_files), end_time - start_time))
+    print(test_message)
+
+    if recipient != None:
+        now = datetime.now()
+        hostname = socket.gethostname()
+        if len(result) < len(all_test_files):
+            test_subject = "🚨 ALERT! 🚨 "
+        else:
+            test_subject = ""
+        test_subject += "Prisma test result |"
+        test_subject += (f" host: {socket.gethostname()} |")
+        test_subject += (f" date: {now.year}/{now.month}/{now.day} |")
+        test_subject += (f" %d/%d passed |" % (len(result), len(all_test_files)))
+        if runner != None:
+            test_subject += (f" runner: {runner} |")
+        send_email(recipient, test_subject, test_message)
 
 if __name__ == "__main__":
     tags        = []
@@ -86,6 +130,8 @@ if __name__ == "__main__":
     cache       = 0
     num_cores   = os.cpu_count() - 1
     application = "all"
+    recipient   = None
+    runner      = None
     if len(sys.argv) > 2:
       for i in range(2, len(sys.argv)):
         if sys.argv[i] == "--verbose": # allow verbose by command line argument --verbose
@@ -96,13 +142,17 @@ if __name__ == "__main__":
           num_cores = int(sys.argv[i].split('=')[-1])
         elif "--application=" in sys.argv[i]: # specify the tests in an application
           application=sys.argv[i].split('=')[-1]
+        elif "--recipient=" in sys.argv[i]: # specify the email to sent the test results to
+          recipient=sys.argv[i].split('=')[-1]
+        elif "--runner=" in sys.argv[i]: # specify the name of the runner to run the test
+          runner=sys.argv[i].split('=')[-1]
         else:
           tags.append(sys.argv[i])
 
     if len(tags) > 0:
-        print(f"Tags to be tested: {tags}, application={application}, verbose = {verbose}")
+        print(f"Tags to be tested: {tags}, application = {application}, verbose = {verbose}")
     else:
-        print(f"Tags to be tested: all, application={application}, verbose = {verbose}")
+        print(f"Tags to be tested: all, application = {application}, verbose = {verbose}")
 
     # Check if the file exists
     exclude_file = ".appignore"
@@ -122,6 +172,8 @@ if __name__ == "__main__":
     params['cache']     = cache
     params['exclude']   = exclude_names
     params['application']   = application
+    params['recipient'] = recipient
+    params['runner']    = runner
     params['dry_run']   = False # enable this to NOT run the actual test (assume passing)
 
     ######
