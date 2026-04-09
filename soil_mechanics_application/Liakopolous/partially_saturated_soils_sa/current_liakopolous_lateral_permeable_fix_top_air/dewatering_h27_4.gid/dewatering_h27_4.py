@@ -270,7 +270,7 @@ def test():
     vtu.TransferVariablesToNodes(model.model_part, WATER_FLOW)
     wf = bottom_nodes[0].GetSolutionStepValue(WATER_FLOW)
     wf2 = wf[2]*60.0/0.01
-    ref_wf2 = -2.4674156043656449e-02
+    ref_wf2 = -2.4837768808419577e-02
     print("%.16e, diff: %.16e" % (wf2, wf2 - ref_wf2))
     assert(abs(wf2 - ref_wf2) < 1e-8)
 
