@@ -13,11 +13,20 @@ def main():
     fourc_model = fourc_problem.GetModel()
     fourc_model.FillComplete()
 
-    params = TrilinosParameterList()
+    params = TeuchosParameterList()
     params.Set("action", "calc_struct_nlnstiffmass")
     fourc_model.SetZeroState("structure", 0, "displacement")
     fourc_model.SetZeroState("structure", 0, "residual displacement")
     fourc_model.Evaluate(params, "structure")
+
+    dd = fourc_model.GetDiscretizationData("structure")
+    assert(dd.mat1.num_global_rows() == 2880)
+    assert(dd.mat1.num_global_cols() == 2880)
+    assert(dd.mat2.num_global_rows() == 2880)
+    assert(dd.mat2.num_global_cols() == 2880)
+    assert(dd.vec1.global_length() == 2880)
+    assert(dd.vec2.global_length() == 2880)
+    assert(dd.vec3.global_length() == 2880)
 
     # print(fourc_problem)
 

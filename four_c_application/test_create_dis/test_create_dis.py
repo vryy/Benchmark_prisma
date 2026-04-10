@@ -28,7 +28,7 @@ def main():
     fourc_model.CreateNode("dis1", 6, 1.0, 0.0, 1.0)
     fourc_model.CreateNode("dis1", 7, 1.0, 1.0, 1.0)
     fourc_model.CreateNode("dis1", 8, 0.0, 1.0, 1.0)
-    fourc_model.CreateElement("dis1", "SOLID", 1, [1, 2, 3, 4, 5, 6, 7, 8])
+    fourc_model.CreateElement("dis1", "SOLID3", 1, [1, 2, 3, 4, 5, 6, 7, 8])
     fourc_model.FillComplete()
 
     # fourc_model.EvaluateSystem("dis1")
