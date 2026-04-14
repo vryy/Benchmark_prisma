@@ -181,19 +181,19 @@ def test2():
     assert(abs(ozz - ozz_ref) < 1e-10)
 
 def test3():
-    model = main(logging=False, output=False, linear_solver="superlu", integration_order=2, paxial=-400.0, nsteps_axial=150)
+    model = main(logging=False, output=False, linear_solver="skyline-lu", integration_order=2, paxial=-400.0, nsteps_axial=150)
 
     elem = model.model_part.Elements[1]
     strain = elem.CalculateOnIntegrationPoints(STRAIN, model.model_part.ProcessInfo)
     stress = elem.CalculateOnIntegrationPoints(STRESSES, model.model_part.ProcessInfo)
     ezz = strain[0][2]
     ozz = stress[0][2]
-    ezz_ref = -1.5807666864685148e-02
-    ozz_ref = -4.0002139423456407e+02
+    ezz_ref = -1.5807683697059982e-02
+    ozz_ref = -4.0003255183630870e+02
     print("ezz: %.16e, ozz: %.16e" % (ezz, ozz))
     print("diff ezz: %.16e, diff ozz: %.16e" % (ezz - ezz_ref, (ozz - ozz_ref) / ozz_ref))
-    assert(abs(ezz - ezz_ref) < 2e-8)
-    assert(abs(ozz - ozz_ref) / abs(ozz_ref) < 2e-5)
+    assert(abs(ezz - ezz_ref) < 1e-10)
+    assert(abs(ozz - ozz_ref) / abs(ozz_ref) < 1e-10)
 
 def test():
     if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
