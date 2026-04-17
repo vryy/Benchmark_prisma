@@ -358,7 +358,7 @@ class Model:
             self.model_part.Properties[1].SetValue(SHAPE_PARAMETER,      3.0 )
             self.model_part.Properties[1].SetValue(VIRGIN_COMPRESSION_INDEX,      0.066 )
             self.model_part.Properties[1].SetValue(SWELL_INDEX,      0.0077 )
-            self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, ClayAndSandImplicitAdaptiveSubstepping() )
+            self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, ClayAndSandImplicitAutomaticSubstepping() )
             # self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, ModifiedCamClay3dImplicit_II() )
             self.model_part.Properties[1].SetValue(FIX_VOID_RATIO, False )
             self.model_part.Properties[1].SetValue(LOCAL_ERROR_TOLERANCE, 1.0e-10 )

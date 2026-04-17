@@ -104,10 +104,10 @@ if __name__ == '__main__':
     else:
         # main(logging=True, output=True)
         # main(logging=True, output=True, number_of_excavation_layers_per_step=2, viscous_damping=1e-5)
-        # test4(logging=True, output=True, abs_tol=1e-13, rel_tol=1e-13)
+        test3(logging=True, output=True, abs_tol=1e-13, rel_tol=1e-13)
 
-        test_with_params(logging=True, output=True, \
-            number_of_excavation_layers_per_step=2, \
-            abs_tol=1e-13, rel_tol=1e-13, \
-            viscous_damping=1e-5, \
-            ref_u=[-2.8797079690590258e-02, -1.4918505615879419e-02])
+        # test_with_params(logging=True, output=True, \
+        #     number_of_excavation_layers_per_step=2, \
+        #     abs_tol=1e-13, rel_tol=1e-13, \
+        #     viscous_damping=1e-5, \
+        #     ref_u=[-2.8797079690590258e-02, -1.4918505615879419e-02])

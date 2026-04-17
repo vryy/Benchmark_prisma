@@ -83,7 +83,7 @@ class CriticalStatePropertiesUtility:
         self.casm_pointer1 = ClayAndSandExplicit()
         self.casm_pointer2 = ClayAndSandImplicitSubstepping()
         self.casm_pointer3 = ClayAndSandConstantStiffness()
-        self.casm_pointer4 = ClayAndSandImplicitAdaptiveSubstepping()
+        self.casm_pointer4 = ClayAndSandImplicitAutomaticSubstepping()
 
     def SetEchoLevel( self, level ):
         self.echo_level = level
