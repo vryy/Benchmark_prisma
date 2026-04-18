@@ -23,7 +23,7 @@ def SetMaterialProperties(elem):
     elem.SetValue(POROSITY,                 0.2975)
     elem.SetValue(PERMEABILITY_WATER,       4.4e-6)
     elem.SetValue(PERMEABILITY_AIR,         3.2e-7)
-    aux_util.SetValue(SWCC_LAW, InversedLiakopolousSWCC1(1e-3), elem)
+    aux_util.SetValue(SWCC_LAW, InversedLiakopolousSWCC1().Create(1e-3), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, LiakopolousRelativePermeabilityAirLaw(), elem)
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
@@ -303,8 +303,8 @@ if __name__ == '__main__':
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
         # main(logging=True, output=False, p=30e3, apply_top_air_pressure=False)
-        # main(logging=True, output=True, dt=1.0, apply_top_air_pressure=False)
-        main(logging=True, output=True, dt=1.0, num_steps=7200, apply_top_air_pressure=False)
+        main(logging=True, output=True, dt=1.0, num_steps=1, apply_top_air_pressure=False)
+        # main(logging=True, output=True, dt=1.0, num_steps=7200, apply_top_air_pressure=False)
 
 ##################################################################
 ###  END OF SIMULATION  ##########################################

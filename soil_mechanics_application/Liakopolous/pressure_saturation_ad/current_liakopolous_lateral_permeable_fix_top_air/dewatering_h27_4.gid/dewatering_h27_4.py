@@ -23,7 +23,7 @@ def SetMaterialProperties(elem):
     elem.SetValue(POROSITY,                 0.2975)
     elem.SetValue(PERMEABILITY_WATER,       4.4e-6)
     elem.SetValue(PERMEABILITY_AIR,         3.2e-7)
-    aux_util.SetValue(SWCC_LAW, InversedLiakopolousSWCC1(1e-2), elem)
+    aux_util.SetValue(SWCC_LAW, InversedLiakopolousSWCC1().Create(1e-2), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, LiakopolousRelativePermeabilityAirLaw(), elem)
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
