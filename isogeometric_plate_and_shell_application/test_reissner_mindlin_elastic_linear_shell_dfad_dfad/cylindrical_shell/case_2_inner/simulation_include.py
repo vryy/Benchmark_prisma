@@ -333,16 +333,9 @@ class Model:
         return max_dist
 
     def Run(self, output=True, logging=True, visual=False, disp=None, rot=None):
-        length_bar = self.length / self.thickness
-        radius_bar = self.radius / self.thickness
         p = self.pressure
-        # create the scaled multipatch. On the scaled multipatch, the VARIABLE and TRUE_VARIABLE are not the same.
-        mpatch = self.CreateMultiPatch(length_bar, radius_bar, self.order, self.mode)
+        mpatch = self.CreateMultiPatch(self.length, self.radius, order=self.order, mode=self.mode)
         mpatch = self.Refine(mpatch, self.nsampling)
-        # create the unscaled multipatch. On the unscaled multipatch, the VARIABLE and TRUE_VARIABLE are the same. They can be used interchangeably.
-        # mpatch_orig = self.CreateMultiPatch(self.length, self.radius, self.order, self.mode)
-        # mpatch_orig = self.Refine(mpatch_orig, self.nsampling)
-        mpatch_orig = mpatch
         print("########################################")
         mpatch.Enumerate()
         print(mpatch)
@@ -365,13 +358,14 @@ class Model:
         sim_params["abs_tol"] = 1e-10
         model = model_iga_include.Model('one_patch', os.getcwd()+"/", model_part, sim_params)
         model.InitializeModel()
+        model.mpatch = mpatch
         time = 0.0
         # model.Solve(time, 0, 0, 0, 0)
 
         # fix displacement on the boundary
         tol = 1e-6
         for node in model.model_part.Nodes:
-            if (abs(node.X0) < tol) or (abs(node.X0 - length_bar) < tol):
+            if (abs(node.X0) < tol) or (abs(node.X0 - self.length) < tol):
                 node.Fix(DISPLACEMENT_X)
                 node.Fix(ROTATION_X)
 
@@ -407,45 +401,12 @@ class Model:
 
         self.ndofs = model.solver.solver.builder_and_solver.GetEquationSystemSize()
 
-        # # preparation for post-processing
-        # transfer_util = BezierPostUtility()
-        # # transfer_util.TransferVariablesToNodes(THREED_STRESSES, model.model_part, SuperLUSolver())
-        # transfer_util.TransferVariablesToNodes(TRUE_SHEAR_ROTATION, model.model_part, SuperLUSolver())
-        # # true_rotation_control_values = transfer_util.TransferVariablesToNodalArray(TRUE_SHEAR_ROTATION, model.model_part, SuperLUSolver())
-
-        # true_rotation_patch_values = {}
-        # for patch_id, elems in patch_elems.items():
-        #     true_rotation_control_values = transfer_util.TransferVariablesToNodalArray(TRUE_SHEAR_ROTATION, model.model_part, elems, SuperLUSolver())
-        #     true_rotation_patch_values[patch_id] = true_rotation_control_values
-        # # print(true_rotation_patch_values)
-
-        # # ######Synchronize back the results ttransfer_util.TransferVariablesToNodeso multipatch
-        # # mpatch_mp.SynchronizeBackward(DISPLACEMENT)
-        # # mpatch_mp.SynchronizeBackward(ROTATION)
-        # # mpatch_mp.SynchronizeBackward(TRUE_SHEAR_ROTATION)
-        # # # mpatch_mp.SynchronizeBackward(THREED_STRESSES)
-        # ##################################################################
+        mpatch_mp.SynchronizeBackward(DISPLACEMENT)
+        mpatch_mp.SynchronizeBackward(ROTATION)
 
         if output:
+
             ## post processing
-
-            patch_orig_elems, mpatch_mp_orig = self.CreateModel(mpatch_orig)
-            model_part_orig = mpatch_mp_orig.GetModelPart()
-            model_orig = model_iga_include.Model('one_patch', os.getcwd()+"/", model_part_orig, model_iga_include.StaticParameters())
-            model_orig.InitializeModel()
-
-            for node_orig in model_part_orig.Nodes:
-                node = model_part.Nodes[node_orig.Id]
-                node_orig.SetSolutionStepValue(DISPLACEMENT, node.GetSolutionStepValue(DISPLACEMENT))
-                rot_orig = Vector(3)
-                rot = node.GetSolutionStepValue(ROTATION)
-                rot_orig[0] = rot[0] / self.thickness
-                rot_orig[1] = rot[1] / self.thickness
-                rot_orig[2] = rot[2] / self.thickness
-                node_orig.SetSolutionStepValue(ROTATION, rot_orig) # obtain the true rotation
-
-            mpatch_mp_orig.SynchronizeBackward(DISPLACEMENT)
-            mpatch_mp_orig.SynchronizeBackward(ROTATION)
 
             params_post = {}
             params_post['name'] = "one_patch"
@@ -458,45 +419,12 @@ class Model:
             params_post['division number w'] = 1
             params_post['variables list'] = [DISPLACEMENT, ROTATION]
             dim = 2
-            model_iga_include.PostMultiPatch(mpatch_orig, dim, time, params_post)
+            model_iga_include.PostMultiPatch(mpatch, dim, time, params_post)
 
             ##################################################################
 
-            # E = self.young_modulus
-            # nu = self.poisson_ratio
-            # h = self.thickness
-            # G = E/(2*(1+nu))
-            # R = self.radius
-            # q = self.face_load
-
-            # analytical_solution = AnalyticalSolution(q, G, nu, h, R)
-
-            # wck = analytical_solution.get_kh_displacement(0.0, 0.0)
-            # wc = analytical_solution.get_displacement(0.0, 0.0)
-            # print("Analytical deflection at center: %.10e" % (wc))
-            # print("Kirchhoff solution: %.10e" % (wck))
-
-            # patch5 = mpatch_orig[5].GetReference()
-            # # cgf = patch5.GridFunction(CONTROL_POINT_COORDINATES)
-            # [stat, xi] = patch5.LocalCoordinates([0.0, 0.0, 0.0], [0.0, 0.0, 0.0])
-            # # print("stat: %d" % stat)
-            # dgf = patch5.GridFunction(DISPLACEMENT)
-            # disp = dgf.GetValue(xi)
-            # # print(disp)
-            # disp_error = abs(disp[2] - wc) / abs(wc) * 100
-            # print("Computed deflection at center: %.10e, error = %.10e %%" % (disp[2], disp_error))
-
-            # pgf = patch5.GridFunction(ROTATION)
-            # psi = pgf.GetValue(xi)
-            # print("Computed psi at center: %.10e, %.10e" % (psi[0], psi[1]))
-
-            # u_error = self.ComputeUError(model_part_orig, analytical_solution)
-            # print("U error: %.10e" % u_error)
-            # psi_error = self.ComputePsiError(model_part_orig, analytical_solution)
-            # print("Psi error: %.10e" % psi_error)
-
         if logging and output:
-            self.ExportUr("ur_computed.txt", mpatch_orig, self.radius / self.thickness, npoints=20)
+            self.ExportUr("ur_computed.txt", mpatch, self.radius, npoints=20)
             # self.ExportUrCheck("ur_check_computed.txt", model.model_part)
             middle_values = self.ExtractUrCheck(model.model_part, x_ref=0.5*self.length, export=False)
             self.ConvertUrCheck(middle_values, export=True, filename="ur_check_polar.txt")
@@ -507,7 +435,7 @@ class Model:
             self.ConvertForce(middle_force_values, export=True, filename="force_polar.txt")
 
         if visual and "KratosVisualApplication" in KratosGlobals.RequestedApplications:
-            gui = IgaGUI(mpatch_orig)
+            gui = IgaGUI(mpatch)
             gui.Run(globals(), locals())
 
         return model

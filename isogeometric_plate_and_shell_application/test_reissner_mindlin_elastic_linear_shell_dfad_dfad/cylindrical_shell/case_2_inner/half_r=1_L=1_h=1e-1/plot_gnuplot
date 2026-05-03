@@ -1,0 +1,16 @@
+#set terminal postscript eps enhanced color
+set terminal pdf
+#set view equal xy
+#set size ratio -1
+#set size 1.5, 1.5
+
+set output "radial_displacement.pdf"
+set xlabel "angle"
+set ylabel "ur"
+#set xtics 0.5
+#set ytics 1.0
+set key center bottom
+#set title "Radial displacement"
+set ylabel "ur"
+plot "ur_check_polar.txt" using ($1+0.5*pi):($4) with linespoints title "computed", \
+     "/Users/zglc59@durham.ac.uk/kratos_bundle/Benchmark_prisma/isogeometric_plate_and_shell_application/test_reissner_mindlin_elastic_linear_shell_dfad_dfad/cylindrical_2d/half_r=1_L=1_h=1e-1/u_computed_average.txt" using ($1):($2) with lines title "3D-ET", \
