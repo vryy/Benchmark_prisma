@@ -1,0 +1,18 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key right bottom
+
+set output "convergence.pdf"
+set xlabel "ndofs"
+set ylabel "uz [mm]"
+#set xtics 0.002
+set yrange [0:]
+set ytics 2e-3
+#set yrange [0:1100]
+plot "convergence.log" using ($2):(-$3*1e3) with linespoints title "Q9", \
+     1.8248e-2 with lines notitle
