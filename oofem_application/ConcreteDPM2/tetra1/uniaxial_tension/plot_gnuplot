@@ -1,0 +1,8 @@
+set terminal pdf enhanced color
+set title "Single element test - Uniaxial tension"
+set output "reaction_uni_tension.pdf"
+set xlabel "epsilon-xx [mm/m]"
+set ylabel "sigma-xx [MPa]"
+set xrange [0:2]
+set yrange [-0.1:]
+plot "reaction.log" using ($4*1e3):($5/1e6) with lines notitle, \

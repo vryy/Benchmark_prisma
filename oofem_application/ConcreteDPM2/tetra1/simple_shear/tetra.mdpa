@@ -1,0 +1,38 @@
+Begin ModelPartData
+//  VARIABLE_NAME value
+End ModelPartData
+
+Begin Properties 1
+DENSITY         7620  //scalar
+BODY_FORCE [3] (0.0, 0.0, 0.0)
+GRAVITY [3] ( 0.0, 0.0, 0.0 )
+YOUNG_MODULUS      2.1e+11
+POISSON_RATIO          0.3
+End Properties
+
+Begin Nodes
+1   0.0000000000  0.0000000000  0.0000000000
+2   0.1000000000  0.0000000000  0.0000000000
+3   0.0000000000  0.1000000000  0.0000000000
+4   0.0000000000  0.0000000000  0.1000000000
+End Nodes
+
+Begin Elements KinematicLinear3D4N
+1  1 1 2 3 4
+End Elements
+
+Begin Conditions PointForce3D
+1 1 2
+End Conditions
+
+Begin NodalData FORCE_X
+3 0 0.0000000000
+End NodalData
+
+Begin NodalData FORCE_Y
+3 0 0.0000000000
+End NodalData
+
+Begin NodalData FORCE_Z
+3 0 0.0000000000
+End NodalData

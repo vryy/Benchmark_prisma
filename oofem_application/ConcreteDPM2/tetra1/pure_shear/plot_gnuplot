@@ -1,0 +1,7 @@
+set terminal pdf enhanced color
+set output "reaction_pure_shear.pdf"
+set title "Single element test - Pure shear"
+set xlabel "epsilon-xy [mm/m]"
+set ylabel "sigma-xy [MPa]"
+set yrange [-0.1:]
+plot "reaction.log" using ($4*1e3):($5/1e6) with lines notitle, \

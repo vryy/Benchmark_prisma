@@ -1,0 +1,7 @@
+set terminal pdf enhanced color
+set output "reaction_uni_compression.pdf"
+set title "Single element test - Uniaxial compression"
+set xlabel "epsilon-xx [mm/m]"
+set ylabel "sigma-xx [MPa]"
+set xrange [-40:0]
+plot "reaction.log" using ($4*1e3):($5/1e6) with lines notitle, \
