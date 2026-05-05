@@ -1,0 +1,16 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+set key left bottom
+
+set output "reaction.pdf"
+set xlabel "epsilon-xx"
+set ylabel "sigma-xx (MPa)"
+set xtics 0.00025
+#set ytics 1.0
+#set yrange [0:1100]
+plot "reaction.log" using ($1):($3/1e6) with lines notitle, \
