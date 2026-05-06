@@ -29,6 +29,9 @@ def main(logging=True, output=True):
     ## boundary condition
     tol = 1e-06
     for node in model.model_part.Nodes:
+        if (abs(node.X0) < tol) and (abs(node.Y0) < tol) and (abs(node.Z0) < tol):
+            node.Fix(DISPLACEMENT_Y)
+
         if (abs(node.Y0) < tol) or (abs(node.Y0 - 600.0) < tol):
             node.Fix(DISPLACEMENT_X)
             node.Fix(DISPLACEMENT_Z)
