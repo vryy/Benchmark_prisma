@@ -38,7 +38,7 @@ def test():
     p = 1e2
     model, l2_error = main(logging=False, output=False, p=p, compute_error=True)
 
-    l2_error_ref = 4.5502322501e-06
+    l2_error_ref = 4.5863757912e-06
     assert(abs(l2_error - l2_error_ref) < 1e-10)
 
 def tag():

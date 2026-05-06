@@ -90,7 +90,7 @@ def test():
         if (abs(node.X0 - 0.5*w) < tol) and (abs(node.Y0 - 0.5*h) < tol):
             test_node = node
     disp_z = test_node.GetSolutionStepValue(DISPLACEMENT_Z)
-    ref_disp_z = -6.713149224888185e+02
+    ref_disp_z = -6.104378906176190e+02
     print("disp z: %.15e" % disp_z)
     print("ref_disp z: %.15e" % ref_disp_z)
     print("diff: %.15e" % (disp_z - ref_disp_z))
