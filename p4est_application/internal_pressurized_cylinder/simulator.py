@@ -61,6 +61,33 @@ def Compute_H1_error(model, solution, P):
     else:
         return math.sqrt(abs(nom / denom))
 
+###COMPUTE GLOBAL DISPLACEMENT (H1) ERROR FOR RECOVERY STRESS###
+def Compute_H1_error_rstress(model, solution, P):
+    nom = 0.0
+    denom = 0.0
+    nu = float(model.model_part.Properties[1].GetValue(POISSON_RATIO))
+    for element in model.model_part.Elements:
+        o = element.GetValuesOnIntegrationPoints(RECOVERY_STRESSES, model.model_part.ProcessInfo)
+        J0 = element.GetValuesOnIntegrationPoints(JACOBIAN_0, model.model_part.ProcessInfo)
+        Q = element.GetValuesOnIntegrationPoints(INTEGRATION_POINT_GLOBAL, model.model_part.ProcessInfo)
+        W = element.GetValuesOnIntegrationPoints(INTEGRATION_WEIGHT, model.model_part.ProcessInfo)
+        er = []
+        for i in range(0, len(o)):
+            o_zz = nu * (o[i][0] + o[i][1])
+            ana_o = solution.get_stress_3d(P, Q[i][0], Q[i][1])
+            d = (pow(o[i][0] - ana_o[0], 2) + pow(o[i][1] - ana_o[1], 2) + pow(o_zz - ana_o[2], 2) + 2.0*(pow(o[i][2] - ana_o[3], 2) + pow(0.0 - ana_o[4], 2) + pow(0.0 - ana_o[5], 2)))
+            er.append(math.sqrt(d))
+            nom = nom + d * W[i][0] * J0[i][0]
+            denom = denom + (pow(ana_o[0], 2) + pow(ana_o[1], 2) + pow(ana_o[2], 2) + 2.0*(pow(ana_o[3], 2) + pow(ana_o[4], 2) + pow(ana_o[5], 2))) * W[i][0] * J0[i][0]
+        element.SetValuesOnIntegrationPoints(H1_ERROR, er, model.model_part.ProcessInfo)
+    if denom == 0.0:
+        if nom == 0.0:
+            return 0.0
+        else:
+            return float('nan');
+    else:
+        return math.sqrt(abs(nom / denom))
+
 class Simulator:
 
     def __init__(self, params):
@@ -93,6 +120,7 @@ class Simulator:
         # create the model_part
         [mp, layer_sets, layer_cond_sets, node_groups, element_assignments] = p4est_simulator.ConstructSystemModelPart(p4est_model, self.params)
         model.SetModelPart(mp)
+        model.InitializeModel(stress_recovery_type = self.params["stress_recovery_type"], neighbour_expansion_level=self.params['neighbour_expansion_level'])
 
         # boundary condition
         tol = 1.0e-6
@@ -115,10 +143,14 @@ class Simulator:
         report_conv_name = self.params["report_convergence_name"]
         report_disp_b_name = self.params["report_disp_b_name"]
         compute_condition_number = self.params["compute_condition_number"]
+        stress_recovery_type = self.params["stress_recovery_type"]
 
         if compute_condition_number:
             model.solver.solver.ReformDofSetAtEachStep = False
             eigen_solver = SpectraEigenvaluesSolver()
+
+        if stress_recovery_type > 0:
+            FindElementalNeighboursProcess(model.model_part, 2, 6).Execute()
 
         ## Loading path
         E = float(model.model_part.Properties[1].GetValue(YOUNG_MODULUS))
@@ -220,12 +252,18 @@ class Simulator:
                 if P == 0.0:
                     l2_error = 0.0
                     h1_error = 0.0
+                    h1_error_rs = 0.0
                 else:
                     l2_error = Compute_L2_error(model, self.elastic_sol, P)
                     h1_error = Compute_H1_error(model, self.elastic_sol, P)
+                    if stress_recovery_type > 0:
+                        h1_error_rs = Compute_H1_error_rstress(model, self.elastic_sol, P)
+                    else:
+                        h1_error_rs = 0.0
 
                     print("Global displacement (L2) error:", l2_error)
                     print("Global displacement (H1) error:", h1_error)
+                    print("Global displacement (H1) error (recovery stress):", h1_error_rs)
 
                 ## reporting
                 if logging:
@@ -245,3 +283,4 @@ class Simulator:
 
         model.l2_error = l2_error
         model.h1_error = h1_error
+        model.h1_error_rs = h1_error_rs

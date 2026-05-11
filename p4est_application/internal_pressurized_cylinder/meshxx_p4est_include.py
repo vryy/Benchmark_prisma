@@ -10,8 +10,7 @@ from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.MultithreadedSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
-from KratosMultiphysics.FiniteCellApplication import *
-from KratosMultiphysics.FiniteCellStructuralApplication import *
+from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.mpi import *
 from KratosMultiphysics.P4estApplication import *
 kernel = Kernel()   #defining kernel
@@ -83,6 +82,8 @@ class Model:
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = True
         self.analysis_parameters['log_residuum'] = logging
+        self.analysis_parameters['calculate_strain_energy'] = True
+        self.analysis_parameters['log_strain_energy'] = logging
         print("builder_and_solver_type: " + str(self.analysis_parameters['builder_and_solver_type']))
 
         self.abs_tol =        1e-06
@@ -105,7 +106,7 @@ class Model:
         #write_elements = WriteConditionsFlag.WriteElementsOnly
         post_mode = GiDPostMode.GiD_PostBinary
         multi_file_flag = MultiFileFlag.MultipleFiles
-        self.gid_io = StructuralGidIO( self.results_path+self.problem_name, post_mode, multi_file_flag, write_deformed_flag, write_elements )
+        self.gid_io = SDGidPostIO( self.results_path+self.problem_name, post_mode, multi_file_flag, write_deformed_flag, write_elements )
         self.model_part_io = ModelPartIO(self.path+self.problem_name)
         self.model_part_io.ReadModelPart(self.model_part)
         self.meshWritten = False
@@ -139,7 +140,8 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        plinear_solver = DiagonalFitSolver(MKLPardisoSolver())
+        plinear_solver = MKLPardisoSolver()
+        # plinear_solver = DiagonalFitSolver(MKLPardisoSolver())
         # plinear_solver = DiagonalFitSolver(SuperLUSolver())
 #        plinear_solver = SuperLUSolver()
 #        plinear_solver = CGSolver(1.0e-9, 1000, ILU0Preconditioner())
@@ -173,7 +175,8 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        plinear_solver = DiagonalFitSolver(MKLPardisoSolver())
+        plinear_solver = MKLPardisoSolver()
+        # plinear_solver = DiagonalFitSolver(MKLPardisoSolver())
         # plinear_solver = DiagonalFitSolver(SuperLUSolver())
 #        plinear_solver = SuperLUSolver()
 #        plinear_solver = CGSolver(1.0e-9, 1000, ILU0Preconditioner())
@@ -254,13 +257,15 @@ class Model:
         self.gid_io.WriteNodalResults(DISPLACEMENT, self.model_part.Nodes, time, 0)
         self.gid_io.WriteNodalResults(REACTION, self.model_part.Nodes, time, 0)
         self.gid_io.PrintOnGaussPoints(STRESSES, self.model_part, time)
+        self.gid_io.PrintOnGaussPoints(RECOVERY_STRESSES, self.model_part, time)
         self.gid_io.PrintOnGaussPoints(L2_ERROR, self.model_part, time)
         self.gid_io.PrintOnGaussPoints(H1_ERROR, self.model_part, time)
         #self.gid_io.PrintOnGaussPoints(CONTACT_PENETRATION, self.model_part, time)
         #self.gid_io.PrintOnGaussPoints(NORMAL, self.model_part, time, 0)
         self.gid_io.FinalizeResults()
+        self.gid_io.Reset()
 
-    def InitializeModel( self ):
+    def InitializeModel( self, stress_recovery_type=1, neighbour_expansion_level=1 ):
         ##################################################################
         ## STORE LAYER SETS ##############################################
         ##################################################################
@@ -316,6 +321,8 @@ class Model:
         self.model_part.Properties[1].SetValue(POISSON_RATIO,          0.3 )
         self.model_part.Properties[1].SetValue(THICKNESS, 1.0 )
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, PlaneStrain() )
+        self.model_part.Properties[1].SetValue(STRESS_RECOVERY_TYPE, stress_recovery_type )
+        self.model_part.Properties[1].SetValue(NEIGHBOUR_EXPANSION_LEVEL, neighbour_expansion_level )
         print("Linear elastic model selected for Isotropic3D, description: Steel")
         ##################################################################
         ## ACTIVATION ####################################################

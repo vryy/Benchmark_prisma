@@ -147,17 +147,9 @@ def ConstructSystemModelPart(p4est_model, params):
     layer_index = 1
     prop_index = 1
     element_name = params['element_name'] + element_postfix
-    gravity = Vector(3)
-    gravity[0] = 0.0
-    gravity[1] = 0.0
-    gravity[2] = 0.0
     prop = mp.Properties[prop_index]
-    prop.SetValue(DENSITY,            0 )
-    prop.SetValue(BODY_FORCE,            ZeroVector(3) )
-    prop.SetValue(YOUNG_MODULUS,      2.1e+11 )
-    prop.SetValue(POISSON_RATIO,          0.3 )
-    prop.SetValue(THICKNESS, 1.0 )
-    prop.SetValue(TENSILE_STRENGTH,          0.27712812921102037e9 )
+    prop.SetValue(BODY_FORCE,         [0., 0., 0.] )
+    prop.SetValue(TENSILE_STRENGTH,   0.27712812921102037e9 )
     if params['order'] == 1:
         prop.SetValue(INTEGRATION_ORDER,     2 )
     elif params['order'] == 2:
