@@ -1,0 +1,1 @@
+egrep -i 'Congratulations the time step solution is converged|obtained values displascement|disp:' $1
