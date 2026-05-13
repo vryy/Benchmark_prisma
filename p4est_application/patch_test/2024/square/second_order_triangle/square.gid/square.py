@@ -83,7 +83,7 @@ def Solve(model, p4est_model, time, output=True):
         node.SetSolutionStepValue(DISPLACEMENT_X, 0.1)
 
     model.Solve(time, 0, 0, 0, 0)
-    transfer_util.TransferVariablesToNodes(model.model_part, STRESSES)
+    transfer_util.TransferVariablesToNodes(model.model_part, STRESSES, 3)
     p4est_model.SynchronizeBackward()
 
     if output:
@@ -122,7 +122,7 @@ def main(logging=True, output=True):
     p4est_quad_nodal = P4estQuadData(p4est_order.Value)
     p4est_quad_nodal.Initialize()
     p4est_quad_nodal.Register(DISPLACEMENT)
-    p4est_quad_nodal.Register(STRESSES)
+    p4est_quad_nodal.Register(STRESSES, 3)
     p4est_quad_nodal.Finalize()
 
     p4est_quad_int = P4estQuadData(p4est_order.Value)

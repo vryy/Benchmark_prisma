@@ -74,7 +74,7 @@ def main(logging=True, output=True):
 
     p4est_quad_int = P4estQuadData(p4est_order.Value)
     p4est_quad_int.Initialize()
-    p4est_quad_int.Register(STRESSES)
+    p4est_quad_int.Register(STRESSES, 3)
     p4est_quad_int.Finalize()
 
     p4est_quad = P4estQuad(p4est_quad_nodal, p4est_quad_int)

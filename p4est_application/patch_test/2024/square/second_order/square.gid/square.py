@@ -66,7 +66,7 @@ def ApplyBC(mp):
             prescribed_nodes.append(node)
     return prescribed_nodes
 
-def Solve(model, p4est_model, time, output=True):
+def Solve(model, p4est_model, time, output=True, sync_method=1):
     prescribed_nodes = ApplyBC(model.model_part)
 
     time = time + 100.0
@@ -77,7 +77,16 @@ def Solve(model, p4est_model, time, output=True):
         node.SetSolutionStepValue(DISPLACEMENT_X, 0.1)
 
     model.Solve(time, 0, 0, 0, 0)
-    p4est_model.SynchronizeBackwardUsingExtrapolation()
+    if sync_method == 1:
+        p4est_model.SynchronizeBackwardUsingExtrapolation()
+    elif sync_method == 2:
+        transfer_util = VariableTransferUtility(SuperLUSolver())
+        transfer_util.TransferVariablesToNodes(model.model_part, STRESSES, 3)
+        p4est_model.SynchronizeBackward()
+
+        # for node in model.model_part.Nodes:
+        #     print(node.GetSolutionStepValue(STRESSES))
+        # sys.exit(0)
 
     if output:
         model.WriteOutput(time)
@@ -95,7 +104,7 @@ def Solve(model, p4est_model, time, output=True):
 
     return time
 
-def main(logging=True, output=True):
+def main(logging=True, output=True, sync_method=1):
 
     if mpi.size == 1:
         model = square_include.Model('square',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
@@ -119,7 +128,7 @@ def main(logging=True, output=True):
 
     p4est_quad_int = P4estQuadData(p4est_order.Value)
     p4est_quad_int.Initialize()
-    p4est_quad_int.Register(STRESSES)
+    p4est_quad_int.Register(STRESSES, 3)
     p4est_quad_int.Finalize()
 
     p4est_quad = P4estQuad(p4est_quad_nodal, p4est_quad_int)
@@ -138,7 +147,7 @@ def main(logging=True, output=True):
     ##### simulation #####
 
     time = 0.0
-    time = Solve(model, p4est_model, time, output=output)
+    time = Solve(model, p4est_model, time, output=output, sync_method=sync_method)
 
     ###############################
 
@@ -157,7 +166,7 @@ def main(logging=True, output=True):
     p4est_model.SynchronizeForward()
 
     # solve
-    time = Solve(model, p4est_model, time, output=output)
+    time = Solve(model, p4est_model, time, output=output, sync_method=sync_method)
 
     ###############################
 
@@ -177,7 +186,7 @@ def main(logging=True, output=True):
     p4est_model.SynchronizeForward()
 
     # solve
-    time = Solve(model, p4est_model, time, output=output)
+    time = Solve(model, p4est_model, time, output=output, sync_method=sync_method)
 
     ###############################
 
@@ -197,7 +206,7 @@ def main(logging=True, output=True):
     p4est_model.SynchronizeForward()
 
     # solve
-    time = Solve(model, p4est_model, time, output=output)
+    time = Solve(model, p4est_model, time, output=output, sync_method=sync_method)
 
     ###############################
 
@@ -217,20 +226,21 @@ def main(logging=True, output=True):
     p4est_model.SynchronizeForward()
 
     # solve
-    time = Solve(model, p4est_model, time, output=output)
+    time = Solve(model, p4est_model, time, output=output, sync_method=sync_method)
 
     return model
 
 def test():
-    model = main(logging = False, output = False)
+    for i in [1, 2]:
+        model = main(logging = False, output = False, sync_method=i)
 
-    for elem in model.model_part.Elements:
-        stresses = elem.GetValuesOnIntegrationPoints(STRESSES, model.model_part.ProcessInfo)
-        stress_xx = []
-        for stress in stresses:
-            stress_xx.append(round(stress[0], 2))
-        for stress in stress_xx:
-            assert(abs(stress - 0.2) < 1e-10)
+        for elem in model.model_part.Elements:
+            stresses = elem.GetValuesOnIntegrationPoints(STRESSES, model.model_part.ProcessInfo)
+            stress_xx = []
+            for stress in stresses:
+                stress_xx.append(round(stress[0], 2))
+            for stress in stress_xx:
+                assert(abs(stress - 0.2) < 1e-10)
     print("Test passed")
 
 def tag():
