@@ -51,6 +51,26 @@ class P4RefinementProcessAll():
             p4est_model.Refine()
             p4est_model.Repartition(balance_option)
 
+## refinement process that refine everything
+class P4RefinementProcessBasedOnRefineVector():
+    def __init__(self, refine_vector):
+        self.refine_vector = refine_vector
+        self.recursive = 0
+        self.max_level = 99
+        self.balance_option = 0
+
+    def Execute(self, p4est_model):
+        # create the refinement vector
+        ncell = p4est_model.NumberOfCells()
+        print(f"ncell: {ncell}")
+        refine_vector = ncell*[0]
+        for cell_id in self.refine_vector:
+            refine_vector[cell_id - 1] = 1
+        #
+        p4est_model.Mark(refine_vector)
+        p4est_model.Refine(self.recursive, self.max_level)
+        p4est_model.Repartition(self.balance_option)
+
 ## set the layer index for the elements in a model
 def SetLayerIndex(model):
     for elem in model.model_part.Elements:
@@ -74,8 +94,8 @@ def CreateP4estModel(model_part, params):
 
     p4est_quad_int = P4estQuadData(p4est_order.Value)
     p4est_quad_int.Initialize()
-    p4est_quad_int.Register(STRESSES)
-    p4est_quad_int.Register(PRESTRESS)
+    p4est_quad_int.Register(STRESSES, 3)
+    p4est_quad_int.Register(PRESTRESS, 3)
     p4est_quad_int.Finalize()
 
     p4est_quad = P4estQuad(p4est_quad_nodal, p4est_quad_int)

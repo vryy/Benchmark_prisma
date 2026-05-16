@@ -7,9 +7,7 @@ import math
 import time as time_module
 ##################################################################
 include_path = os.getcwd() + '/../'
-mdpa_path = os.getcwd() + '/../design_data/mesh10x10.gid/'
 sys.path.append(include_path)
-sys.path.append(mdpa_path)
 import meshxx_p4est_include
 from meshxx_p4est_include import *
 
@@ -23,9 +21,11 @@ import analytical_solution
 
 start = time_module.time()
 
-def main(logging=True, output=True,nrefine=0,stress_recovery_type=0,neighbour_expansion_level=1):
+def main(name="mesh10x10", logging=True, output=True,nrefine=0,stress_recovery_type=0,neighbour_expansion_level=1):
 
-    model = meshxx_p4est_include.Model('mesh10x10',mdpa_path,os.getcwd()+"/",logging=logging)
+    mdpa_path = os.getcwd() + '/../design_data/' + name + '.gid/'
+
+    model = meshxx_p4est_include.Model(name,mdpa_path,os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     params = {}
@@ -43,15 +43,17 @@ def main(logging=True, output=True,nrefine=0,stress_recovery_type=0,neighbour_ex
     params["initial_refinement_process"] = p4est_simulator.P4RefinementProcessAll(nrefine)
     ##########################
     sim = simulator.Simulator(params)
+    sim.Initialize(model)
+    sim.Update(model)
     sim.Run(model, logging=logging)
 
     return model
 
 def test():
-    model = main(logging=False, output=False, nrefine=0, stress_recovery_type=1, neighbour_expansion_level=1)
-    l2_error_ref = 5.7472686304219853e-03
-    h1_error_ref = 6.9721831732381820e-02
-    h1_error_rs_ref = 1.9371376297527044e-02
+    model = main(logging=False, output=False, nrefine=1, stress_recovery_type=1, neighbour_expansion_level=1)
+    l2_error_ref = 1.4467271166261504e-03
+    h1_error_ref = 3.5049873600182184e-02
+    h1_error_rs_ref = 6.6422792656567146e-03
     print("%.16e" % model.l2_error)
     print("%.16e" % model.h1_error)
     print("%.16e" % model.h1_error_rs)

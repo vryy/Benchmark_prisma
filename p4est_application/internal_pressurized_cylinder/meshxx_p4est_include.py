@@ -267,51 +267,6 @@ class Model:
 
     def InitializeModel( self, stress_recovery_type=1, neighbour_expansion_level=1 ):
         ##################################################################
-        ## STORE LAYER SETS ##############################################
-        ##################################################################
-        model_layers = __import__(self.problem_name+"_layers")
-        ## ELEMENTS on layers ############################################
-        self.layer_sets = model_layers.ReadLayerSets()
-        ## NODES on layers ###############################################
-        self.layer_nodes_sets = model_layers.ReadLayerNodesSets()
-        ## CONTACT MASTER NODES ##########################################
-        #self.contact_master_nodes = model_layers.ReadContactMasterNodes()
-        ## CONTACT SLAVE NODES ###########################################
-        #self.contact_slave_nodes = model_layers.ReadContactSlaveNodes()
-        ##################################################################
-        print("layer sets stored")
-        ##################################################################
-        ## STORE NODES ON GROUND SURFACE #################################
-        ##################################################################
-        self.top_surface_nodes = model_layers.ReadTopSurfaceNodes()
-        print("nodes on ground surface stored")
-        ##################################################################
-        ## STORE NODES ON SIDE ###########################################
-        ##################################################################
-        self.boundary_nodes = model_layers.ReadBoundaryNodes()
-        print("nodes on side surface stored")
-        ##################################################################
-        ## STORE NODES CORRECTLY FOR CONDITIONS ##########################
-        ##################################################################
-        self.node_groups = model_layers.ReadNodeGroups()
-        print("node groups stored")
-        ##################################################################
-        ## EXTRACT CONDITIONS FROM NODE GROUPS ###########################
-        ##################################################################
-        self.layer_cond_sets = {}
-        for layer, node_group in six.iteritems(self.node_groups):
-            self.layer_cond_sets[layer] = []
-        for layer, node_group in six.iteritems(self.node_groups):
-            for cond in self.model_part.Conditions:
-                in_group = True
-                for node in cond.GetNodes():
-                    if node.Id not in node_group:
-                        in_group = False
-                        break
-                if in_group:
-                    self.layer_cond_sets[layer].append(cond.Id)
-        print("conditions in node groups stored")
-        ##################################################################
         ## INITIALISE CONSTITUTIVE LAWS ##################################
         ##################################################################
         #set material parameters

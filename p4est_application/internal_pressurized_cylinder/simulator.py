@@ -115,10 +115,11 @@ class Simulator:
 
         # create p4est model
         p4est_simulator.SetLayerIndex(model)
-        p4est_model = p4est_simulator.CreateP4estModel(model.model_part, self.params)
+        self.p4est_model = p4est_simulator.CreateP4estModel(model.model_part, self.params)
 
+    def Update(self, model):
         # create the model_part
-        [mp, layer_sets, layer_cond_sets, node_groups, element_assignments] = p4est_simulator.ConstructSystemModelPart(p4est_model, self.params)
+        [mp, layer_sets, layer_cond_sets, node_groups, element_assignments] = p4est_simulator.ConstructSystemModelPart(self.p4est_model, self.params)
         model.SetModelPart(mp)
         model.InitializeModel(stress_recovery_type = self.params["stress_recovery_type"], neighbour_expansion_level=self.params['neighbour_expansion_level'])
 
@@ -134,8 +135,7 @@ class Simulator:
 
         model.solver.solver.MoveMeshFlag = False
 
-    def Run(self, model, logging=True):
-        self.Initialize(model)
+    def Run(self, model, time=1.0, logging=True):
         ##################################################################
         ###  SIMULATION  #################################################
         ##################################################################
@@ -209,7 +209,6 @@ class Simulator:
             print("setup loading P = " + str(P) + " completed")
             ############################################
 
-            time = P
             model.Solve(time, 0, 0, 0, 0)
 
             end_time = time_module.time()
