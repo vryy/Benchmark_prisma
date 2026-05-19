@@ -121,10 +121,67 @@ def study(output=True, logging=True, ratio=0.1, nrefine=15):
     if logging:
         ifile.close()
 
-    return model
+    return sim, model
+
+def study1(output=True, logging=True, ratio=0.1, nrefine=15):
+    model = meshxx_p4est_include.Model('mesh10x10',mdpa_path,os.getcwd()+"/",logging=False)
+    model.InitializeModel()
+
+    params = create_params(output=output, stress_recovery_type=0, refine_vector=[])
+
+    sim = simulator.Simulator(params)
+    sim.Initialize(model)
+
+    ############
+
+    if logging:
+        ifile = open("convergence.log", "w")
+        ifile.write("%-*s%-*s%-*s%s\n" % (10, "ndofs", 30, "l2_error", 30, "h1_error", "h1_error_rs"))
+    refine_vector = []
+    stress_util = RecoverStressUtility()
+    for i in range(0, nrefine):
+        print(f"#####################################################")
+        print(f"############SOLVING the refinement step {i+1}############")
+        print(f"#####################################################", flush=True)
+
+        refine_process = p4est_simulator.P4RefinementProcessBasedOnRefineVector(refine_vector)
+        refine_process.Execute(sim.p4est_model)
+        sim.Update(model)
+        sim.Run(model, time=i+1, logging=False)
+
+        # compute the error and mark the element to refine
+        print(f"############COMPUTING THE KELLY ERROR ESTIMATOR############")
+        ee_vec = []
+        e_vec = []
+        icon = sim.p4est_model.ConstructInterfaces()
+        stress_util.ResetLocalError(model.model_part.Elements)
+        stress_util.ComputeKellyErrorEstimation(icon, DISPLACEMENT)
+        for elem in model.model_part.Elements:
+            ee = elem.GetValue(LOCAL_ERROR)
+            e_vec.append(elem.Id)
+            ee_vec.append(ee)
+        threshold = find_value2(ee_vec, ratio=ratio)
+        print(f"threshold: {threshold}")
+        refine_vector = []
+        for i in range(0, len(e_vec)):
+            if ee_vec[i] > threshold:
+                refine_vector.append(e_vec[i])
+        # print(f"refine_vector: {refine_vector}")
+        # print(f"len(refine_vector): {len(refine_vector)}")
+        # print(f"e_vec: {e_vec}")
+        # print(f"len(e_vec): {len(e_vec)}")
+        #
+        if logging:
+            ifile.write("%-*d%-*.16e%-*.16e%.16e\n" % (10, model.solver.solver.builder_and_solver.GetEquationSystemSize(), 30, model.l2_error, 30, model.h1_error, model.h1_error_rs))
+            ifile.flush()
+        #
+    if logging:
+        ifile.close()
+
+    return sim, model
 
 def test():
-    model = study(output=False, logging=False, ratio=0.1, nrefine=8)
+    sim, model = study(output=False, logging=False, ratio=0.1, nrefine=8)
     l2_error_ref = 5.4070169429321210e-04
     h1_error_ref = 4.1737228270184397e-02
     h1_error_rs_ref = 9.5609903401865804e-03
@@ -135,6 +192,19 @@ def test():
     assert(abs(model.h1_error - h1_error_ref) < 1e-10)
     assert(abs(model.h1_error_rs - h1_error_rs_ref) < 1e-10)
     print("Test passed")
+
+def test1():
+    sim, model = study(output=False, logging=False, ratio=0.1, nrefine=2)
+
+    # util = P4estUtilities()
+    # util.DumpHalfEdges(sim.p4est_model)
+
+    icon = sim.p4est_model.ConstructInterfaces()
+    # print(icon)
+    stress_util = RecoverStressUtility()
+    stress_util.ResetLocalError(model.model_part.Elements)
+    kee = stress_util.ComputeKellyErrorEstimation(icon, DISPLACEMENT)
+    print("kee: %.16e" % (kee))
 
 def tag():
     return "p4est"
