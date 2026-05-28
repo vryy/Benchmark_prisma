@@ -15,10 +15,9 @@ start_time = time_module.time()
 sys.path.append("../..")
 import analytical_solution
 
-def main(logging=True, output=True):
+def run(model, output=True):
 
-    model = mesh10x10_include.Model('mesh10x10',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
-    model.InitializeModel()
+    # boundary condition
 
     P = 1.0e2
     load = Vector(3)
@@ -31,6 +30,15 @@ def main(logging=True, output=True):
         load[1] = P * math.sin(t)
         load[2] = 0.0
         node.SetSolutionStepValue(FACE_LOAD, load)
+
+    tol = 1e-06
+    for node in model.model_part.Nodes:
+        if abs(node.X0) < tol:
+            node.Fix(DISPLACEMENT_X)
+        if abs(node.Y0) < tol:
+            node.Fix(DISPLACEMENT_Y)
+
+    # analysis
 
     time = 1.0
     model.Solve(time, 0, 0, 0, 0)
@@ -89,11 +97,20 @@ def main(logging=True, output=True):
 
     return model
 
+def main(logging=True, output=True):
+
+    model = mesh10x10_include.Model('mesh10x10',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
+    model.InitializeModel()
+
+    model = run(model, output=output)
+
+    return model
+
 def test():
 
     model = main(logging=False, output=False)
-    l2_error_ref = 1.5686134762428691e-02
-    h1_error_ref = 9.1667144584522853e-02
+    l2_error_ref = 1.7467908086117562e-02
+    h1_error_ref = 9.1725497539060563e-02
     assert(abs(model.l2_error - l2_error_ref) < 1e-10)
     assert(abs(model.h1_error - h1_error_ref) < 1e-10)
     print("Test passed")

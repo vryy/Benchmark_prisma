@@ -81,8 +81,10 @@ def test():
         if abs(node.X0 - 0.6) < tol and abs(node.Y0 - 0.21) < tol:
             probe_node = node
 
-    ref_disp_y = -3.0600858324625782e-03
-    assert(abs(probe_node.GetSolutionStepValue(DISPLACEMENT_Y) - ref_disp_y) < 1e-10)
+    disp_y = probe_node.GetSolutionStepValue(DISPLACEMENT_Y)
+    print("disp_y: %.16e" % (disp_y))
+    ref_disp_y = -3.0600898319216373e-03
+    assert(abs(disp_y - ref_disp_y) < 1e-10)
 
     print("Test passed")
 

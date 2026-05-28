@@ -38,10 +38,10 @@ def test():
     model = main(output=False, logging=False)
 
     stress_util = RecoverStressUtility()
-    ee = stress_util.ComputeKellyErrorEstimation(model.model_part, DISPLACEMENT)
+    ee = stress_util.ComputeKellyErrorEstimation2D(model.model_part, DISPLACEMENT)
 
     print("ee: %.16e" % (ee))
-    ee_ref = 1.1756147477114069e-03
+    ee_ref = 1.1707745861426584e-03
     assert(abs(ee - ee_ref) < 1e-10)
 
     print("Test passed")
