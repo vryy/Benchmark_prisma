@@ -7,7 +7,7 @@ import time as time_module
 import cube_include
 from cube_include import *
 ##################################################################
-###  SIMULATION  #####################cube_0.post.bin############################
+###  SIMULATION  #################################################
 start_time = time_module.time()
 ##################################################################
 
@@ -101,22 +101,58 @@ def test():
     print("num nodes: %d" % (len(model.model_part.Nodes)))
     print("num elements: %d" % (len(model.model_part.Elements)))
 
-    assert(len(model.model_part.Nodes) == 7178)
-    assert(len(model.model_part.Elements) == 38777)
+    if KratosMmgApplication.GetMmgVersion() == "5.5.2":
 
-    mon_node = model.model_part.Nodes[151]
-    ux = mon_node.GetSolutionStepValue(DISPLACEMENT_X)
-    uy = mon_node.GetSolutionStepValue(DISPLACEMENT_Y)
-    uz = mon_node.GetSolutionStepValue(DISPLACEMENT_Z)
-    print("ux: %.16e" % (ux))
-    print("uy: %.16e" % (uy))
-    print("uz: %.16e" % (uz))
-    ux_ref = -6.5226439470000288e-04
-    uy_ref = -1.9167209820000205e-04
-    uz_ref = 1.2033793050000032e-03
-    assert(abs(ux - ux_ref) < 1e-10)
-    assert(abs(uy - uy_ref) < 1e-10)
-    assert(abs(uz - uz_ref) < 1e-10)
+        assert(len(model.model_part.Nodes) == 7178)
+        assert(len(model.model_part.Elements) == 38777)
+
+        mon_node = model.model_part.Nodes[151]
+        ux = mon_node.GetSolutionStepValue(DISPLACEMENT_X)
+        uy = mon_node.GetSolutionStepValue(DISPLACEMENT_Y)
+        uz = mon_node.GetSolutionStepValue(DISPLACEMENT_Z)
+        print("ux: %.16e" % (ux))
+        print("uy: %.16e" % (uy))
+        print("uz: %.16e" % (uz))
+        ux_ref = -6.5226439470000288e-04
+        uy_ref = -1.9167209820000205e-04
+        uz_ref = 1.2033793050000032e-03
+        assert(abs(ux - ux_ref) < 1e-10)
+        assert(abs(uy - uy_ref) < 1e-10)
+        assert(abs(uz - uz_ref) < 1e-10)
+
+    elif KratosMmgApplication.GetMmgVersion() == "5.8.0":
+
+        assert(len(model.model_part.Nodes) == 7144)
+        assert(len(model.model_part.Elements) == 38569)
+
+        mon_node = model.model_part.Nodes[151]
+        x = mon_node.X0
+        y = mon_node.Y0
+        z = mon_node.Z0
+        ux = mon_node.GetSolutionStepValue(DISPLACEMENT_X)
+        uy = mon_node.GetSolutionStepValue(DISPLACEMENT_Y)
+        uz = mon_node.GetSolutionStepValue(DISPLACEMENT_Z)
+        print("x: %.16e" % (x))
+        print("y: %.16e" % (y))
+        print("z: %.16e" % (z))
+        print("ux: %.16e" % (ux))
+        print("uy: %.16e" % (uy))
+        print("uz: %.16e" % (uz))
+        x_ref = 4.3632775847908845e-01
+        y_ref = 1.2935882555313419e-01
+        z_ref = 2.3621297167973243e-01
+        ux_ref = -6.5449163771863147e-04
+        uy_ref = -1.9403823832970105e-04
+        uz_ref = 1.1810648583986602e-03
+        assert(abs(x - x_ref) < 1e-10)
+        assert(abs(y - y_ref) < 1e-10)
+        assert(abs(z - z_ref) < 1e-10)
+        assert(abs(ux - ux_ref) < 1e-10)
+        assert(abs(uy - uy_ref) < 1e-10)
+        assert(abs(uz - uz_ref) < 1e-10)
+
+    else:
+        raise Exception(f"This test is not implemented for MMg version {KratosMmgApplication.GetMmgVersion()}")
 
     print("Test passed")
 

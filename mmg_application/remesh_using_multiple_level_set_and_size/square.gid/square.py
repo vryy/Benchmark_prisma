@@ -144,18 +144,49 @@ def test():
 
     model = main(output=False, logging=False, output_gmsh=False)
 
-    assert(len(model.model_part.Nodes) == 1162)
-    assert(len(model.model_part.Elements) == 2234)
+    print(f"len(model.model_part.Nodes): {len(model.model_part.Nodes)}")
+    print(f"len(model.model_part.Elements): {len(model.model_part.Elements)}")
 
-    mon_node = model.model_part.Nodes[684]
-    ux = mon_node.GetSolutionStepValue(DISPLACEMENT_X)
-    uy = mon_node.GetSolutionStepValue(DISPLACEMENT_Y)
-    print("ux: %.16e" % (ux))
-    print("uy: %.16e" % (uy))
-    ux_ref = -1.0797686208854366e-03
-    uy_ref = 1.5528509112974270e-03
-    assert(abs(ux - ux_ref) < 1e-10)
-    assert(abs(uy - uy_ref) < 1e-10)
+    if KratosMmgApplication.GetMmgVersion() == "5.5.2":
+
+        assert(len(model.model_part.Nodes) == 1162)
+        assert(len(model.model_part.Elements) == 2234)
+
+        mon_node = model.model_part.Nodes[684]
+        ux = mon_node.GetSolutionStepValue(DISPLACEMENT_X)
+        uy = mon_node.GetSolutionStepValue(DISPLACEMENT_Y)
+        print("ux: %.16e" % (ux))
+        print("uy: %.16e" % (uy))
+        ux_ref = -1.0797686208854366e-03
+        uy_ref = 1.5528509112974270e-03
+        assert(abs(ux - ux_ref) < 1e-10)
+        assert(abs(uy - uy_ref) < 1e-10)
+
+    elif KratosMmgApplication.GetMmgVersion() == "5.8.0":
+
+        assert(len(model.model_part.Nodes) == 1243)
+        assert(len(model.model_part.Elements) == 2392)
+
+        mon_node = model.model_part.Nodes[695]
+        x = mon_node.X0
+        y = mon_node.Y0
+        ux = mon_node.GetSolutionStepValue(DISPLACEMENT_X)
+        uy = mon_node.GetSolutionStepValue(DISPLACEMENT_Y)
+        print("x: %.16e" % (x))
+        print("y: %.16e" % (y))
+        print("ux: %.16e" % (ux))
+        print("uy: %.16e" % (uy))
+        x_ref = 5.0373986486018885e-01
+        y_ref = 6.8000152265791591e-01
+        ux_ref = -1.0925955527247627e-03
+        uy_ref = 1.5663870949336350e-03
+        assert(abs(x - x_ref) < 1e-10)
+        assert(abs(y - y_ref) < 1e-10)
+        assert(abs(ux - ux_ref) < 1e-10)
+        assert(abs(uy - uy_ref) < 1e-10)
+
+    else:
+        raise Exception(f"This test is not implemented for MMg version {KratosMmgApplication.GetMmgVersion()}")
 
     print("Test passed")
 
