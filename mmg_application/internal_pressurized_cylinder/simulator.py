@@ -111,10 +111,10 @@ class Simulator:
         self.params['boundaries'][1] = ils
         self.params['boundaries'][2] = ols
 
+    def Update(self, model):
         # create mmg model
         self.mmg_model = mmg_simulator.CreateMmgModel(model.model_part, self.params)
 
-    def Update(self, model):
         # create the model_part
         [mp, layer_sets, layer_cond_sets, node_groups, element_assignments] = mmg_simulator.ConstructSystemModelPart(self.mmg_model, self.params)
         model.SetModelPart(mp)

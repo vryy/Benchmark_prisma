@@ -259,6 +259,7 @@ class Model:
         print("write nodal displacements")
         self.gid_io.WriteNodalResults(DISPLACEMENT, self.model_part.Nodes, time, 0)
         self.gid_io.WriteNodalResults(REACTION, self.model_part.Nodes, time, 0)
+        self.gid_io.WriteNodalResults(NODAL_MMG_SCALAR_METRIC, self.model_part.Nodes, time, 0)
         # self.gid_io.WriteNodalResults(FACE_LOAD, self.model_part.Nodes, time, 0)
         self.gid_io.PrintOnGaussPoints(STRESSES, self.model_part, time)
         self.gid_io.PrintOnGaussPoints(RECOVERY_STRESSES, self.model_part, time)

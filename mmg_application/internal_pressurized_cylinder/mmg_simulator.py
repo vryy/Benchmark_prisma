@@ -37,30 +37,26 @@ class MmgRefinementProcessAll():
     def __init__(self, mesh_size):
         self.h = mesh_size
 
-    def Execute(self, model_part, mmg_model):
+    def Initialize(self, mmg_model):
         mmg_model.SetValue(MMG_HAUSDORFF_DISTANCE, self.h)
+
+    def Execute(self, model_part):
         for node in model_part.Nodes:
             node.SetSolutionStepValue(NODAL_MMG_SCALAR_METRIC, self.h)
 
-# ## refinement process that refine everything
-# class P4RefinementProcessBasedOnRefineVector():
-#     def __init__(self, refine_vector):
-#         self.refine_vector = refine_vector
-#         self.recursive = 0
-#         self.max_level = 99
-#         self.balance_option = 0
+## refinement process that refines only the nodes specified by the refine vector
+class MmgRefinementProcessBasedOnRefineVector():
+    def __init__(self, refine_vector):
+        self.refine_vector = refine_vector
 
-#     def Execute(self, mmg_model):
-#         # create the refinement vector
-#         ncell = mmg_model.NumberOfCells()
-#         print(f"ncell: {ncell}")
-#         refine_vector = ncell*[0]
-#         for cell_id in self.refine_vector:
-#             refine_vector[cell_id - 1] = 1
-#         #
-#         mmg_model.Mark(refine_vector)
-#         mmg_model.Refine(self.recursive, self.max_level)
-#         mmg_model.Repartition(self.balance_option)
+    def Initialize(self, mmg_model):
+        pass # DO NOTHING
+
+    def Execute(self, model_part):
+        for node_id in self.refine_vector:
+            node = model_part.Nodes[node_id]
+            h = node.GetSolutionStepValue(NODAL_MMG_SCALAR_METRIC)
+            node.SetSolutionStepValue(NODAL_MMG_SCALAR_METRIC, 0.5*h)
 
 ## create the Mmg model from the model_part
 def CreateMmgModel(model_part, params):
@@ -69,9 +65,12 @@ def CreateMmgModel(model_part, params):
     # refinement
     if 'initial_refinement_process' in params:
         if params['initial_refinement_process'] != None:
-            params['initial_refinement_process'].Execute(model_part, mmg_model)
+            params['initial_refinement_process'].Initialize(mmg_model)
+            params['initial_refinement_process'].Execute(model_part)
 
     # mmg_model.SetValue(MMG_GRADATION, 1.1)
+    if 'hausdorff_distance' in params:
+        mmg_model.SetValue(MMG_HAUSDORFF_DISTANCE, params['hausdorff_distance'])
     mmg_model.SetIParam(MMG2D_Param.IPARAM_verbose, 10)
     mmg_model.Initialize(model_part)
     mmg_model.Remesh()

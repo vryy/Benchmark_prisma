@@ -105,10 +105,11 @@
     axis equal,
     grid=major,
     legend style={at={(1,1)},anchor=north east},
-    legend entries={uniform-t3},
+    legend entries={uniform-t3,amr-t3},
     mark size=1pt,
 ]
 \addplot table[x expr={sqrt(\thisrow{ndofs})},y=l2_error] {../uniform_refinement/t3/convergence.log};
+\addplot table[x expr={sqrt(\thisrow{ndofs})},y=l2_error] {../amr/t3/convergence.log};
 \logLogSlopeTriangleLeft{0.57}{0.08}{0.2}{2}{black};
 \end{loglogaxis}
 \end{tikzpicture}
@@ -145,11 +146,11 @@
     axis equal,
     grid=major,
     legend style={at={(1,1)},anchor=north east},
-    legend entries={uniform-t3},
+    legend entries={uniform-t3,amr-t3},
     mark size=1pt,
 ]
 \addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error] {../uniform_refinement/t3/convergence.log};
-% \addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error] {../uniform_refinement/t6/convergence.log};
+\addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error] {../amr/t3/convergence.log};
 \logLogSlopeTriangleLeft{0.69}{0.08}{0.15}{1}{black};
 \end{loglogaxis}
 \end{tikzpicture}
