@@ -37,7 +37,7 @@ def create_params(output=True, stress_recovery_type=0, neighbour_expansion_level
     params["stress_recovery_type"] = stress_recovery_type
     params["neighbour_expansion_level"] = neighbour_expansion_level
     #####p4est parameters#####
-    params["order"] = 1
+    params["order"] = 2
     params["element_name"] = "KinematicLinear"
     params["condition_name"] = "LinePressure"
     params["initial_refinement_process"] = p4est_simulator.P4RefinementProcessBasedOnRefineVector(refine_vector)
@@ -186,9 +186,9 @@ def study1(output=True, logging=True, ratio=0.1, nrefine=15):
 
 def test():
     sim, model = study(output=False, logging=False, ratio=0.1, nrefine=8)
-    l2_error_ref = 5.4070169429321210e-04
-    h1_error_ref = 4.1737228270184397e-02
-    h1_error_rs_ref = 9.5609903401865804e-03
+    l2_error_ref = 6.9723559666458681e-05
+    h1_error_ref = 4.3877765682532495e-03
+    h1_error_rs_ref = 6.9957615170103508e-03
     print("%.16e" % model.l2_error)
     print("%.16e" % model.h1_error)
     print("%.16e" % model.h1_error_rs)
@@ -198,19 +198,10 @@ def test():
     print("Test passed")
 
 def test1():
-    sim, model = study(output=False, logging=False, ratio=0.1, nrefine=2)
+    sim, model = study(output=True, logging=False, ratio=0.1, nrefine=2)
 
-    # util = P4estUtilities()
-    # util.DumpHalfEdges(sim.p4est_model)
-
-    icon = sim.p4est_model.ConstructInterfaces()
-    # print(icon)
-    stress_util = RecoverStressUtility()
-    stress_util.ResetLocalError(model.model_part.Elements)
-    kee = stress_util.ComputeKellyErrorEstimation(icon, DISPLACEMENT)
-    print("kee: %.16e" % (kee))
-
-    # model.WriteOutput(2.0)
+    util = P4estUtilities()
+    util.DumpHalfEdges(sim.p4est_model)
 
 def tag():
     return "p4est"

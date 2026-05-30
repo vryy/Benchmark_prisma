@@ -63,11 +63,12 @@
     axis equal,
     grid=major,
     legend style={at={(1,1)},anchor=north east},
-    legend entries={uniform,amr},
+    legend entries={uniform,amr,amr-p=2},
     mark size=1pt,
 ]
 \addplot table[x expr={sqrt(\thisrow{ndofs})},y=l2_error] {../uniform_refinement/convergence.log};
 \addplot table[x expr={sqrt(\thisrow{ndofs})},y=l2_error] {../amr/convergence.log};
+\addplot table[x expr={sqrt(\thisrow{ndofs})},y=l2_error] {../amr_p=2/convergence.log};
 \logLogSlopeTriangleLeft{0.57}{0.08}{0.2}{2}{black};
 \end{loglogaxis}
 \end{tikzpicture}
@@ -85,35 +86,36 @@
     axis equal,
     grid=major,
     legend style={at={(1,1)},anchor=north east},
-    legend entries={uniform,amr},
+    legend entries={uniform,amr,amr-p=2},
     mark size=1pt,
 ]
 \addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error] {../uniform_refinement/convergence.log};
 \addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error] {../amr/convergence.log};
+\addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error] {../amr_p=2/convergence.log};
 \logLogSlopeTriangleLeft{0.7}{0.08}{0.15}{1}{black};
 \end{loglogaxis}
 \end{tikzpicture}
 
 %%%%
 
-\begin{tikzpicture}
-\begin{loglogaxis}[
-%    title=Convergence Plot,
-    width=0.5\textwidth,
-    height=0.4\textwidth,
-    xlabel={Degrees of freedom},
-    ylabel={$H_1$ Error (RS)},
-    y label style={at={(axis description cs:-0.2,.5)},anchor=south},
-    axis equal,
-    grid=major,
-    legend style={at={(1,1)},anchor=north east},
-    legend entries={uniform,amr},
-    mark size=1pt,
-]
-\addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error_rs] {../uniform_refinement/convergence.log};
-\addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error_rs] {../amr/convergence.log};
-\logLogSlopeTriangleLeft{0.5}{0.08}{0.15}{1}{black};
-\end{loglogaxis}
-\end{tikzpicture}
+% \begin{tikzpicture}
+% \begin{loglogaxis}[
+% %    title=Convergence Plot,
+%     width=0.5\textwidth,
+%     height=0.4\textwidth,
+%     xlabel={Degrees of freedom},
+%     ylabel={$H_1$ Error (RS)},
+%     y label style={at={(axis description cs:-0.2,.5)},anchor=south},
+%     axis equal,
+%     grid=major,
+%     legend style={at={(1,1)},anchor=north east},
+%     legend entries={uniform,amr},
+%     mark size=1pt,
+% ]
+% \addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error_rs] {../uniform_refinement/convergence.log};
+% \addplot table[x expr={sqrt(\thisrow{ndofs})},y=h1_error_rs] {../amr/convergence.log};
+% \logLogSlopeTriangleLeft{0.5}{0.08}{0.15}{1}{black};
+% \end{loglogaxis}
+% \end{tikzpicture}
 
 \end{document}
