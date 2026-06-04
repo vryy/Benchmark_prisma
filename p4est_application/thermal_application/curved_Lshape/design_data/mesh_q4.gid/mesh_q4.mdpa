@@ -1,0 +1,121 @@
+//problemtype for KRATOS structural application
+//and ekate extension
+//(c) 2012 Janosch Stascheit, Ruhr-University Bochum
+//(c) 2016, 2017, 2018, 2019, 2020, 2021, 2022 Hoang Giang Bui, Ruhr-University Bochum
+//(c) 2023 Hoang Giang Bui, Helmholtz-Zentrum Hereon
+//Greetings from ekate.tcl -> Life is wonderful.
+
+Begin ModelPartData
+//  VARIABLE_NAME value
+End ModelPartData
+
+Begin Properties 1
+BODY_FORCE [3] (0.0, 0.0, 0.0)
+GRAVITY [3] ( 0.0, 0.0, 0.0 )
+End Properties
+
+Begin Properties 2
+End Properties
+
+Begin Properties 3
+End Properties
+
+Begin Properties 4
+End Properties
+
+Begin Nodes
+1   -0.5980762114  -1.5000000000  0.0000000000
+2   -0.1650635095  -1.2500000000  0.0000000000
+3   -0.8977774948  -0.7764570758  0.0000000000
+4   -0.4148145790  -0.6470475632  0.0000000000
+5   0.2679491924  -1.0000000000  0.0000000000
+6   0.0681483368  -0.5176380505  0.0000000000
+7   -0.5000000000  0.0000000000  0.0000000000
+8   -1.0000000000  0.0000000000  0.0000000000
+9   0.0000000000  0.0000000000  0.0000000000
+10   0.5000000000  0.0000000000  0.0000000000
+11   0.0681483368  0.5176380505  0.0000000000
+12   -0.4148145790  0.6470475632  0.0000000000
+13   1.0000000000  0.0000000000  0.0000000000
+14   0.5511112526  0.3882285379  0.0000000000
+15   -0.8977774948  0.7764570758  0.0000000000
+16   1.0340741684  0.2588190253  0.0000000000
+17   0.7009618943  0.7500000000  0.0000000000
+18   0.2679491924  1.0000000000  0.0000000000
+19   1.1339745962  0.5000000000  0.0000000000
+20   -0.1650635095  1.2500000000  0.0000000000
+21   -0.5980762114  1.5000000000  0.0000000000
+End Nodes
+
+Begin Elements KinematicLinear2D4N
+1  1 15 12 20 21
+2  1 8 7 12 15
+3  1 12 11 18 20
+4  1 7 9 11 12
+5  1 11 14 17 18
+6  1 9 10 14 11
+7  1 14 16 19 17
+8  1 10 13 16 14
+9  1 7 4 6 9
+10  1 8 3 4 7
+11  1 4 2 5 6
+12  1 3 1 2 4
+End Elements
+//Begin Conditions Condition2D
+//1799 0        644        650
+//1800 0        650        663
+//1801 0        663        673
+//...
+//1947 0        972        973
+//1948 0        973        974
+//End Conditions
+
+Begin Conditions DummyLineCondition2D2N
+1      3    21 15
+//ElementAssignment 1 1
+2      4    20 21
+//ElementAssignment 2 1
+3      3    15 8
+//ElementAssignment 3 2
+4      4    18 20
+//ElementAssignment 4 3
+5      4    17 18
+//ElementAssignment 5 5
+6      4    9 10
+//ElementAssignment 6 6
+7      1    16 19
+//ElementAssignment 7 7
+8      4    19 17
+//ElementAssignment 8 7
+9      1    13 16
+//ElementAssignment 9 8
+10      4    10 13
+//ElementAssignment 10 8
+11      2    6 9
+//ElementAssignment 11 9
+12      3    8 3
+//ElementAssignment 12 10
+13      2    5 6
+//ElementAssignment 13 11
+14      4    2 5
+//ElementAssignment 14 11
+15      3    3 1
+//ElementAssignment 15 12
+16      4    1 2
+//ElementAssignment 16 12
+End Conditions
+
+Begin ElementalData USE_DISTRIBUTED_PROPERTIES
+1 1
+2 1
+3 1
+4 1
+5 1
+6 1
+7 1
+8 1
+9 1
+10 1
+11 1
+12 1
+End ElementalData
