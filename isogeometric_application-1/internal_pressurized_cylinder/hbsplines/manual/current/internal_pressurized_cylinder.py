@@ -198,7 +198,7 @@ def Solve(model_part, time, logging=True):
     transfer_util = BezierPostUtility()
     transfer_util.TransferVariablesToNodes(THREED_STRESSES, model.model_part, SuperLUSolver())
 
-def main(logging=True, output=True):
+def main(logging=True, output=True, nsteps=3):
     ## create the B-Splines multipatch
     mpatch = CreateMultiPatch()
 #    mpatch = Refine(mpatch, [0.5])
@@ -228,7 +228,6 @@ def main(logging=True, output=True):
     dim = 2
     ###############################
 
-    nsteps = 3
     time = 0.0
     delta_time = 1.0
     l2_errors = []

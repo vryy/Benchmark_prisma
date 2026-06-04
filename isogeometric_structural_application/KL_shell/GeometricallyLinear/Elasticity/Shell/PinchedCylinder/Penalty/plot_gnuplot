@@ -11,9 +11,13 @@ set output "convergence.pdf"
 set xlabel "ndofs"
 set ylabel "uz [mm]"
 #set xtics 0.002
-set yrange [0:]
-set ytics 2e-3
-#set yrange [0:1100]
+
+#set yrange [0:]
+#set ytics 2e-3
+
+set yrange [0.0176:]
+
 plot "convergence_p=2_q=2.log" using ($2):(-$3*1e3) with linespoints title "p=2, q=2", \
      "convergence_p=3_q=3.log" using ($2):(-$3*1e3) with linespoints title "p=3, q=3", \
-     1.8248e-2 with lines notitle
+     1.8248e-2 with lines dt 1 title "ref (Kiendl)", \
+     1.826797e-2 with lines dt 2 title "ref (Yamamoto)"

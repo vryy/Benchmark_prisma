@@ -110,6 +110,8 @@ class Simulator:
         self.params['boundaries'] = {}
         self.params['boundaries'][1] = ils
         self.params['boundaries'][2] = ols
+        if 'fix_boundary' not in self.params:
+            self.params['fix_boundary'] = True
 
     def Update(self, model):
         # create mmg model

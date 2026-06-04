@@ -273,6 +273,8 @@ class Model:
         self.gid_io.InitializeResults( time, self.model_part.GetMesh() )
         self.gid_io.WriteNodalResults(DISPLACEMENT, time, 0)
         print("nodal DISPLACEMENT written")
+        self.gid_io.WriteNodalResults(NODAL_MMG_SCALAR_METRIC, time, 0)
+        print("nodal NODAL_MMG_SCALAR_METRIC written")
         self.gid_io.WriteNodalResults(REACTION, time, 0)
         print("nodal REACTION written")
         self.gid_io.PrintOnGaussPoints(STRESSES, self.model_part, time)

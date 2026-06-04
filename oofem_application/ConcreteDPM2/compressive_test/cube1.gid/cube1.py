@@ -7,11 +7,8 @@
 #####     by Hoang-Giang Bui for SFB837                      #####
 ##### all rights reserved                                    #####
 ##################################################################
-##################################################################
-## This file is generated on Sa 14. Mar 00:15:32 CET 2020
-##################################################################
-# This example tests the tensile part of C-DPM2. The stress will
-# reach and bounded by ft
+# This example tests the compressive part of C-DPM2. The stress will
+# reach and bounded by fc
 ##################################################################
 import sys
 import os

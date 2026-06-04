@@ -262,7 +262,8 @@ class Model:
         self.gid_io.WriteNodalResults(NODAL_MMG_SCALAR_METRIC, self.model_part.Nodes, time, 0)
         # self.gid_io.WriteNodalResults(FACE_LOAD, self.model_part.Nodes, time, 0)
         self.gid_io.PrintOnGaussPoints(STRESSES, self.model_part, time)
-        self.gid_io.PrintOnGaussPoints(RECOVERY_STRESSES, self.model_part, time)
+        if self.model_part.Properties[1].GetValue(STRESS_RECOVERY_TYPE) > 0:
+            self.gid_io.PrintOnGaussPoints(RECOVERY_STRESSES, self.model_part, time)
         self.gid_io.PrintOnGaussPoints(L2_ERROR, self.model_part, time)
         self.gid_io.PrintOnGaussPoints(H1_ERROR, self.model_part, time)
         # self.gid_io.PrintOnElement(LOCAL_ERROR, self.model_part, time)

@@ -11,27 +11,6 @@ from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.MmgApplication import *
 
-# ## refinemenet process along the boundary
-# class P4RefinementProcessAlongBoundary():
-#     def __init__(self, brep, nrefine):
-#         self.brep = brep
-#         self.number_of_refinement = nrefine
-
-#     def Execute(self, mmg_model):
-#         nsampling = 5
-#         for step in range(0, self.number_of_refinement):
-#             all_stats = mmg_model.ProbeCutStatus(self.brep, nsampling)
-#             refine_vector = []
-#             for stat in all_stats:
-#                 if stat == BRep._CUT:
-#                     refine_vector.append(1)
-#                 else:
-#                     refine_vector.append(0)
-#             balance_option = 0
-#             mmg_model.Mark(refine_vector)
-#             mmg_model.Refine()
-#             mmg_model.Repartition(balance_option)
-
 ## refinement process that refine everything
 class MmgRefinementProcessAll():
     def __init__(self, mesh_size):
@@ -166,19 +145,20 @@ def ConstructSystemModelPart(mmg_model, params):
     inner_boundary_nodes = list(set(inner_boundary_nodes))
     outer_boundary_nodes = list(set(outer_boundary_nodes))
 
-    brep1 = params['boundaries'][1]
-    for node_id in inner_boundary_nodes:
-        node = new_mp.Nodes[node_id]
-        node.Set(FREEZE, False)
-        brep1.ProjectOnSurface(node)
-        node.Set(FREEZE, True)
+    if params['fix_boundary']:
+        brep1 = params['boundaries'][1]
+        for node_id in inner_boundary_nodes:
+            node = new_mp.Nodes[node_id]
+            node.Set(FREEZE, False)
+            brep1.ProjectOnSurface(node)
+            node.Set(FREEZE, True)
 
-    brep2 = params['boundaries'][2]
-    for node_id in outer_boundary_nodes:
-        node = new_mp.Nodes[node_id]
-        node.Set(FREEZE, False)
-        brep2.ProjectOnSurface(node)
-        node.Set(FREEZE, True)
+        brep2 = params['boundaries'][2]
+        for node_id in outer_boundary_nodes:
+            node = new_mp.Nodes[node_id]
+            node.Set(FREEZE, False)
+            brep2.ProjectOnSurface(node)
+            node.Set(FREEZE, True)
 
     # for quadratic edge we shall place the mid-node in the middle of the chord
     if params['order'] == 2:

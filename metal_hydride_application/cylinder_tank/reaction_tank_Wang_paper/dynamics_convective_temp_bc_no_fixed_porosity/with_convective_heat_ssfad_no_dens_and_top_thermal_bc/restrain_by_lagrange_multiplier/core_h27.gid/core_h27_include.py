@@ -82,16 +82,18 @@ class Model:
         self.analysis_parameters['print_sparsity_info_flag'] = False
         self.analysis_parameters['analysis_type'] = 2
         self.analysis_parameters['dissipation_radius'] = 0.9
+        # self.analysis_parameters['nonlinear_mass_damping'] = True
         self.analysis_parameters['decouple_build_and_solve'] = False
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = True
         self.analysis_parameters['list_dof'] = True
-        self.analysis_parameters['convergence_criteria'] = "custom criteria"
-        self.analysis_parameters['custom_convergence_criteria'] = ThmMhMultiPhaseCriteria(1e-10, 1e-10)
         self.analysis_parameters['log_residuum'] = logging
 
         self.abs_tol =        1e-10
         self.rel_tol =        1e-10
+
+        self.analysis_parameters['convergence_criteria'] = "custom criteria"
+        self.analysis_parameters['custom_convergence_criteria'] = ThmMhMultiPhaseCriteria(self.abs_tol, self.rel_tol)
 
         ## generating solver
         import structural_solver_advanced

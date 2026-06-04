@@ -263,8 +263,9 @@ def main(logging=True, output=True, order=[2, 2], nsampling=10, restart_method=1
 
     if output:
 
-        serializerp = Serializer("mpatch_post", SerializerTraceType.SERIALIZER_NO_TRACE) # use SERIALIZER_TRACE_ERROR to save the restart in Ascii (useful for debugging)
-        mpatch.Save(serializerp, "mpatch")
+        serializerp = Serializer("mpatch_postw", SerializerTraceType.SERIALIZER_NO_TRACE) # use SERIALIZER_TRACE_ERROR to save the restart in Ascii (useful for debugging)
+        mpatch_wrapper = MultiPatchWrapper(mpatch)
+        mpatch_wrapper.Save(serializerp, "mpatch")
 
         mpatch_post = mpatch.Clone()
 

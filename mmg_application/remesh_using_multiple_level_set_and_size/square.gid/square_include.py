@@ -164,9 +164,12 @@ class Model:
 
     def AddVariables(self, model_part):
         import structural_solver_advanced
-        structural_solver_advanced.AddVariables( model_part )
         model_part.AddNodalSolutionStepVariable(NODAL_MMG_SCALAR_METRIC)
         model_part.AddNodalSolutionStepVariable(NODAL_MMG_LEVEL_SET)
+        model_part.AddNodalSolutionStepVariable(FACE_LOAD)
+        model_part.AddNodalSolutionStepVariable(DISPLACEMENT)
+        model_part.AddNodalSolutionStepVariable(REACTION)
+        model_part.AddNodalSolutionStepVariable(PRESCRIBED_DELTA_DISPLACEMENT)
 
     def SetModelPart(self, model_part):
         self.model_part = model_part
@@ -274,6 +277,8 @@ class Model:
         self.gid_io.InitializeResults( time, self.model_part.GetMesh() )
         self.gid_io.WriteNodalResults(DISPLACEMENT, time, 0)
         print("nodal DISPLACEMENT written")
+        self.gid_io.WriteNodalResults(NODAL_MMG_SCALAR_METRIC, time, 0)
+        print("nodal NODAL_MMG_SCALAR_METRIC written")
         self.gid_io.PrintOnGaussPoints(STRESSES, self.model_part, time)
         print("gauss point STRESSES written")
         self.gid_io.PrintOnGaussPoints(YOUNG_MODULUS, self.model_part, time)

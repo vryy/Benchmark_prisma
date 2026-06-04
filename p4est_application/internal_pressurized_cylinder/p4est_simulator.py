@@ -7,34 +7,10 @@ from KratosMultiphysics import *
 # from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.BRepApplication import *
-from KratosMultiphysics.FiniteCellApplication import *
-from KratosMultiphysics.FiniteCellStructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
-# from KratosMultiphysics.MortarApplication import *
 from KratosMultiphysics.mpi import *
 from KratosMultiphysics.P4estApplication import *
-
-## refinemenet process along the boundary
-class P4RefinementProcessAlongBoundary():
-    def __init__(self, brep, nrefine):
-        self.brep = brep
-        self.number_of_refinement = nrefine
-
-    def Execute(self, p4est_model):
-        nsampling = 5
-        for step in range(0, self.number_of_refinement):
-            all_stats = p4est_model.ProbeCutStatus(self.brep, nsampling)
-            refine_vector = []
-            for stat in all_stats:
-                if stat == BRep._CUT:
-                    refine_vector.append(1)
-                else:
-                    refine_vector.append(0)
-            balance_option = 0
-            p4est_model.Mark(refine_vector)
-            p4est_model.Refine()
-            p4est_model.Repartition(balance_option)
 
 ## refinement process that refine everything
 class P4RefinementProcessAll():
@@ -51,7 +27,7 @@ class P4RefinementProcessAll():
             p4est_model.Refine()
             p4est_model.Repartition(balance_option)
 
-## refinement process that refine everything
+## refinement process that refine using an indicator vector
 class P4RefinementProcessBasedOnRefineVector():
     def __init__(self, refine_vector):
         self.refine_vector = refine_vector

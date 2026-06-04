@@ -19,9 +19,6 @@ class MaterialPropertiesUtility:
     def __init__( self, matfile ):
         print("initialized MaterialPropertiesUtility")
         self.ReadMaterials( matfile )
-#        self.isotropic3dpointer = Isotropic3D()
-#        self.planestrainpointer = PlaneStrain()
-#        self.planestresspointer = PlaneStress()
         self.isotropic3dpointer = LinearElastic3D()
         self.planestrainpointer = LinearElasticPlaneStrain()
         self.planestresspointer = LinearElasticPlaneStress()
