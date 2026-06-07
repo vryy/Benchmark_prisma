@@ -287,6 +287,12 @@ class Model:
         self.model_part.Properties[1].SetValue(THICKNESS, 1.0 )
         self.model_part.Properties[1].SetValue(INTEGRATION_ORDER, 2 )
         self.model_part.Properties[1].SetValue(GRAVITY, [0.0, -1.0, 0.0] )
+        # dummy values to get pass initialization
+        self.model_part.Properties[1].SetValue(FIRST_SATURATION_PARAM, 0.0 )
+        self.model_part.Properties[1].SetValue(SECOND_SATURATION_PARAM, 0.0 )
+        self.model_part.Properties[1].SetValue(AIR_ENTRY_VALUE, 0.0 )
+        self.model_part.Properties[1].SetValue(DENSITY_AIR, 0.0 )
+        self.model_part.Properties[1].SetValue(BULK_AIR, 0.0 )
         ##################################################################
         ## ACTIVATION ####################################################
         ##################################################################

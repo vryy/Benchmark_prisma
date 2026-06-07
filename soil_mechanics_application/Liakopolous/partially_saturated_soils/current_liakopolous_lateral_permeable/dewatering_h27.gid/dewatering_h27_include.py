@@ -17,7 +17,7 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, results_path, logging=True ):
+    def __init__( self, problem_name, path, results_path, logging=True, analysis_type=1, dissipation_radius=0.1 ):
         #setting the domain size for the problem to be solved
         self.domain_size = 3
         ##################################################################
@@ -76,8 +76,8 @@ class Model:
         self.analysis_parameters['fricrampcriterion'] = fricrampcriterion
         self.analysis_parameters['fricrampfactor'] = fricrampfactor
         self.analysis_parameters['print_sparsity_info_flag'] = False
-        self.analysis_parameters['analysis_type'] = 1
-        self.analysis_parameters['dissipation_radius'] = 0.1
+        self.analysis_parameters['analysis_type'] = analysis_type
+        self.analysis_parameters['dissipation_radius'] = dissipation_radius
         self.analysis_parameters['decouple_build_and_solve'] = True
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = True

@@ -20,32 +20,14 @@ def SetMaterialProperties(elem):
     elem.SetValue(USE_DISTRIBUTED_PROPERTIES, 1)
     elem.SetValue(DENSITY,                  2000.0)
     elem.SetValue(DENSITY_WATER,            1.0e3)
-    # elem.SetValue(DENSITY_AIR,              1.295)
-    # elem.SetValue(BULK_AIR,                 1.188280000e-05)
-    elem.SetValue(POROSITY,                 0.2) # 0.2975)
-    elem.SetValue(PERMEABILITY_WATER,       1e-4) # 4.4e-6)
-    elem.SetValue(PERMEABILITY_AIR,         4e-5) # 4e-5) # 3.2e-7)
-    # elem.SetValue(FIRST_SATURATION_PARAM,   2.5)
-    # elem.SetValue(SECOND_SATURATION_PARAM,  0.4)
-    # elem.SetValue(AIR_ENTRY_VALUE,          3000.0)
-    # aux_util.SetValue(SWCC_LAW, VanGenuchtenSWCC(2.5, 0.4, 3000.0), elem)
-    # aux_util.SetValue(SWCC_LAW, VanGenuchtenSWCC(2.5, 0.4, 3000.0, 0.1, 0.9), elem)
+    elem.SetValue(POROSITY,                 0.2)
+    elem.SetValue(PERMEABILITY_WATER,       1e-4)
+    elem.SetValue(PERMEABILITY_AIR,         4e-5)
     aux_util.SetValue(SWCC_LAW, VanGenuchtenSWCC(2.5, 0.4, 3000.0, 0.1, 0.85), elem)
-    # aux_util.SetValue(SWCC_LAW, FullySaturatedSWCC(), elem)
-    # aux_util.SetValue(SWCC_LAW, LiakopolousSWCC(), elem)
-    # aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, SimpleRelativePermeabilityLaw(), elem)
-    # aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, MualemRelativePermeabilityWaterLaw(0.4), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, MualemRelativePermeabilityWaterLaw(0.4, 0.1, 0.85), elem)
-    # aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
-    # aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, SimpleRelativePermeabilityLaw(), elem)
-    # aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, MualemRelativePermeabilityAirLaw(0.4, 0.0, 1.0), elem)
-    # aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, MualemRelativePermeabilityAirLaw(0.4, 0.1, 0.9), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, MualemRelativePermeabilityAirLaw(0.4, 0.1, 0.85), elem)
-    # aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, MualemRelativePermeabilityAirLaw(0.4), elem)
-    # aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, LiakopolousRelativePermeabilityAirLaw(), elem)
-    # aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.23, 0.0123e-3), elem)
-    elem.SetValue(FIX_POROSITY,             True)
+    elem.SetValue(POROSITY_CALCULATION_MODE, 0)
 
 def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0, analysis_type=1, dissipation_radius=0.1):
 
@@ -265,7 +247,6 @@ def test():
     wf = bottom_nodes[0].GetSolutionStepValue(WATER_FLOW)
     wf2 = wf[2]*60.0/0.01
     print("%.16e" % (wf2))
-    #ref_wf2 = -3.3704912428e-01
     ref_wf2 = -3.2993829791272833e-01
     assert(abs(wf2 - ref_wf2) < 1e-6)
 

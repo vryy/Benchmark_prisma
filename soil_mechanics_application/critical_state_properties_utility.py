@@ -77,13 +77,17 @@ class CriticalStatePropertiesUtility:
         self.modifiedcamclayik_pointer = ModifiedCamClay3D_IK()
         self.modifiedcamclayii_pointer = ModifiedCamClay3dImplicit_II()
         self.modifiedcamclayiis_pointer = ModifiedCamClay3dImplicit_II_s()
+        self.modifiedcamclayiisv_pointer = ModifiedCamClay3dImplicit_II_sv()
         self.modifiedcamclayiias_pointer = ModifiedCamClay3dImplicit_II_as()
+        self.modifiedcamclayiiasv_pointer = ModifiedCamClay3dImplicit_II_asv()
         self.modifiedcamclayiics_pointer = ModifiedCamClayIIConstantStiffness()
         self.modifiedcamclayiii_pointer = ModifiedCamClay3dImplicit_III()
         self.casm_pointer1 = ClayAndSandExplicit()
         self.casm_pointer2 = ClayAndSandImplicitSubstepping()
         self.casm_pointer3 = ClayAndSandConstantStiffness()
         self.casm_pointer4 = ClayAndSandImplicitAutomaticSubstepping()
+        self.casm_pointer5 = ClayAndSandImplicitSubsteppingV()
+        self.casm_pointer6 = ClayAndSandImplicitAutomaticSubsteppingV()
 
     def SetEchoLevel( self, level ):
         self.echo_level = level
@@ -215,8 +219,12 @@ class CriticalStatePropertiesUtility:
                         cl_pointers.append( self.modifiedcamclayii_pointer.Clone() )
                     elif( material.params['model_type'] == "modified_cam_clay_ii_s" ):
                         cl_pointers.append( self.modifiedcamclayiis_pointer.Clone() )
+                    elif( material.params['model_type'] == "modified_cam_clay_ii_sv" ):
+                        cl_pointers.append( self.modifiedcamclayiisv_pointer.Clone() )
                     elif( material.params['model_type'] == "modified_cam_clay_ii_as" ):
                         cl_pointers.append( self.modifiedcamclayiias_pointer.Clone() )
+                    elif( material.params['model_type'] == "modified_cam_clay_ii_asv" ):
+                        cl_pointers.append( self.modifiedcamclayiiasv_pointer.Clone() )
                     elif( material.params['model_type'] == "modified_cam_clay_ii_constant_stiffness" ):
                         cl_pointers.append( self.modifiedcamclayiics_pointer.Clone() )
                     youngs_moduli.append( 0.0 )
@@ -250,8 +258,12 @@ class CriticalStatePropertiesUtility:
                         cl_pointers.append( self.casm_pointer1.Clone() )
                     elif( material.params['model_type'] == "casm_implicit_substepping" ):
                         cl_pointers.append( self.casm_pointer2.Clone() )
-                    elif( material.params['model_type'] == "casm_implicit_adaptive_substepping" ):
+                    elif( material.params['model_type'] == "casm_implicit_substepping_v" ):
+                        cl_pointers.append( self.casm_pointer5.Clone() )
+                    elif( material.params['model_type'] == "casm_implicit_automatic_substepping" ):
                         cl_pointers.append( self.casm_pointer4.Clone() )
+                    elif( material.params['model_type'] == "casm_implicit_automatic_substepping_v" ):
+                        cl_pointers.append( self.casm_pointer6.Clone() )
                     elif( material.params['model_type'] == "casm_constant_stiffness" ):
                         cl_pointers.append( self.casm_pointer3.Clone() )
                     youngs_moduli.append( 0.0 )
@@ -316,15 +328,12 @@ class CriticalStatePropertiesUtility:
         if 'porosity' in self.materials[mat].params:
             porosity = float(self.materials[mat].params['porosity'])
             element.SetValue( POROSITY, float(porosity) )
-        if 'fix_porosity' in self.materials[mat].params:
-            if self.materials[mat].params['fix_porosity'] == "true":
-                element.Properties.SetValue(FIX_POROSITY, True)
-                element.SetValue(FIX_POROSITY, True)
-            else:
-                element.Properties.SetValue(FIX_POROSITY, False)
-                element.SetValue(FIX_POROSITY, False)
+        if 'poro_calc_mode' in self.materials[mat].params:
+            poro_calc_mode = int(self.materials[mat].params['poro_calc_mode'])
+            element.Properties.SetValue(POROSITY_CALCULATION_MODE, poro_calc_mode)
+            element.SetValue(POROSITY_CALCULATION_MODE, poro_calc_mode)
         else:
-            element.SetValue(FIX_POROSITY, True) # default value is True
+            element.SetValue(POROSITY_CALCULATION_MODE, 0) # default value is 0 (fix the porosity)
         if 'fix_void_ratio' in self.materials[mat].params:
             if self.materials[mat].params['fix_void_ratio'] == "true":
                 element.Properties.SetValue(FIX_VOID_RATIO, True)

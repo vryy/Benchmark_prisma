@@ -1,13 +1,4 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Institute for Structural Mechanics, RUB   #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-##################################################################
 ##################################################################
 from __future__ import absolute_import
 import sys
@@ -158,7 +149,6 @@ class Model:
         # self.output_intpt_variables.append(PRESTRESS)
         self.output_intpt_variables.append(EXCESS_PORE_WATER_PRESSURE)
         # self.output_intpt_variables.append(EXCESS_PORE_AIR_PRESSURE)
-        self.output_intpt_variables.append(SATURATION)
         self.output_intpt_variables.append(CAPILLARY_PRESSURE)
         self.output_intpt_variables.append(WATER_PRESSURE)
         ##################################################################
@@ -270,42 +260,6 @@ class Model:
         ## ELEMENTS on layers ############################################
         self.layer_sets = model_layers.ReadLayerSets()
 
-        ## extract the ground and excavation layer
-        self.layer_sets['ground'] = []
-        for elem in self.model_part.Elements:
-            self.layer_sets['ground'].append(elem.Id)
-
-        x_min = -18.0
-        round_length = 1.5
-        exc_radius = 4.725
-        for i in range(0, 24):
-            layer_name = "excavation_volumes//volume_" + str(i+1)
-
-            self.layer_sets[layer_name] = []
-            for elem in self.model_part.Elements:
-                cx = 0.0
-                cy = 0.0
-                nnodes = len(elem.GetNodes())
-                for node in elem.GetNodes():
-                    cx += node.X0
-                    cy += node.Y0
-                cx /= nnodes
-                cy /= nnodes
-
-                if (cy < exc_radius) and (cy > -exc_radius) and (cx < x_min + (i+1)*round_length) and (cx > x_min + i*round_length):
-                    self.layer_sets[layer_name].append(elem.Id)
-                    self.layer_sets['ground'].remove(elem.Id)
-
-            # print(self.layer_sets[layer_name])
-
-        # print(self.layer_sets['ground'])
-
-        ## other layers
-        self.layer_sets['shield//shield_volume'] = []
-
-        for i in range(0, 24):
-            self.layer_sets['lining_volumes//volume_' + str(i+1)] = []
-            self.layer_sets['grouting_volumes//volume_' + str(i+1)] = []
 
         ## NODES on layers ###############################################
         self.layer_nodes_sets = model_layers.ReadLayerNodesSets()

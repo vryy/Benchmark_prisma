@@ -356,7 +356,12 @@ class Model:
         self.model_part.Properties[1].SetValue(POISSON_RATIO,          0.4 )
         self.model_part.Properties[1].SetValue(THICKNESS, 1.0 )
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, LinearElastic3D() )
-        # self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, Isotropic3D() )
+        # dummy values to get pass initialization
+        self.model_part.Properties[1].SetValue(FIRST_SATURATION_PARAM, 0.0 )
+        self.model_part.Properties[1].SetValue(SECOND_SATURATION_PARAM, 0.0 )
+        self.model_part.Properties[1].SetValue(AIR_ENTRY_VALUE, 0.0 )
+        self.model_part.Properties[1].SetValue(DENSITY_AIR, 0.0 )
+        self.model_part.Properties[1].SetValue(BULK_AIR, 0.0 )
         print("Linear elastic model selected for Isotropic3D, description: Soil")
         ##################################################################
         ## ACTIVATION ####################################################

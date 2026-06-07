@@ -17,7 +17,7 @@ void_ratio 2.52
 K0 1.2
 thickness 1.0
 porosity 0.2
-fix_porosity true
+poro_calc_mode 0
 fix_void_ratio true
 permeability 1e-05
 end parameters

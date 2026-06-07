@@ -60,7 +60,7 @@ def SetMaterialProperties(elem):
     # aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, LiakopolousRelativePermeabilityAirLaw(), elem)
     # aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.23, 0.0123e-3), elem)
-    elem.SetValue(FIX_POROSITY,             True)
+    elem.SetValue(POROSITY_CALCULATION_MODE,             0)
 
 def main(output=True, logging=True, dt=1.0, num_steps=7200, p=0.0, analysis_type=1, dissipation_radius=0.1):
 

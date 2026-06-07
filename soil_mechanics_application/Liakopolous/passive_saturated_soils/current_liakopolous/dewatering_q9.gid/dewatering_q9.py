@@ -47,7 +47,7 @@ def main(output=True, logging=True):
         aux_util.SetValue(SWCC_LAW, LiakopolousSWCC(), elem)
         # aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, SimpleRelativePermeabilityLaw(), elem)
         aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
-        elem.SetValue(FIX_POROSITY,             False)
+        elem.SetValue(POROSITY_CALCULATION_MODE,  2)
 
         elem.Initialize(model_virgin.model_part.ProcessInfo)
 
@@ -122,7 +122,7 @@ def main(output=True, logging=True):
         aux_util.SetValue(SWCC_LAW, LiakopolousSWCC(), elem)
         # aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, SimpleRelativePermeabilityLaw(), elem)
         aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
-        elem.SetValue(FIX_POROSITY,             False)
+        elem.SetValue(POROSITY_CALCULATION_MODE,  2)
 
         elem.Initialize(model.model_part.ProcessInfo)
 

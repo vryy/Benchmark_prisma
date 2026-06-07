@@ -1,13 +1,4 @@
 ##################################################################
-######################## include.py   ############################
-##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Institute for Structural Mechanics, RUB   #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-##################################################################
 ##################################################################
 from __future__ import absolute_import
 import sys
@@ -294,6 +285,12 @@ class Model:
         #set material parameters
         self.model_part.Properties[1].SetValue(THICKNESS, 1.0 )
         self.model_part.Properties[1].SetValue(GRAVITY, [-1.0, 0.0, 0.0] )
+        # dummy values to get pass initialization
+        self.model_part.Properties[1].SetValue(FIRST_SATURATION_PARAM, 0.0 )
+        self.model_part.Properties[1].SetValue(SECOND_SATURATION_PARAM, 0.0 )
+        self.model_part.Properties[1].SetValue(AIR_ENTRY_VALUE, 0.0 )
+        self.model_part.Properties[1].SetValue(DENSITY_AIR, 0.0 )
+        self.model_part.Properties[1].SetValue(BULK_AIR, 0.0 )
         print("Material properties are selected for Properties 1")
         ##################################################################
         ## ACTIVATION ####################################################

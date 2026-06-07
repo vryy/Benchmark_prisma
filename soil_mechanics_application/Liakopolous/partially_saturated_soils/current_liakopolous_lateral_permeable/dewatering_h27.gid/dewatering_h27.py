@@ -33,11 +33,11 @@ def SetMaterialProperties(elem):
     aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, LiakopolousRelativePermeabilityAirLaw(), elem)
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
-    elem.SetValue(FIX_POROSITY,             False)
+    elem.SetValue(POROSITY_CALCULATION_MODE,  2)
 
-def main(output=True, logging=True, dt=1.0, num_steps=7200):
+def main(output=True, logging=True, dt=1.0, num_steps=7200, analysis_type=1, dissipation_radius=0.1):
 
-    model_virgin = dewatering_h27_include.Model('dewatering_h27',os.getcwd()+"/",os.getcwd()+"/virgin_results/",logging=False)
+    model_virgin = dewatering_h27_include.Model('dewatering_h27',os.getcwd()+"/",os.getcwd()+"/virgin_results/",logging=False,analysis_type=0)
     model_virgin.InitializeModel()
 
     # print(HARDENING_LAW)
@@ -114,7 +114,7 @@ def main(output=True, logging=True, dt=1.0, num_steps=7200):
 
     ## solve the system
 
-    model = dewatering_h27_include.Model('dewatering_h27',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
+    model = dewatering_h27_include.Model('dewatering_h27',os.getcwd()+"/",os.getcwd()+"/",logging=logging,analysis_type=analysis_type,dissipation_radius=dissipation_radius)
     model.InitializeModel()
 
     # material parameters
@@ -240,9 +240,9 @@ def test():
     vtu.TransferVariablesToNodes(model.model_part, WATER_FLOW)
     wf = bottom_nodes[0].GetSolutionStepValue(WATER_FLOW)
     wf2 = wf[2]*60.0/0.01
-    print("%.16e" % (wf2))
     # ref_wf2 = -1.9866135389e-03 # for num_steps = 7200
     ref_wf2 = -2.4921044964631472e-02 # for num_steps = 100
+    print("%.16e, diff: %.6e" % (wf2, wf2-ref_wf2))
     assert(abs(wf2 - ref_wf2) < 1e-6)
 
     print("Test passed")

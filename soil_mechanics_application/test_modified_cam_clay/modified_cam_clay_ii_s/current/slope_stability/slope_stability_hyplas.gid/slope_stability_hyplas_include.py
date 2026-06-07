@@ -395,7 +395,7 @@ class Model:
             self.model_part.Properties[1].SetValue(SPACING_RATIO,      2.0 )
             self.model_part.Properties[1].SetValue(SHAPE_PARAMETER,      1.4 )
             self.model_part.Properties[1].SetValue(FIX_VOID_RATIO, False )
-            self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, ClayAndSandImplicitAdaptiveSubstepping() )
+            self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, ClayAndSandImplicitAutomaticSubstepping() )
             self.model_part.Properties[1].SetValue(MAXIMUM_NUMBER_OF_SUB_STEPPING_LEVELS, 30 )
             self.model_part.Properties[1].SetValue(VISCOUS_DAMPING_FACTOR, 1e-3 )
             print("CASM with adaptive sub-stepping model selected")

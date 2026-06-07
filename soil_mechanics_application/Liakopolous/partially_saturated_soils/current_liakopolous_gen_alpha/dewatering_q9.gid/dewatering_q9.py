@@ -20,7 +20,7 @@ start_time = time_module.time()
 
 aux_util = SoilsAuxiliaryUtility()
 
-def SetMaterialProperties(elem, fix_porosity=True):
+def SetMaterialProperties(elem, poro_calc_mode=0):
     elem.SetValue(USE_DISTRIBUTED_PROPERTIES, 1)
     elem.SetValue(DENSITY,                  2000.0)
     elem.SetValue(DENSITY_WATER,            1.0e3)
@@ -31,9 +31,9 @@ def SetMaterialProperties(elem, fix_porosity=True):
     aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, LiakopolousRelativePermeabilityAirLaw(), elem)
     aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
-    elem.SetValue(FIX_POROSITY,             fix_porosity)
+    elem.SetValue(POROSITY_CALCULATION_MODE, poro_calc_mode)
 
-def main(output=True, logging=True, fix_lateral=False, fix_porosity=True, testing=False, damping_alpha=0.0):
+def main(output=True, logging=True, fix_lateral=False, poro_calc_mode=0, testing=False, damping_alpha=0.0):
 
     model_virgin = simulation_include.Model(model_name_,os.getcwd()+"/",os.getcwd()+"/virgin_results/",logging=False)
     model_virgin.InitializeModel()
@@ -41,7 +41,7 @@ def main(output=True, logging=True, fix_lateral=False, fix_porosity=True, testin
     # material parameters
     for e in model_virgin.layer_sets['Layer0']:
         elem = model_virgin.model_part.Elements[e]
-        SetMaterialProperties(elem, fix_porosity=fix_porosity)
+        SetMaterialProperties(elem, poro_calc_mode=poro_calc_mode)
         elem.Initialize(model_virgin.model_part.ProcessInfo)
 
     # boundary condition
@@ -114,7 +114,7 @@ def main(output=True, logging=True, fix_lateral=False, fix_porosity=True, testin
     # material parameters
     for e in model.layer_sets['Layer0']:
         elem = model.model_part.Elements[e]
-        SetMaterialProperties(elem, fix_porosity=fix_porosity)
+        SetMaterialProperties(elem, poro_calc_mode=poro_calc_mode)
         elem.Initialize(model.model_part.ProcessInfo)
 
     # boundary condition
@@ -298,7 +298,7 @@ def main(output=True, logging=True, fix_lateral=False, fix_porosity=True, testin
         ifile.close()
 
 def test():
-    model = main(logging=False, output=False, fix_lateral=True, fix_porosity=True, testing=True, damping_alpha=0.01)
+    model = main(logging=False, output=False, fix_lateral=True, poro_calc_mode=0, testing=True, damping_alpha=0.01)
 
     tol = 1.0e-6
     bottom_nodes = []
@@ -326,7 +326,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=False, fix_lateral=True, fix_porosity=True, damping_alpha=0.01)
+        main(logging=True, output=False, fix_lateral=True, poro_calc_mode=0, damping_alpha=0.01)
 
 ##################################################################
 ###  END OF SIMULATION  ##########################################

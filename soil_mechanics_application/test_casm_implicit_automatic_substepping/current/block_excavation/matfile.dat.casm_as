@@ -6,7 +6,7 @@ begin polygon
 -1000.0 0 1000.0
 end polygon
 begin parameters
-model_type casm_implicit_adaptive_substepping
+model_type casm_implicit_automatic_substepping
 poisson_ratio 0.35
 density 1.732
 density_water 1.000

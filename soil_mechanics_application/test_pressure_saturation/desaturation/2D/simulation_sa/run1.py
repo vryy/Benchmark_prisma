@@ -66,7 +66,7 @@ def SetMaterialProperties(elem):
     aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, MualemRelativePermeabilityWaterLaw(m, Smin, Smax), elem)
     aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, MualemRelativePermeabilityAirLaw(m, Smin, Smax), elem)
     aux_util.SetValue(GAS_LAW, IdealGasLaw(rho_a, rho_a*1e-5), elem)
-    elem.SetValue(FIX_POROSITY,             True)
+    elem.SetValue(POROSITY_CALCULATION_MODE, 0)
 
 def main(output=True, logging=True, total_time=100.0, ramp_time = 1e2, ramp_steps = 60, pinj=90e3, \
     solution_strategy="implicit_Newton_Raphson", analysis_type=1, dissipation_radius=0.1):
