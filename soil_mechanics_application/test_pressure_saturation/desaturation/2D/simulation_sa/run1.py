@@ -68,7 +68,7 @@ def SetMaterialProperties(elem):
     aux_util.SetValue(GAS_LAW, IdealGasLaw(rho_a, rho_a*1e-5), elem)
     elem.SetValue(POROSITY_CALCULATION_MODE, 0)
 
-def main(output=True, logging=True, total_time=100.0, ramp_time = 1e2, ramp_steps = 60, pinj=90e3, \
+def main(output=True, logging=True, delta_time=5.0, total_time=100.0, ramp_time = 1e2, ramp_steps = 60, pinj=90e3, \
     solution_strategy="implicit_Newton_Raphson", analysis_type=1, dissipation_radius=0.1):
 
     ## solve the system
@@ -136,24 +136,41 @@ def main(output=True, logging=True, total_time=100.0, ramp_time = 1e2, ramp_step
         node.Free(SATURATION)
         node.Free(AIR_PRESSURE)
 
-    # but fix air pressure on top and lateral
-    for node in top_nodes + lateral_nodes:
+    # BC set 1
+
+    # # but fix air pressure on top and lateral
+    # for node in top_nodes + lateral_nodes:
+    #     node.Fix(AIR_PRESSURE)
+
+    # # fix saturation on top and lateral
+    # for node in top_nodes + lateral_nodes:
+    #     node.Fix(SATURATION)
+
+    # # BC set 2
+
+    # but fix air pressure on top
+    for node in top_nodes:
         node.Fix(AIR_PRESSURE)
 
-    # # fix water pressure on top and lateral
-    # TODO we need to add the constraint here
-    # for node in top_nodes + lateral_nodes:
-    #     node.Fix(WATER_PRESSURE)
-
-    # for node in top_nodes:
+    # fix saturation on top
     for node in top_nodes:
         node.Fix(SATURATION)
+
+    # # BC set 3
+
+    # # but fix air pressure on top
+    # for node in top_nodes:
+    #     node.Fix(AIR_PRESSURE)
+
+    # # fix saturation on lateral
+    # for node in lateral_nodes:
+    #     node.Fix(SATURATION)
 
     # pressure ramp-up
     model.model_part.ProcessInfo[FIRST_TIME_STEP] = 1
 
     time = 0.0
-    delta_time = ramp_time / ramp_steps
+    delta_time_ramp = ramp_time / ramp_steps
     delta_pres = pinj / ramp_steps
     for i in range(0, ramp_steps):
 
@@ -168,7 +185,7 @@ def main(output=True, logging=True, total_time=100.0, ramp_time = 1e2, ramp_step
             node.SetSolutionStepValue(AIR_PRESSURE_NULL, p)
             node.SetSolutionStepValue(AIR_PRESSURE_EINS, p)
 
-        time += delta_time
+        time += delta_time_ramp
         model.SolveModel(time)
 
         # if output:
@@ -179,7 +196,6 @@ def main(output=True, logging=True, total_time=100.0, ramp_time = 1e2, ramp_step
             model.WriteOutput(time)
 
         model.model_part.ProcessInfo[FIRST_TIME_STEP] = 0
-
 
     cnt = 1
     while True:
@@ -207,12 +223,12 @@ def main(output=True, logging=True, total_time=100.0, ramp_time = 1e2, ramp_step
     return model
 
 def test():
-    model = main(logging=False, output=False, pinj=90e3, ramp_steps=40, total_time=130.0, analysis_type=4, dissipation_radius=1.0)
+    model = main(logging=False, output=False, pinj=90e3, ramp_steps=40, delta_time=2.5, total_time=130.0, analysis_type=4, dissipation_radius=1.0)
 
     mon_node = model.model_part.Nodes[299]
 
     pa = mon_node.GetSolutionStepValue(AIR_PRESSURE)
-    ref_pa = 8.3321926417441719e+04
+    ref_pa = 8.3329521805466866e+04
     print("pa: %.16e, diff: %.16e" % (pa, pa - ref_pa))
     assert(abs(pa - ref_pa) / abs(ref_pa) < 1e-10)
 
@@ -231,7 +247,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=True, pinj=90e3, ramp_steps=50, total_time=1000.0, analysis_type=4, dissipation_radius=1.)
+        main(logging=True, output=True, pinj=90e3, ramp_steps=40, delta_time=2.5, total_time=3600.0, analysis_type=4, dissipation_radius=1.)
 
 ##################################################################
 ###  END OF SIMULATION  ##########################################
