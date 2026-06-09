@@ -428,7 +428,7 @@ class Model:
         self.model_part.Properties[1].SetValue(BULK_MODULUS,      E/(3*(1-2*nu)) )
         self.model_part.Properties[1].SetValue(SHEAR_MODULUS,      E/(2*(1+nu)) )
         self.model_part.Properties[1].SetValue(POROSITY,   0.5 ) # [4]
-        self.model_part.Properties[1].SetValue(FIX_POROSITY,   True )
+        self.model_part.Properties[1].SetValue(POROSITY_CALCULATION_MODE,   0 )
         self.model_part.Properties[1].SetValue(UNIVERSAL_GAS_CONSTANT,   8.314 ) # J mol^-1 K^-1 [2,4]
         self.model_part.Properties[1].SetValue(MH_PARTICLE_SIZE,   1e-3 ) # m # [1]
         self.model_part.Properties[1].SetValue(MH_ACTIVATION_ENEGRY,   21.17e03  ) # J mol^-1 # [4]

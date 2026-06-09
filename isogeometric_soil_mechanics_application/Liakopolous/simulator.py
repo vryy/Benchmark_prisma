@@ -219,7 +219,7 @@ def Run(params):
         aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
         aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, LiakopolousRelativePermeabilityAirLaw(), elem)
         aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
-        elem.SetValue(FIX_POROSITY,             False)
+        elem.SetValue(POROSITY_CALCULATION_MODE, 2)
 
         elem.Initialize(model_virgin.model_part.ProcessInfo)
 
@@ -353,7 +353,7 @@ def Run(params):
         aux_util.SetValue(RELATIVE_PERMEABILITY_WATER_LAW, LiakopolousRelativePermeabilityWaterLaw(), elem)
         aux_util.SetValue(RELATIVE_PERMEABILITY_AIR_LAW, LiakopolousRelativePermeabilityAirLaw(), elem)
         aux_util.SetValue(GAS_LAW, IdealGasLaw(1.295, 1.188280000e-05), elem)
-        elem.SetValue(FIX_POROSITY,             False)
+        elem.SetValue(POROSITY_CALCULATION_MODE, 2)
 
         elem.Initialize(model.model_part.ProcessInfo)
 

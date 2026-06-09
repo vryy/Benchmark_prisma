@@ -320,15 +320,11 @@ class SoilPropertiesUtility:
         if 'porosity' in self.materials[mat].params:
             porosity = float(self.materials[mat].params['porosity'])
             element.SetValue( POROSITY, float(porosity) )
-        if 'fix_porosity' in self.materials[mat].params:
-            if self.materials[mat].params['fix_porosity'] == "true":
-                element.Properties.SetValue(FIX_POROSITY, True)
-                element.SetValue(FIX_POROSITY, True)
-            else:
-                element.Properties.SetValue(FIX_POROSITY, False)
-                element.SetValue(FIX_POROSITY, False)
+        if 'poro_calc_mode' in self.materials[mat].params:
+            element.Properties.SetValue(POROSITY_CALCULATION_MODE, self.materials[mat].params['poro_calc_mode'])
+            element.SetValue(POROSITY_CALCULATION_MODE, self.materials[mat].params['poro_calc_mode'])
         else:
-            element.SetValue(FIX_POROSITY, True) # default value is True
+            element.SetValue(POROSITY_CALCULATION_MODE, 0) # default value is 0
 
         if 'thickness' in self.materials[mat].params:
             element.Properties.SetValue(THICKNESS, float(self.materials[mat].params['thickness']))
