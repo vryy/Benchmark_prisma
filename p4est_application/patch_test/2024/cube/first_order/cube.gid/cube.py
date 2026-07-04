@@ -4,6 +4,7 @@ import os
 ##################################################################
 import cube_include
 from cube_include import *
+import cube_parallel_include
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
@@ -92,8 +93,11 @@ def Solve(model, p4est_model, time, output=True):
 
     return time
 
-def main(logging=True, output=True):
-    model = cube_include.Model('cube',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
+def main(logging=True, output=True, parallel=False):
+    if not parallel:
+        model = cube_include.Model('cube',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
+    else:
+        model = cube_parallel_include.Model('cube',os.getcwd()+"/",os.getcwd()+"/",logging=logging)
     model.InitializeModel()
 
     # set the layer index. It is important to set the layer index.
@@ -191,7 +195,7 @@ def main(logging=True, output=True):
     return model
 
 def test():
-    model = main(logging = False, output = False)
+    model = main(logging = False, output = False, parallel=(mpi.size>1))
 
     for elem in model.model_part.Elements:
         stresses = elem.GetValuesOnIntegrationPoints(STRESSES, model.model_part.ProcessInfo)

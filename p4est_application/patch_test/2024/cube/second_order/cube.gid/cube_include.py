@@ -8,6 +8,7 @@ from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
+from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.mpi import *
 from KratosMultiphysics.P4estApplication import *
 kernel = Kernel()   #defining kernel
@@ -101,7 +102,7 @@ class Model:
         #write_elements = WriteConditionsFlag.WriteElementsOnly
         post_mode = GiDPostMode.GiD_PostBinary
         multi_file_flag = MultiFileFlag.MultipleFiles
-        self.gid_io = StructuralGidIO( self.results_path+self.problem_name, post_mode, multi_file_flag, write_deformed_flag, write_elements )
+        self.gid_io = SDGidPostIO( self.results_path+self.problem_name, post_mode, multi_file_flag, write_deformed_flag, write_elements )
         self.model_part_io = ModelPartIO(self.path+self.problem_name)
         self.model_part_io.ReadModelPart(self.model_part)
         self.meshWritten = False
@@ -258,6 +259,7 @@ class Model:
         #self.gid_io.PrintOnGaussPoints(CONTACT_PENETRATION, self.model_part, time)
         #self.gid_io.PrintOnGaussPoints(NORMAL, self.model_part, time, 0)
         self.gid_io.FinalizeResults()
+        self.gid_io.Reset()
 
     def InitializeModel( self ):
         ##################################################################

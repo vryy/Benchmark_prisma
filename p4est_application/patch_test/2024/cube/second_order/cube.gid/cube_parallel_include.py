@@ -1,14 +1,4 @@
 ##################################################################
-################### distributed_include.py   #####################
-##################################################################
-##### KRATOS Multiphysics                                    #####
-##### include file for distributed-memory simulation         #####
-##### copyright by CIMNE, Barcelona, Spain                   #####
-#####          and Institute for Structural Mechanics, RUB   #####
-##### all rights reserved                                    #####
-##################################################################
-##################################################################
-##################################################################
 ##################################################################
 import sys
 import os
@@ -18,19 +8,19 @@ import os
 from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
-from KratosMultiphysics.MKLSolversApplication import *
+# from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.mpi import *
-from KratosMultiphysics.MetisApplication import *
+# from KratosMultiphysics.MetisApplication import *
 from KratosMultiphysics.DistributedBuildersApplication import *
 # from KratosMultiphysics.TrilinosSolversApplication import *
 from KratosMultiphysics.PetscSolversApplication import *
 from KratosMultiphysics.P4estApplication import *
+from KratosMultiphysics.LayerApplication import *
 kernel = Kernel()   #defining kernel
-
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, results_path ):
+    def __init__( self, problem_name, path, results_path, logging=True ):
         ##################################################################
         ## DEFINE MODELPART ##############################################
         ##################################################################
@@ -38,6 +28,7 @@ class Model:
         self.path = path
         self.results_path = results_path
         self.problem_name = problem_name
+        self.logging = logging
         ##################################################################
         ## ADD VARIABLES #################################################
         ##################################################################
@@ -55,7 +46,7 @@ class Model:
         # post_mode = GiDPostMode.GiD_PostAscii
         post_mode = GiDPostMode.GiD_PostBinary
         multi_file_flag = MultiFileFlag.MultipleFiles
-        self.gid_io = StructuralGidIO( self.results_path+self.problem_name, post_mode, multi_file_flag, write_deformed_flag, write_elements )
+        self.gid_io = SDGidPostIO( self.results_path+self.problem_name, post_mode, multi_file_flag, write_deformed_flag, write_elements )
         self.model_part_io = ModelPartIO(self.path+self.problem_name)
         self.model_part_io.ReadModelPart(self.model_part)
         self.meshWritten = False
@@ -73,7 +64,7 @@ class Model:
                 self.model_part.Conditions[int(val_set[1])].SetValue( ACTIVATION_LEVEL, self.model_part.Elements[int(val_set[2])].GetValue(ACTIVATION_LEVEL) )
                 #print( "assigning ACTIVATION_LEVEL of element: " +str(int(val_set[2])) + " to Condition: " + str(int(val_set[1])) + " as " + str(self.model_part.Elements[int(val_set[2])].GetValue(ACTIVATION_LEVEL)) )
                 self.element_assignments[int(val_set[1])] = int(val_set[2])
-        print "input data read OK"
+        print("input data read OK")
         #print "+++++++++++++++++++++++++++++++++++++++"
         #for node in self.model_part.Nodes:
         #    print node
@@ -129,8 +120,10 @@ class Model:
         self.CalculateReactionFlag = False
         self.ReformDofSetAtEachStep = True
         self.MoveMeshFlag = True
-#        self.EchoLevel = 0b0000000000011100
-        self.EchoLevel = 0x0001 + 0x0020 + 0x0040 + 0x0080 + 0x0008 + 0x0010 + 0x0004
+        if self.logging:
+            self.EchoLevel = 0x0001 + 0x0020 + 0x0040 + 0x0080 + 0x0008 + 0x0010 + 0x0004
+        else:
+            self.EchoLevel = 0b0000000000011100
 
         # defining solving strategy
         import distributed_strategies
@@ -157,8 +150,7 @@ class Model:
         self.model_part.Properties[1].SetValue(YOUNG_MODULUS,      2.0 )
         self.model_part.Properties[1].SetValue(POISSON_RATIO,          0.3 )
         self.model_part.Properties[1].SetValue(CONSTITUTIVE_LAW, Isotropic3D() )
-        print "Linear elastic model selected"
-
+        print("Linear elastic model selected")
         ##################################################################
         ## STORE LAYER SETS ##############################################
         ##################################################################
@@ -168,12 +160,12 @@ class Model:
         ## NODES on layers ###############################################
         self.layer_nodes_sets = model_layers.ReadLayerNodesSets()
         ##################################################################
-        print "layer sets stored"
+        print("layer sets stored")
         ##################################################################
         ## STORE NODES CORRECTLY FOR CONDITIONS ##########################
         ##################################################################
         self.node_groups = model_layers.ReadNodeGroups()
-        print "node groups stored"
+        print("node groups stored")
         ##################################################################
         ## ACTIVATION ####################################################
         ##################################################################
@@ -181,10 +173,10 @@ class Model:
         self.deac.Initialize( self.model_part )
         self.solver.Initialize()
         if(mpi.rank == 0):
-            print "activation utility initialized"
+            print("activation utility initialized")
         self.model_part.Check( self.model_part.ProcessInfo )
         if(mpi.rank == 0):
-            print "model successfully initialized"
+            print("model successfully initialized")
 
     def WriteOutput( self, time ):
         mpi_fn_step = 0.0001
@@ -204,6 +196,7 @@ class Model:
         self.gid_io.WriteNodalResults(PARTITION_INDEX, self.model_part.GetCommunicator().InterfaceMesh().Nodes, time, 0)
         self.gid_io.PrintOnGaussPoints(STRESSES, self.model_part, time)
         self.gid_io.FinalizeResults()
+        self.gid_io.Reset()
         if(mpi.rank == 0):
             meshname = time+mpi_fn_step
             self.mergefile.write("Files Read "+self.path+self.problem_name+"_"+str(meshname)+".post.bin\n")
@@ -227,4 +220,3 @@ class Model:
         self.deac.Deactivate( self.model_part, from_deac, to_deac )
         self.model_part.CloneTimeStep(time)
         self.solver.Solve()
-##################################################################
