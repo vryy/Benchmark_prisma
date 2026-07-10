@@ -7,6 +7,7 @@ import os
 from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
+from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.mpi import *
 from KratosMultiphysics.P4estApplication import *
