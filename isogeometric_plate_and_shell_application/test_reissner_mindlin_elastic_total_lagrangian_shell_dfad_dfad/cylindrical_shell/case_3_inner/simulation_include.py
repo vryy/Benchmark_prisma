@@ -82,27 +82,15 @@ class Model:
         self.nsampling = nsampling
         self.plinear_solver = plinear_solver
         self.drill_stiff = drill_stiff
-        self.mode = 2
 
-    def CreateMultiPatch(self, length, radius, order=3, mode=2):
-        if mode == 1:
-            ####### create arc 1
-            arc1_ptr = geometry_factory.CreateSmallArc([0.0, 0.0, 0.0], 'x', radius, 0.0, 180.0)
-            arc1 = arc1_ptr.GetReference()
+    def CreateMultiPatch(self, length, radius, order=2):
+        ####### create arc 1
+        arc1_ptr = geometry_factory.CreateSmallArc([0.0, 0.0, 0.0], 'x', radius, 0.0, 180.0)
+        arc1 = arc1_ptr.GetReference()
 
-            ####### create arc 2
-            arc2_ptr = geometry_factory.CreateSmallArc([length, 0.0, 0.0], 'x', radius, 0.0, 180.0)
-            arc2 = arc2_ptr.GetReference()
-
-        elif mode == 2:
-
-            ####### create arc 1
-            arc1_ptr = geometry_factory.CreateHalfCircle([0.0, 0.0, 0.0], 'x', radius)
-            arc1 = arc1_ptr.GetReference()
-
-            ####### create arc 2
-            arc2_ptr = geometry_factory.CreateHalfCircle([length, 0.0, 0.0], 'x', radius)
-            arc2 = arc2_ptr.GetReference()
+        ####### create arc 2
+        arc2_ptr = geometry_factory.CreateSmallArc([length, 0.0, 0.0], 'x', radius, 0.0, 180.0)
+        arc2 = arc2_ptr.GetReference()
 
         # create patch 2
         patch1_ptr = bsplines_patch_util.CreateLoftPatch(arc1, arc2)
@@ -118,12 +106,8 @@ class Model:
         mpatch = MultiPatch2D()
         mpatch.AddPatch(patch1_ptr)
 
-        if mode == 1:
-            if order >= 2:
-                multipatch_refine_util.DegreeElevate(mpatch[1], [order-2, order-1])
-        elif mode == 2:
-            if order >= 3:
-                multipatch_refine_util.DegreeElevate(mpatch[1], [order-3, order-1])
+        if order >= 2:
+            multipatch_refine_util.DegreeElevate(mpatch[1], [order-2, order-1])
 
         return mpatch
 
@@ -265,7 +249,7 @@ class Model:
                 nc = elem.CalculateOnIntegrationPoints(LOCAL_MEMBRANE_FORCE_INTEGRAL_CHARACTERISTIC, model_part.ProcessInfo)
                 qc = elem.CalculateOnIntegrationPoints(LOCAL_SHEAR_FORCE_INTEGRAL_CHARACTERISTIC, model_part.ProcessInfo)
                 for i in range(0, len(coords)):
-                    if abs(coords[i][0] - x_ref) < 1e-10:
+                    if abs(coords[i][0] - x_ref) < 1e-6:
                         all_values.append([coords[i], n[i], m[i], q[i], nc[i], mc[i], qc[i]])
         if export:
             ifile = open(filename, "w")
@@ -329,15 +313,15 @@ class Model:
                 max_dist = dist
         return max_dist
 
-    def Run(self, output=True, logging=True, disp=None, rot=None):
+    def Run(self, output=True, logging=True):
         length_bar = self.length / self.thickness
         radius_bar = self.radius / self.thickness
         p = self.pressure
         # create the scaled multipatch. On the scaled multipatch, the VARIABLE and TRUE_VARIABLE are not the same.
-        mpatch = self.CreateMultiPatch(length_bar, radius_bar, self.order, self.mode)
+        mpatch = self.CreateMultiPatch(length_bar, radius_bar, self.order)
         mpatch = self.Refine(mpatch, self.nsampling)
         # create the unscaled multipatch. On the unscaled multipatch, the VARIABLE and TRUE_VARIABLE are the same. They can be used interchangeably.
-        # mpatch_orig = self.CreateMultiPatch(self.length, self.radius, self.order, self.mode)
+        # mpatch_orig = self.CreateMultiPatch(self.length, self.radius, self.order)
         # mpatch_orig = self.Refine(mpatch_orig, self.nsampling)
         mpatch_orig = mpatch
         print("########################################")
@@ -375,23 +359,11 @@ class Model:
             if (abs(node.Z0) < tol):
                 node.Fix(DISPLACEMENT_Z)
                 node.Fix(DISPLACEMENT_Y)
-                node.Fix(DISPLACEMENT_X)
-                node.Fix(ROTATION_X)
-                node.Fix(ROTATION_Y)
-                node.Fix(ROTATION_Z)
+                # node.Fix(ROTATION_X)
 
-        # apply initial displacement and rotation
-        if disp != None:
-            for node in model.model_part.Nodes:
-                node.SetSolutionStepValue(DISPLACEMENT_X, disp[node.Id][0])
-                node.SetSolutionStepValue(DISPLACEMENT_Y, disp[node.Id][1])
-                node.SetSolutionStepValue(DISPLACEMENT_Z, disp[node.Id][2])
-
-        if rot != None:
-            for node in model.model_part.Nodes:
-                node.SetSolutionStepValue(ROTATION_X, rot[node.Id][0])
-                node.SetSolutionStepValue(ROTATION_Y, rot[node.Id][1])
-                node.SetSolutionStepValue(ROTATION_Z, rot[node.Id][2])
+            # node.Fix(ROTATION_X)
+            # node.Fix(ROTATION_Y)
+            # node.Fix(ROTATION_Z)
 
         ## pressure load
         for element in model.model_part.Elements:
@@ -495,14 +467,21 @@ class Model:
             # print("Psi error: %.10e" % psi_error)
 
         if logging and output:
+            if model.model_part.Properties[1].GetValue(INTEGRATION_ORDER) == 1:
+                x_ref = 0.5*self.length
+            elif model.model_part.Properties[1].GetValue(INTEGRATION_ORDER) == 2:
+                x_ref = 0.33000947820757187*self.length
+            else:
+                raise Exception("Invalid INTEGRATION_ORDER")
+
             self.ExportUr("ur_computed.txt", mpatch_orig, self.radius, npoints=20)
             # self.ExportUrCheck("ur_check_computed.txt", model.model_part)
-            middle_values = self.ExtractUrCheck(model.model_part, x_ref=0.5*self.length, export=False)
+            middle_values = self.ExtractUrCheck(model.model_part, x_ref=x_ref, export=False)
             self.ConvertUrCheck(middle_values, export=True, filename="ur_check_polar.txt")
             # analytical_solution.ExportUr("ur_analytical.txt", npoints=100)
             # # self.CheckDur(mpatch_orig, self.radius, 1e-8)
 
-            # middle_force_values = self.ExtractForce(model.model_part, x_ref=0.5*self.length, export=False)
+            # middle_force_values = self.ExtractForce(model.model_part, x_ref=x_ref, export=False)
             # self.ConvertForce(middle_force_values, export=True, filename="force_polar.txt")
 
         return model
