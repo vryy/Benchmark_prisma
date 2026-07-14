@@ -119,8 +119,8 @@ def compute_L2_error(elements, solution, process_info):
                 ana_u = solution.GetTemperatureAt(Q[i][0], Q[i][1], Q[i][2])
                 nom = nom + pow(u[i][0] - ana_u, 2) * W[i][0] * J0[i][0]
                 denom = denom + pow(ana_u, 2) * W[i][0] * J0[i][0]
-    print("nom:", nom)
-    print("denom:", denom)
+    # print("nom:", nom)
+    # print("denom:", denom)
     if denom == 0.0:
         if nom == 0.0:
             return 0.0
@@ -128,6 +128,32 @@ def compute_L2_error(elements, solution, process_info):
             return float('nan');
     else:
         return math.sqrt(nom / denom)
+
+def compute_H1_error(elements, solution, process_info):
+    nom = 0.0
+    denom = 0.0
+    for element in elements:
+        if element.Is(ACTIVE):
+            du = element.GetValuesOnIntegrationPoints(TEMPERATURE_GRADIENT, process_info)
+            J0 = element.GetValuesOnIntegrationPoints(JACOBIAN_0, process_info)
+            Q = element.GetValuesOnIntegrationPoints(INTEGRATION_POINT_GLOBAL, process_info)
+            W = element.GetValuesOnIntegrationPoints(INTEGRATION_WEIGHT, process_info)
+            for i in range(0, len(du)):
+                ana_du = solution.GetTemperatureGradientAt(Q[i][0], Q[i][1], Q[i][2])
+                dist = 0.0
+                norm_ana_du = 0.0
+                for j in range(0, 3):
+                    dist += pow(du[i][j] - ana_du[j], 2)
+                    norm_ana_du += pow(ana_du[j], 2)
+                nom = nom + dist * W[i][0] * J0[i][0]
+                denom = denom + norm_ana_du * W[i][0] * J0[i][0]
+    if denom == 0.0:
+        if nom == 0.0:
+            return 0.0
+        else:
+            return float('nan');
+    else:
+        return math.sqrt(abs(nom / denom))
 
 def main(logging=True, output=True, nsampling=2):
     mpatch = CreateMultiPatch()
@@ -168,9 +194,12 @@ def main(logging=True, output=True, nsampling=2):
     #     print(node.GetSolutionStepValue(TEMPERATURE))
 
     solution = HeatStdProblem1Solution()
-    error = compute_L2_error(model.model_part.Elements, solution, model.model_part.ProcessInfo)
-    print("Global L2 error: %.16e" % error)
-    model.l2_error = error
+    l2_error = compute_L2_error(model.model_part.Elements, solution, model.model_part.ProcessInfo)
+    h1_error = compute_H1_error(model.model_part.Elements, solution, model.model_part.ProcessInfo)
+    print("Global L2 error: %.16e" % l2_error)
+    print("Global H1 error: %.16e" % h1_error)
+    model.l2_error = l2_error
+    model.h1_error = h1_error
 
     ######Synchronize back the results to multipatch
     mpatch_mp.SynchronizeBackward(TEMPERATURE)
@@ -192,9 +221,29 @@ def test():
 
     model = main(output=False, logging=False, nsampling=2)
 
+    print("%.16e" % model.h1_error)
     l2_error_ref = 2.8552495988074197e-03
+    h1_error_ref = 4.3472717999962079e-02
     assert(abs(model.l2_error - l2_error_ref) < 1e-10)
+    assert(abs(model.h1_error - h1_error_ref) < 1e-10)
     print("Test passed")
+
+def study():
+
+    ifile = open("convergence.log", "w")
+    ifile.write("%-*s%-*s%s\n" % (10, "ndofs", 30, "l2_error", "h1_error"))
+
+    nsampling = 2
+    for i in range(0, 5):
+        model = main(output=False, logging=False, nsampling=nsampling)
+
+        ndofs = model.solver.solver.builder_and_solver.GetEquationSystemSize()
+
+        ifile.write("%-*d%-*.16e%.16e\n" % (10, ndofs, 30, model.l2_error, model.h1_error))
+
+        nsampling *= 2
+
+    ifile.close()
 
 def tag():
     return "nurbs"
