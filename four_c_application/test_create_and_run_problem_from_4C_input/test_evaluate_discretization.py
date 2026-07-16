@@ -17,6 +17,7 @@ def main():
     params.Set("action", "calc_struct_nlnstiffmass")
     fourc_model.SetZeroState("structure", 0, "displacement")
     fourc_model.SetZeroState("structure", 0, "residual displacement")
+    fourc_model.SetZeroState("structure", 0, "acceleration")
     fourc_model.Evaluate(params, "structure")
 
     dd = fourc_model.GetDiscretizationData("structure")
