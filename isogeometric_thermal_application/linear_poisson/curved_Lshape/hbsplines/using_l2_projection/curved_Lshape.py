@@ -1,8 +1,7 @@
 import sys
 import os
-import operator
+import time as time_module
 ##################################################################
-import pdb
 #importing Kratos modules
 from KratosMultiphysics import *
 from KratosMultiphysics.IsogeometricApplication import *
@@ -217,7 +216,7 @@ def Compute_L2_error_OnElement(element, solution, process_info):
         error = error + (pow(u[i][0] - ana_u, 2)) * W[i][0] * J0[i][0]
     return error
 
-def main(logging=True, output=True, nsteps=3):
+def main(logging=True, output=True, nsteps=3, mark_param=0.5, check=False):
     mpatch = CreateMultiPatch()
     mpatch = Refine(mpatch)
     mpatch.Enumerate()
@@ -342,7 +341,6 @@ def main(logging=True, output=True, nsteps=3):
         # ###########################
 
         ### TEST 4: Using maximum marking strategy
-        mark_param = 0.5
         refine_list = []
         max_est = -1.0e99
         for node in model.model_part.Nodes:
@@ -369,6 +367,7 @@ def main(logging=True, output=True, nsteps=3):
 
         # print("refine_bf_list:", refine_bf_list)
         # print("len(refine_bf_list):", len(refine_bf_list))
+        time0 = time_module.time()
         for tmp in refine_bf_list:
             bf = tmp[0]
             hpatch = tmp[1]
@@ -378,14 +377,21 @@ def main(logging=True, output=True, nsteps=3):
             # re-enumerate
             hmpatch.Enumerate()
 
-            # generate the internal cells
-            for hpatch_ptr in hmpatch.Patches():
-                hpatch = hpatch_ptr.GetReference()
-                print("UpdateCells for patch %d begin" % (hpatch.Id), flush=True)
-                hpatch.FESpace().UpdateCells()
+            if check:
+                mpatch_util.CheckInterfaces(hmpatch)
+                hbsplines_patch_util.ReportDuplicatedEquationId(hmpatch, True)
 
-            mpatch_util.CheckInterfaces(hmpatch)
-            hbsplines_patch_util.ReportDuplicatedEquationId(hmpatch, True)
+        # generate the internal cells
+        for hpatch_ptr in hmpatch.Patches():
+            hpatch = hpatch_ptr.GetReference()
+            # print("UpdateCells for patch %d begin" % (hpatch.Id), flush=True)
+            hpatch.FESpace().UpdateCells()
+
+        time10 = time_module.time()
+        print("### Refine summary at step %d:" % (i+1))
+        print("  %d bfs" % (len(refine_bf_list)))
+        print("  last Level = %d %d %d" % (hmpatch[1].GetReference().FESpace().LastLevel(), hmpatch[2].GetReference().FESpace().LastLevel(), hmpatch[3].GetReference().FESpace().LastLevel()))
+        print("  time = %.6e" % (time10 - time0))
 
         ###########################
 
@@ -436,7 +442,7 @@ def main(logging=True, output=True, nsteps=3):
     return model
 
 def test():
-    model = main(logging=False, output=False, nsteps=6)
+    model = main(logging=False, output=False, nsteps=6, check=True)
 
     print("%.16e" % model.l2_error_list[-1])
     print("%.16e" % model.h1_error_list[-1])
@@ -458,3 +464,4 @@ if __name__ == "__main__":
         globals()[sys.argv[1]]()
     else:
         main(logging=True, output=True, nsteps=16)
+        print(Timer())
