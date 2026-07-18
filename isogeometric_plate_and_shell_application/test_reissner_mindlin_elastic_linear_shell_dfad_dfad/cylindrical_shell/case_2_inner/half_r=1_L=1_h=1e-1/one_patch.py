@@ -33,8 +33,8 @@ def test():
     point = cgf.GetValue(xi)
     dgf = patch.GridFunction(DISPLACEMENT)
     disp = dgf.GetValue(xi)
-    print("%.16e" % disp[2])
     ref_disp = 6.4851693450630012e+00
+    print("u: %.16e, diff: %.6e" % (disp[2], disp[2] - ref_disp))
 
     assert(abs(disp[2] - ref_disp) / ref_disp < 1e-12)
 

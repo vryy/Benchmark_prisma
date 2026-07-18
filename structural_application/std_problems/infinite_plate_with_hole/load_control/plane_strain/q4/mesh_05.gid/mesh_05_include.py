@@ -110,7 +110,7 @@ class Model:
         write_deformed_flag = WriteDeformedMeshFlag.WriteUndeformed
         write_elements = WriteConditionsFlag.WriteConditions
         #write_elements = WriteConditionsFlag.WriteElementsOnly
-        post_mode = GiDPostMode.GiD_PostAscii
+        post_mode = GiDPostMode.GiD_PostBinary
         multi_file_flag = MultiFileFlag.MultipleFiles
         self.gid_io = StructuralGidIO( self.path+self.problem_name, post_mode, multi_file_flag, write_deformed_flag, write_elements )
         self.model_part_io = ModelPartIO(self.path+self.problem_name)

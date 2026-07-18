@@ -12,6 +12,7 @@ from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.PlateAndShellApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
+from KratosMultiphysics.MultithreadedSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
 kernel = Kernel()   #defining kernel
 ##################################################################
@@ -88,6 +89,8 @@ class Model:
         #defining linear solver
         if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
             plinear_solver = MKLPardisoSolver()
+        elif KratosMultithreadedSolversApplication.Has("SuperLUMTSolver"):
+            plinear_solver = SuperLUMTSolver()
         else:
             plinear_solver = SuperLUSolver()
         self.solver.structure_linear_solver = plinear_solver
@@ -136,6 +139,8 @@ class Model:
         #defining linear solver
         if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
             plinear_solver = MKLPardisoSolver()
+        elif KratosMultithreadedSolversApplication.Has("SuperLUMTSolver"):
+            plinear_solver = SuperLUMTSolver()
         else:
             plinear_solver = SuperLUSolver()
         self.solver.structure_linear_solver = plinear_solver

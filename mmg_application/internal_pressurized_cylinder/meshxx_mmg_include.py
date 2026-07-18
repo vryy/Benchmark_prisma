@@ -135,12 +135,10 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        plinear_solver = MKLPardisoSolver()
-        # plinear_solver = DiagonalFitSolver(MKLPardisoSolver())
-        # plinear_solver = DiagonalFitSolver(SuperLUSolver())
-#        plinear_solver = SuperLUSolver()
-#        plinear_solver = CGSolver(1.0e-9, 1000, ILU0Preconditioner())
-#        plinear_solver = BICGSTABSolver(1.0e-9, 1000, ILU0Preconditioner())
+        if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+            plinear_solver = MKLPardisoSolver()
+        else:
+            plinear_solver = SuperLUSolver()
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
@@ -184,12 +182,10 @@ class Model:
         ## INITIALISE SOLVER FOR PARTICULAR SOLUTION #####################
         ##################################################################
         #defining linear solver
-        plinear_solver = MKLPardisoSolver()
-        # plinear_solver = DiagonalFitSolver(MKLPardisoSolver())
-        # plinear_solver = DiagonalFitSolver(SuperLUSolver())
-#        plinear_solver = SuperLUSolver()
-#        plinear_solver = CGSolver(1.0e-9, 1000, ILU0Preconditioner())
-#        plinear_solver = BICGSTABSolver(1.0e-9, 1000, ILU0Preconditioner())
+        if KratosMKLSolversApplication.Has("MKLPardisoSolver"):
+            plinear_solver = MKLPardisoSolver()
+        else:
+            plinear_solver = SuperLUSolver()
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)

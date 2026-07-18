@@ -68,8 +68,6 @@ def main(logging=True, output=True):
 def test():
     model = main(logging=False, output=False)
 
-    model = main(logging=False, output=False)
-
     w = model.model_part.Conditions[1].GetNodes()[0].GetSolutionStepValue(DISPLACEMENT_Z)
     w_ref = -1.6899340677552634e-05
     assert(abs(w - w_ref) / abs(w_ref) < 1e-10)

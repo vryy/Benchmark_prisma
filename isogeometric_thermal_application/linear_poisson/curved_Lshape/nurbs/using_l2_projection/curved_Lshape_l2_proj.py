@@ -182,7 +182,7 @@ def main(logging=True, output=True, nsampling=2):
     model.InitializeModel()
 
     # project the Dirichlet boundary values
-    dirichlet_proc = DirichletL2ProjectionProcess(model_part, model_part.Conditions, MKLPardisoSolver())
+    dirichlet_proc = DirichletL2ProjectionProcess(model_part, model_part.Conditions, SuperLUSolver())
     dirichlet_proc.SetTemperatureFunction(HeatStdProblem1Solution())
     dirichlet_proc.Execute()
 
