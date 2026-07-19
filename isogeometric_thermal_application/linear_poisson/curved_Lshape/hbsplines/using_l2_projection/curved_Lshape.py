@@ -442,12 +442,12 @@ def main(logging=True, output=True, nsteps=3, mark_param=0.5, check=False):
     return model
 
 def test():
-    model = main(logging=False, output=False, nsteps=6, check=True)
+    model = main(logging=False, output=False, nsteps=16, check=True)
 
     print("%.16e" % model.l2_error_list[-1])
     print("%.16e" % model.h1_error_list[-1])
-    ref_l2_error = 4.9460358851197615e-05
-    ref_h1_error = 4.9757316339100102e-03
+    ref_l2_error = 2.0447304531038961e-06
+    ref_h1_error = 1.1272819821731417e-04
     assert(abs(model.l2_error_list[-1] - ref_l2_error) < 1e-10)
     assert(abs(model.h1_error_list[-1] - ref_h1_error) < 1e-10)
 
