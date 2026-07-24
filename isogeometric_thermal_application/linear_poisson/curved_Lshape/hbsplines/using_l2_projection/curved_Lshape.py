@@ -216,7 +216,7 @@ def Compute_L2_error_OnElement(element, solution, process_info):
         error = error + (pow(u[i][0] - ana_u, 2)) * W[i][0] * J0[i][0]
     return error
 
-def main(logging=True, output=True, nsteps=3, mark_param=0.5, check=False):
+def main(logging=True, output=True, nsteps=3, mark_param=0.5, check=False, visual=False):
     mpatch = CreateMultiPatch()
     mpatch = Refine(mpatch)
     mpatch.Enumerate()
@@ -437,6 +437,10 @@ def main(logging=True, output=True, nsteps=3, mark_param=0.5, check=False):
         for i in range(0, len(ndofs_list)):
             ifile.write("%-*d%-*.10e%.10e\n" % (10, ndofs_list[i], 20, l2_error_list[i], h1_error_list[i]))
         ifile.close()
+
+    if visual:
+        gui = IgaGUI(hmpatch)
+        gui.Run(locals(), globals())
 
     # return the last model
     return model
