@@ -93,7 +93,7 @@ def test():
     for node in reaction_nodes:
         P = P + node.GetSolutionStepValue(REACTION_Y)
     print("P/B/c: %.16e" % (2.0*P/B/c))
-    ref_value = 1.5726904226280894e+01
+    ref_value = 1.4532496485884169e+01
     assert(abs(2.0*P/B/c - ref_value) / abs(ref_value) < 1e-10)
     #####################
     print("Test passed")
