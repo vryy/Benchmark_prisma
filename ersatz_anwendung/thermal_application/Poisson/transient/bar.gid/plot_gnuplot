@@ -1,0 +1,49 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+
+set output "snapshot.pdf"
+set xlabel "T"
+set ylabel "x"
+set xrange[0:1]
+set yrange[0.8:1.4]
+plot "snapshot.1" using ($1):($2) with lines title "t=1", \
+     "snapshot.2" using ($1):($2) with lines title "t=2", \
+     "snapshot.3" using ($1):($2) with lines title "t=3", \
+     "snapshot.4" using ($1):($2) with lines title "t=4", \
+     "snapshot.5" using ($1):($2) with lines title "t=5", \
+     "snapshot.6" using ($1):($2) with lines title "t=6", \
+     "snapshot.7" using ($1):($2) with lines title "t=7", \
+     "snapshot.8" using ($1):($2) with lines title "t=8", \
+     "snapshot.9" using ($1):($2) with lines title "t=9", \
+     "snapshot.10" using ($1):($2) with lines title "t=10", \
+     "snapshot.11" using ($1):($2) with lines title "t=11", \
+     "snapshot.12" using ($1):($2) with lines title "t=12", \
+     "snapshot.13" using ($1):($2) with lines title "t=13", \
+     "snapshot.14" using ($1):($2) with lines title "t=14", \
+     "snapshot.15" using ($1):($2) with lines title "t=15", \
+     "snapshot.16" using ($1):($2) with lines title "t=16", \
+     "snapshot.17" using ($1):($2) with lines title "t=17", \
+     "snapshot.18" using ($1):($2) with lines title "t=18", \
+     "snapshot.19" using ($1):($2) with lines title "t=19", \
+     "snapshot.20" using ($1):($2) with lines title "t=20", \
+     "snapshot.21" using ($1):($2) with lines title "t=21", \
+     "snapshot.22" using ($1):($2) with lines title "t=22", \
+     "snapshot.23" using ($1):($2) with lines title "t=23", \
+     "snapshot.24" using ($1):($2) with lines title "t=24", \
+     "snapshot.25" using ($1):($2) with lines title "t=25", \
+     "snapshot.26" using ($1):($2) with lines title "t=26", \
+     "snapshot.27" using ($1):($2) with lines title "t=27", \
+     "snapshot.28" using ($1):($2) with lines title "t=28", \
+     "snapshot.29" using ($1):($2) with lines title "t=29", \
+     "snapshot.30" using ($1):($2) with lines title "t=30", \
