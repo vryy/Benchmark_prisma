@@ -19,7 +19,7 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, results_path, logging=True ):
+    def __init__( self, problem_name, path, results_path, logging=True, decouple_build_and_solve=True ):
         #setting the domain size for the problem to be solved
         ##################################################################
         ## DEFINE MODELPART ##############################################
@@ -36,7 +36,7 @@ class Model:
         # analysis type: static (0), quasi-static (1) or dynamic (2)
         self.analysis_parameters['print_sparsity_info_flag'] = False
         self.analysis_parameters['analysis_type'] = -1 # using custom time scheme
-        self.analysis_parameters['decouple_build_and_solve'] = True
+        self.analysis_parameters['decouple_build_and_solve'] = decouple_build_and_solve
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = True
         self.analysis_parameters['list_dof'] = True

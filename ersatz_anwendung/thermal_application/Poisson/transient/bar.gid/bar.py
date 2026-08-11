@@ -27,12 +27,17 @@ start_time = time_module.time()
 length = 1.0
 thick = 0.01
 
-def main(logging=True, output=True, snapshot=False, bc_type=1, pod="none"):
-    model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging)
+def main(logging=True, output=True, snapshot=False, bc_type=1, pod="none", decouple_build_and_solve=True):
+    model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging, decouple_build_and_solve=decouple_build_and_solve)
     model.InitializeModel()
 
     if pod == "load":
-        model.solver.solver.builder_and_solver.SetPodProcess(PodModeReadingProcess("Q.bin"))
+        pod_process = PodProjectionProcess("Q.bin")
+        model.solver.solver.builder_and_solver.SetPodProcess(pod_process)
+        if decouple_build_and_solve:
+            model.solver.solver.linear_solver = pod_process
+            # this must be set if decouple_build_and_solve == True
+            # since pod_process is also a linear solver, this is usable and necessary
 
     ## initial condition
     tol = 1e-6
@@ -141,7 +146,7 @@ def test1():
     print("Test passed")
 
 def test2():
-    model = main(logging=False, output=False, snapshot=False, bc_type=1, pod="load")
+    model = main(logging=False, output=False, snapshot=False, bc_type=1, pod="load", decouple_build_and_solve=False)
 
     tol = 1e-6
     for node in model.model_part.Nodes:
@@ -155,7 +160,7 @@ def test2():
     print("Test passed")
 
 def test3(): # solve a problem with different BC using the same POD basis
-    model = main(logging=False, output=False, snapshot=False, bc_type=2, pod="load")
+    model = main(logging=False, output=False, snapshot=False, bc_type=2, pod="load", decouple_build_and_solve=True)
 
     tol = 1e-6
     for node in model.model_part.Nodes:
