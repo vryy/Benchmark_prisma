@@ -32,7 +32,7 @@ def main(logging=True, output=True, snapshot=False, bc_type=1, pod="none", decou
     model.InitializeModel()
 
     if pod == "load":
-        pod_process = PodProjectionProcess("Q.bin")
+        pod_process = RayleighRitzProjectionProcess("Phi.mat")
         model.solver.solver.builder_and_solver.SetPodProcess(pod_process)
         if decouple_build_and_solve:
             model.solver.solver.linear_solver = pod_process
@@ -123,7 +123,7 @@ def main(logging=True, output=True, snapshot=False, bc_type=1, pod="none", decou
             marked_time += 1.0
 
     if pod == "save":
-        model.solver.solver.builder_and_solver.GetPodProcess().SavePrincipalComponents("Q.bin", 5)
+        model.solver.solver.builder_and_solver.GetPodProcess().SavePrincipalComponents("Phi.mat", 5)
 
     ## reporting
     if logging:
