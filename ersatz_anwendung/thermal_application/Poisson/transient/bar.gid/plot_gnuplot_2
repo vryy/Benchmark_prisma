@@ -1,0 +1,21 @@
+set terminal pdf enhanced color
+
+#set size ratio -1
+#set key outside
+#set size 2.0, 1.5
+
+#set size square
+#set key left bottom
+
+set style line 1 lc rgb 'red' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 2 lc rgb 'blue' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 3 lc rgb 'green' lt 1 lw 2 pt 7 pi -1 ps 1.0
+set style line 4 lc rgb 'cyan' lt 1 lw 2 pt 7 pi -1 ps 1.0
+
+set output "temperature.pdf"
+set xlabel "T"
+set ylabel "x"
+#set xrange[0:1]
+set yrange[1.0:1.4]
+plot "temperature_fom.log" using ($1):($2) with lines title "FOM", \
+     "temperature_rom.log" using ($1):($2) with linespoints title "ROM", \

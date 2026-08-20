@@ -31,8 +31,11 @@ def main(logging=True, output=True, snapshot=False, bc_type=1, pod="none", decou
     model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging, decouple_build_and_solve=decouple_build_and_solve)
     model.InitializeModel()
 
+    pod_utils = POD_Utils()
+
     if pod == "load":
-        pod_process = RayleighRitzProjectionProcess("Phi.mat")
+        Phi = pod_utils.ReadMat("Phi.mat", 'Phi')
+        pod_process = RayleighRitzProjectionProcess(Phi)
         model.solver.solver.builder_and_solver.SetPodProcess(pod_process)
         if decouple_build_and_solve:
             model.solver.solver.linear_solver = pod_process
@@ -123,7 +126,8 @@ def main(logging=True, output=True, snapshot=False, bc_type=1, pod="none", decou
             marked_time += 1.0
 
     if pod == "save":
-        model.solver.solver.builder_and_solver.GetPodProcess().SavePrincipalComponents("Phi.mat", 5)
+        Phi = model.solver.solver.builder_and_solver.GetPodProcess().GetPrincipalComponents(5)
+        pod_utils.WriteMat("Phi.mat", "Phi", Phi, False)
 
     ## reporting
     if logging:
@@ -143,7 +147,7 @@ def test1():
     print("%.16e" % (temp))
     ref_temp = 1.1176244923232193e+00
     assert(abs(temp - ref_temp) < 1e-10)
-    print("Test passed")
+    print("Test 1 passed")
 
 def test2():
     model = main(logging=False, output=False, snapshot=False, bc_type=1, pod="load", decouple_build_and_solve=False)
@@ -155,9 +159,9 @@ def test2():
 
     temp = monitor_node.GetSolutionStepValue(TEMPERATURE)
     print("%.16e" % (temp))
-    ref_temp = 1.1175733587465031e+00
+    ref_temp = 1.1175755360455890e+00
     assert(abs(temp - ref_temp) < 1e-10)
-    print("Test passed")
+    print("Test 2 passed")
 
 def test3(): # solve a problem with different BC using the same POD basis
     model = main(logging=False, output=False, snapshot=False, bc_type=2, pod="load", decouple_build_and_solve=True)
@@ -169,22 +173,25 @@ def test3(): # solve a problem with different BC using the same POD basis
 
     temp = monitor_node.GetSolutionStepValue(TEMPERATURE)
     print("%.16e" % (temp))
-    ref_temp = 9.0681192567052238e-01
+    ref_temp = 9.0681275887057389e-01
     assert(abs(temp - ref_temp) < 1e-10)
-    print("Test passed")
+    print("Test 3 passed")
 
 def test():
     test1()
     test2()
     test3()
+    print("All tests passed")
 
 def gen_snapshot_1():
     # solve the FOM with BC 1
-    main(logging=False, output=False, snapshot=True, bc_type=1, pod="none")
+    # main(logging=False, output=False, snapshot=True, bc_type=1, pod="none")
+    main(logging=True, output=False, snapshot=False, bc_type=1, pod="none")
 
 def gen_snapshot_1_pod():
     # solve the ROM with BC 1
-    main(logging=False, output=False, snapshot=True, bc_type=1, pod="load")
+    # main(logging=False, output=False, snapshot=True, bc_type=1, pod="load")
+    main(logging=True, output=False, snapshot=False, bc_type=1, pod="load")
 
 def gen_snapshot_2():
     # solve the FOM with BC 2
@@ -195,8 +202,8 @@ def gen_snapshot_2_pod():
     main(logging=False, output=False, snapshot=True, bc_type=2, pod="load")
 
 def tag():
-    tags = "unknown"
-    if not all_modules_are_imported_successfully:
+    tags = "pod"
+    if (not all_modules_are_imported_successfully) or (not KratosErsatzAnwendung.Has('Matio')):
         tags += ",untested"
     return tags
 
