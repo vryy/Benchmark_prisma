@@ -1,11 +1,22 @@
 import sys
 import os
+import re
 import time as time_module
 import subprocess
 import multiprocessing
 import platform
 from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
+
+""" Dummy process for dry run
+"""
+class DummyProcess:
+   def __init__(self):
+      self.returncode = 0
+      self.use_mpi = False
+
+   def communicate(self):
+      return "", ""
 
 # def run(test_files, pytest_py="python2", num_proc=4):
 #     total_tasks = len(test_files)
@@ -107,7 +118,20 @@ def run_file(file_info, shared_log, shared_result, progress_counter, lock, pytes
         start_time = time_module.perf_counter()
 
         if not dry_run:
-            proc = subprocess.Popen([pytest_py, file_name, "test"], cwd=dir_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
+            if file_name.startswith("pytest_"):
+                cmd = [pytest_py, file_name, "test"]
+                proc = subprocess.Popen(cmd, cwd=dir_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
+                proc.use_mpi = False
+            elif file_name.startswith("pympitest_"):
+                match = re.search(r'pympitest_(\d+)_', file_name)
+                if match:
+                    mpi_size = match.group(1)
+                    cmd = ["mpirun", "-np", str(mpi_size), pytest_py, file_name, "test"]
+                    proc = subprocess.Popen(cmd, cwd=dir_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
+                    proc.use_mpi = True
+                    proc.mpi_size = mpi_size
+                else:
+                    proc = DummyProcess()
         else:
             proc = DummyProcess()
         tmp_stdout, tmp_stderr = proc.communicate()
@@ -121,6 +145,8 @@ def run_file(file_info, shared_log, shared_result, progress_counter, lock, pytes
             for tag in tags_of_test:
                 output += f" {tag}"
             output += f"\n"
+            if proc.use_mpi == True:
+                output += f"  mpi_size: {proc.mpi_size}\n"
             output += f"  elapsed time: %.3e s\n" % (end_time - start_time)
         else:
             output += " -> failed\n"
@@ -259,11 +285,15 @@ def collect_tests_parallel(origin_path, exclude=[], pytest_py="python2", max_wor
             for f in f_names:
                 if f.startswith("pytest_") and f.endswith(".py"):
                     files_to_process.append((root, f, pytest_py))
+                elif f.startswith("pympitest_") and f.endswith(".py"):
+                    files_to_process.append((root, f, pytest_py))
         else:
             app_name = application + "_application"
             if app_name in root.split(os.sep):
                 for f in f_names:
                     if f.startswith("pytest_") and f.endswith(".py"):
+                        files_to_process.append((root, f, pytest_py))
+                    elif f.startswith("pympitest_") and f.endswith(".py"):
                         files_to_process.append((root, f, pytest_py))
 
     total_files = len(files_to_process)
