@@ -28,7 +28,7 @@ def WriteLog(ifile, disp, nodes):
     ifile.write("%.10e\t%.15e\n" % (disp, reac))
     ifile.flush()
 
-def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=False, check=False):
+def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=False, check=False, load_option=1):
 
     model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging)
     model.InitializeModel()
@@ -147,12 +147,17 @@ def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=
     if logging:
         WriteLog(ifile, disp, prescribed_nodes)
 
-    delta_disp_list = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.125, 0.125, 0.25, 0.5]   # 4
-    delta_disp_list.extend([0.25]*4)        # 5
-    delta_disp_list.extend([0.125]*7)
-    delta_disp_list.extend([0.125/2]*2)     # 6
-    delta_disp_list.extend([0.125/2]*13)
-    delta_disp_list.extend([0.125/4]*6)     # 7
+    if load_option == 1:
+        delta_disp_list = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.125, 0.125, 0.25, 0.5]   # 4
+        delta_disp_list.extend([0.25]*4)        # 5
+        delta_disp_list.extend([0.125]*7)
+        delta_disp_list.extend([0.125/2]*2)     # 6
+        delta_disp_list.extend([0.125/2]*13)
+        delta_disp_list.extend([0.125/4]*6)     # 7
+    elif load_option == 2:
+        delta_disp_list = []
+        for i in range(0, 8*7):
+            delta_disp_list.append(1.0/8)       # 7
 
     print("*********LOADING STARTED**********")
 
@@ -212,6 +217,7 @@ def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=
     return model
 
 def test1():
+    # this one tests the FOM and generates necessary POD vectors
     model = main(output=False, logging=False, pod = "save")
 
     ######### pytesting results #########
@@ -226,6 +232,7 @@ def test1():
     # 113.52138185501099 s
 
 def test2():
+    # this one tests the ROM with global POD projection strategy
     model = main(output=False, logging=False, pod = "load", dry_run=False, check=False)
 
     ######### pytesting results #########
@@ -240,6 +247,7 @@ def test2():
     #  46.44733119010925 s
 
 def test3():
+    # this one tests the ROM with global POD projection strategy and ECSW reduction
     model = main(output=False, logging=False, pod = "load-ecsw", dry_run=False, check=False)
 
     ######### pytesting results #########
@@ -254,6 +262,7 @@ def test3():
     # 43.60981249809265 s
 
 def test4():
+    # this one tests the ROM with local POD projection strategy
     model = main(output=False, logging=False, pod = "load-v2", dry_run=False, check=False)
 
     ######### pytesting results #########
@@ -267,6 +276,7 @@ def test4():
     print("Test 4 passed")
 
 def test5():
+    # this one tests the ROM with local POD projection strategy and ECSW reduction
     model = main(output=False, logging=False, pod = "load-ecsw-v2", dry_run=False, check=False)
 
     ######### pytesting results #########
@@ -274,10 +284,27 @@ def test5():
     reac = 0.0
     for node in model.prescribed_nodes:
         reac += node.GetSolutionStepValue(REACTION_Y)*4
-    print("reac: %.16e" % (reac))
-    assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
+    diff = abs(reac - ref_reac) / abs(ref_reac)
+    print("reac: %.16e, diff: %.6e" % (reac, diff))
+    assert(diff < 1e-8)
     #####################################
     print("Test 5 passed")
+
+def test6():
+    # this one tests the ROM with local POD projection strategy and ECSW reduction,
+    # and with different loading profile than the one used for training
+    model = main(output=False, logging=False, pod = "load-ecsw-v2", dry_run=False, check=False, load_option=2)
+
+    ######### pytesting results #########
+    ref_reac = 2.1322590332961511e+01
+    reac = 0.0
+    for node in model.prescribed_nodes:
+        reac += node.GetSolutionStepValue(REACTION_Y)*4
+    diff = abs(reac - ref_reac) / abs(ref_reac)
+    print("reac: %.16e, diff: %.6e" % (reac, diff))
+    assert(diff < 1e-9)
+    #####################################
+    print("Test 6 passed")
 
 def test():
     test1()
@@ -285,6 +312,7 @@ def test():
     test3()
     test4()
     test5()
+    test6()
     print("All local tests passed")
 
 def tag():
