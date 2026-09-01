@@ -288,16 +288,17 @@ def collect_tests_parallel(origin_path, exclude=[], pytest_py="python2", max_wor
                 elif f.startswith("pympitest_") and f.endswith(".py"):
                     files_to_process.append((root, f, pytest_py))
         else:
-            app_name = application + "_application"
-            if app_name in root.split(os.sep):
+            app_name_1 = application + "_application"
+            app_name_2 = application + "_anwendung"
+            if (app_name_1 in root.split(os.sep)) or (app_name_2 in root.split(os.sep)):
                 for f in f_names:
                     if f.startswith("pytest_") and f.endswith(".py"):
                         files_to_process.append((root, f, pytest_py))
                     elif f.startswith("pympitest_") and f.endswith(".py"):
                         files_to_process.append((root, f, pytest_py))
 
-    total_files = len(files_to_process)
-    if total_files == 0:
+    num_files = len(files_to_process)
+    if num_files == 0:
         return [], [], []
 
     # 2. Setup shared memory via Manager
@@ -316,9 +317,9 @@ def collect_tests_parallel(origin_path, exclude=[], pytest_py="python2", max_wor
                       for info in files_to_process]
 
             # 4. TQDM Progress Bar
-            with tqdm(total=total_files, desc="Collecting test tags", unit="file") as pbar:
+            with tqdm(total=num_files, desc="Collecting test tags", unit="file") as pbar:
                 last_val = 0
-                while last_val < total_files:
+                while last_val < num_files:
                     current_val = progress.value
                     step = current_val - last_val
                     if step > 0:
@@ -327,7 +328,7 @@ def collect_tests_parallel(origin_path, exclude=[], pytest_py="python2", max_wor
 
                     if all(f.done() for f in futures):
                         # Final catch-up if needed
-                        pbar.update(total_files - last_val)
+                        pbar.update(num_files - last_val)
                         break
 
         # Convert managed lists back to standard python lists before the manager exits
