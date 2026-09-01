@@ -13,7 +13,6 @@ from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
 from KratosMultiphysics.LayerApplication import *
-from KratosMultiphysics.ErsatzAnwendung import *
 kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
@@ -80,7 +79,6 @@ class Model:
 
         self.output_intpt_variables.append(STRESSES)
         self.output_intpt_variables.append(PLASTICITY_INDICATOR)
-        self.output_intpt_variables.append(ELEMENT_WEIGHT)
         ##################################################################
         ## ADD DOFS ######################################################
         ##################################################################
@@ -99,10 +97,6 @@ class Model:
         (self.solver.solver).SetEchoLevel(2)
         (self.solver.solver).max_iter = 20 #control the maximum iterations of Newton Raphson loop
         (self.solver.solver).MoveMeshFlag = False
-
-        # replace the builder and solver by the POD type
-        factory = ProjectionBasedPodBuilderAndSolverFactory()
-        (self.solver.solver).builder_and_solver = factory.Create((self.solver.solver).builder_and_solver)
 
         ##################################################################
         ## INITIALISE RESTART UTILITY ####################################
