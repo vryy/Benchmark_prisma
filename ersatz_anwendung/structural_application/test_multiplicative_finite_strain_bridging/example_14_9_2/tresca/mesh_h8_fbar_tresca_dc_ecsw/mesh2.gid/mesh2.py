@@ -7,9 +7,10 @@ import time as time_module
 current_dir_ = os.path.dirname(os.path.realpath(__file__))
 if current_dir_ not in sys.path:
     sys.path.append(current_dir_)
-import mesh2_include as simulation_include
 try:
+    import mesh2_include as simulation_include
     from mesh2_include import *
+    import KratosMultiphysics
     all_modules_are_imported_successfully = True
 except Exception as e:
     all_modules_are_imported_successfully = False
@@ -208,7 +209,7 @@ def test2():
     #  46.44733119010925 s
 
 def test3():
-    model = main(output=False, logging=True, pod = "load-ecsw", dry_run=False, check=False)
+    model = main(output=False, logging=False, pod = "load-ecsw", dry_run=False, check=False)
 
     ######### pytesting results #########
     ref_reac = 2.1274770851516042e+01

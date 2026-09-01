@@ -118,7 +118,7 @@ class Model:
         (self.solver.solver).MoveMeshFlag = False
 
         # replace the builder and solver by the POD type
-        factory = ProjectionBasedPodBuilderAndSolverFactory()
+        factory = PodBuilderAndSolverFactory()
         (self.solver.solver).builder_and_solver = factory.Create((self.solver.solver).builder_and_solver)
         # (self.solver.solver).builder_and_solver = ProjectionBasedPodBuilderAndSolver((self.solver.solver).builder_and_solver)
 

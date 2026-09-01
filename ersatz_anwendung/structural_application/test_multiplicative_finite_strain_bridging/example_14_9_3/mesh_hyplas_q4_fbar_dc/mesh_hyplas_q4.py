@@ -4,8 +4,13 @@ import os
 import math
 import time as time_module
 ##################################################################
-import mesh_hyplas_q4_include
-from mesh_hyplas_q4_include import *
+try:
+    import mesh_hyplas_q4_include
+    from mesh_hyplas_q4_include import *
+    import KratosMultiphysics
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
