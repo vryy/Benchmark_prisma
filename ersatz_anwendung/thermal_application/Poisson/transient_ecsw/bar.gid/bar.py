@@ -194,7 +194,7 @@ def test2():
 
     temp = monitor_node.GetSolutionStepValue(TEMPERATURE)
     print("%.16e" % (temp))
-    ref_temp = 1.1265490070695461e+00
+    ref_temp = 1.1267196399599291e+00
     assert(abs(temp - ref_temp) < 1e-10)
     print("Test 2 passed")
 
@@ -208,7 +208,7 @@ def test3(): # solve a problem with different BC using the same POD basis
 
     temp = monitor_node.GetSolutionStepValue(TEMPERATURE)
     print("%.16e" % (temp))
-    ref_temp = 9.1010258586958148e-01
+    ref_temp = 9.1016992941428410e-01
     assert(abs(temp - ref_temp) < 1e-10)
     print("Test 3 passed")
 

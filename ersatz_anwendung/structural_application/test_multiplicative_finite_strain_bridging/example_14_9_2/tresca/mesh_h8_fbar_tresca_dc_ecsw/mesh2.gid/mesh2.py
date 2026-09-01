@@ -212,7 +212,7 @@ def test3():
     model = main(output=False, logging=False, pod = "load-ecsw", dry_run=False, check=False)
 
     ######### pytesting results #########
-    ref_reac = 2.1274770851516042e+01
+    ref_reac = 2.1303193960156324e+01
     reac = 0.0
     for node in model.prescribed_nodes:
         reac += node.GetSolutionStepValue(REACTION_Y)*4

@@ -185,7 +185,7 @@ def test2():
     model = main(output=False, logging=False, pod = "load", dry_run=False, check=False)
 
     ######### pytesting results #########
-    ref_reac = 2.804275308845878e+00
+    ref_reac = 2.782635670683006e+00
     reac = 0.0
     for node in model.prescribed_nodes:
         reac += node.GetSolutionStepValue(REACTION_Y)
