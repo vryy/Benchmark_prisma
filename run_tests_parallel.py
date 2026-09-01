@@ -37,6 +37,13 @@ def main(params):
     application = params['application']
     recipient   = params['recipient']
     runner      = params['runner']
+    path        = params['path']
+
+    ###
+
+    if path != None: # run exactly one test
+        # TODO
+        return
 
     ###
 
@@ -132,6 +139,7 @@ if __name__ == "__main__":
     application = "all"
     recipient   = None
     runner      = None
+    path        = None
     if len(sys.argv) > 2:
       for i in range(2, len(sys.argv)):
         if sys.argv[i] == "--verbose": # allow verbose by command line argument --verbose
@@ -146,6 +154,8 @@ if __name__ == "__main__":
           recipient=sys.argv[i].split('=')[-1]
         elif "--runner=" in sys.argv[i]: # specify the name of the runner to run the test
           runner=sys.argv[i].split('=')[-1]
+        elif "--path=" in sys.argv[i]: # specify an exact path of the test
+          path=sys.argv[i].split('=')[-1]
         else:
           tags.append(sys.argv[i])
 
@@ -174,6 +184,7 @@ if __name__ == "__main__":
     params['application']   = application
     params['recipient'] = recipient
     params['runner']    = runner
+    params['path']      = path
     params['dry_run']   = False # enable this to NOT run the actual test (assume passing)
 
     ######
