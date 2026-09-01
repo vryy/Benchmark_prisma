@@ -127,6 +127,7 @@ def main(params):
         test_subject += (f" host: {socket.gethostname()} |")
         test_subject += (f" date: {now.year}/{now.month}/{now.day} |")
         test_subject += (f" %d/%d passed |" % (len(result), len(all_test_files)))
+        test_subject += (f" %d untested |" % (len(untest_files)))
         if runner != None:
             test_subject += (f" runner: {runner} |")
         send_email(recipient, test_subject, test_message)
