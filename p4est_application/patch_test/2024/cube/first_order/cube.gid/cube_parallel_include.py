@@ -32,7 +32,6 @@ class Model:
         ##################################################################
         ## ADD VARIABLES #################################################
         ##################################################################
-        ## generating solver
         import structural_solver_advanced
         structural_solver_advanced.AddVariables( self.model_part )
         self.model_part.AddNodalSolutionStepVariable(PARTITION_INDEX)

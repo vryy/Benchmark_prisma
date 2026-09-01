@@ -75,7 +75,7 @@ class Model:
         self.analysis_parameters['dissipation_radius'] = 0.1
         self.analysis_parameters['decouple_build_and_solve'] = False
         self.analysis_parameters['solving_scheme'] = 'monolithic'
-        self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = False
+        self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = True
         self.analysis_parameters['list_dof'] = True
         self.analysis_parameters['log_residuum'] = logging
 

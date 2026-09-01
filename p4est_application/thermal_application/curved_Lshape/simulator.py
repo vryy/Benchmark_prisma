@@ -139,7 +139,6 @@ class Simulator:
             node = model.model_part.Nodes[node_id]
             ana_temp = util.CalculateTemperatureOnNode(node)
             node.SetSolutionStepValue(TEMPERATURE, ana_temp)
-            print(f"Node {node.Id} TEMPERATURE is set to {ana_temp}")
 
         model.Solve(time, 0, 0, 0, 0)
 

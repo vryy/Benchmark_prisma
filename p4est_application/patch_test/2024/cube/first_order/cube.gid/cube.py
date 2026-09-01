@@ -216,4 +216,4 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         globals()[sys.argv[1]]() # allow to run test externally by python name.py test
     else:
-        main(logging=True, output=True)
+        main(logging=True, output=True, parallel=(mpi.size>1))

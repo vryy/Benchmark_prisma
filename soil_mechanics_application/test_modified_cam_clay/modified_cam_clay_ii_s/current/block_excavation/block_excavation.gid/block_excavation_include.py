@@ -21,6 +21,7 @@ from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
 from KratosMultiphysics.BRepApplication import *
+from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.SoilMechanicsApplication import *
 kernel = Kernel()   #defining kernel
 
@@ -124,7 +125,7 @@ class Model:
         #write_elements = WriteConditionsFlag.WriteElementsOnly
         self.post_mode = GiDPostMode.GiD_PostBinary
         self.multi_file_flag = MultiFileFlag.MultipleFiles
-        self.gid_io = StructuralGidIO( self.results_path+self.problem_name, self.post_mode, self.multi_file_flag, self.write_deformed_flag, self.write_elements )
+        self.gid_io = SDGidPostIO( self.results_path+self.problem_name, self.post_mode, self.multi_file_flag, self.write_deformed_flag, self.write_elements )
 
         ##################################################################
         ## ADD DOFS ######################################################
@@ -285,6 +286,12 @@ class Model:
         print("gauss point OVERCONSOLIDATION_RATIO written")
         self.gid_io.PrintOnGaussPoints(PLASTICITY_INDICATOR, self.model_part, time)
         print("gauss point PLASTICITY_INDICATOR written")
+        self.gid_io.PrintOnGaussPoints(VOID_RATIO, self.model_part, time)
+        print("gauss point VOID_RATIO written")
+        self.gid_io.PrintOnGaussPoints(NUMBER_OF_CONVERGED_SUB_STEPS, self.model_part, time)
+        print("gauss point NUMBER_OF_CONVERGED_SUB_STEPS written")
+        self.gid_io.PrintOnGaussPoints(NUMBER_OF_SUB_STEPS, self.model_part, time)
+        print("gauss point NUMBER_OF_SUB_STEPS written")
         self.gid_io.FinalizeResults()
         self.gid_io.Reset()
 

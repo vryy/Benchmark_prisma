@@ -72,7 +72,7 @@ def test():
 
 def tag():
     if kratos_all_modules_are_imported_successfully:
-        return "p4est"
+        return "comm"
     else:
         return "untested"
 

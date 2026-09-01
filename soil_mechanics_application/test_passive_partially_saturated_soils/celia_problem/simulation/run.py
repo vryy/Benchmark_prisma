@@ -190,6 +190,7 @@ def test():
 
     ph = mon_node.GetSolutionStepValue(WATER_PRESSURE) / (density_water*g)
     ref_ph = -6.1003458465758740e+01 # change after df9d3c117a4c00b92476b007539a3f525fc61a77 in structural_application
+    print("ph: %.16e, diff: %.16e" % (ph, ph - ref_ph))
     assert(abs(ph - ref_ph) < 1e-10)
 
     print("Test passed")

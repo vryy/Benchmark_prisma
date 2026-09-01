@@ -63,11 +63,13 @@
     axis equal,
     grid=major,
     legend style={at={(1,1)},anchor=north east},
-    legend entries={t3},
+    legend entries={t3,t6},
     mark size=1pt,
 ]
 \addplot table[x expr={sqrt(\thisrow{n_dofs})},y=l2_error] {../t3/convergence.grf};
-\logLogSlopeTriangleLeft{0.57}{0.08}{0.2}{2}{black};
+\logLogSlopeTriangleLeft{0.48}{0.08}{0.7}{2}{black};
+\addplot table[x expr={sqrt(\thisrow{n_dofs})},y=l2_error] {../t6/convergence.grf};
+\logLogSlopeTriangleLeft{0.54}{0.08}{0.11}{3}{black};
 \end{loglogaxis}
 \end{tikzpicture}
 
@@ -84,11 +86,13 @@
     axis equal,
     grid=major,
     legend style={at={(1,1)},anchor=north east},
-    legend entries={t3},
+    legend entries={t3,t6},
     mark size=1pt,
 ]
 \addplot table[x expr={sqrt(\thisrow{n_dofs})},y=h1_error] {../t3/convergence.grf};
-\logLogSlopeTriangleLeft{0.7}{0.08}{0.15}{1}{black};
+\logLogSlopeTriangleLeft{0.5}{0.08}{0.72}{1}{black};
+\addplot table[x expr={sqrt(\thisrow{n_dofs})},y=h1_error] {../t6/convergence.grf};
+\logLogSlopeTriangleLeft{0.57}{0.08}{0.15}{2}{black};
 \end{loglogaxis}
 \end{tikzpicture}
 

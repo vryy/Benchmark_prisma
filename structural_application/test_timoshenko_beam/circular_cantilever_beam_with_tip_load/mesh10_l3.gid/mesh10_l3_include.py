@@ -21,6 +21,7 @@ from KratosMultiphysics import *
 from KratosMultiphysics.StructuralApplication import *
 from KratosMultiphysics.ExternalSolversApplication import *
 from KratosMultiphysics.MKLSolversApplication import *
+from KratosMultiphysics.LayerApplication import *
 kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
@@ -91,7 +92,7 @@ class Model:
         #write_elements = WriteConditionsFlag.WriteElementsOnly
         self.post_mode = GiDPostMode.GiD_PostBinary
         self.multi_file_flag = MultiFileFlag.MultipleFiles
-        self.gid_io = StructuralGidIO( self.results_path+self.problem_name, self.post_mode, self.multi_file_flag, self.write_deformed_flag, self.write_elements )
+        self.gid_io = SDGidPostIO( self.results_path+self.problem_name, self.post_mode, self.multi_file_flag, self.write_deformed_flag, self.write_elements )
 
         # define the output variables
         self.output_nodal_variables = []

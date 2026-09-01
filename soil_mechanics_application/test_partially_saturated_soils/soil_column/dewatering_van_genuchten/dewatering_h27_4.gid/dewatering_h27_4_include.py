@@ -139,7 +139,7 @@ class Model:
         self.solver.structure_linear_solver = plinear_solver
         self.solver.Initialize()
         (self.solver.solver).SetEchoLevel(2)
-        (self.solver.solver).max_iter = 300 #control the maximum iterations of Newton Raphson loop
+        (self.solver.solver).max_iter = 100 #control the maximum iterations of Newton Raphson loop
         (self.solver.solver).MoveMeshFlag = True
         self.solver.conv_criteria.SetType(3)
 
