@@ -51,6 +51,17 @@ def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=
             model.solver.solver.linear_solver = pod_process
             # this must be set if decouple_build_and_solve == True
             # since pod_process is also a linear solver, this is usable and necessary
+    elif pod == "load-v2":
+        # POD without hyper reduction
+        Phi = pod_utils.ReadMat("Gb.mat", 'Phi')
+        model.solver.solver.time_scheme = RayleighRitzProjectionScheme(model.solver.solver.time_scheme)
+        model.solver.solver.time_scheme.SetProjectionOperator(Phi)
+        factory = ProjectionBasedPodBuilderAndSolverFactory()
+        model.solver.solver.builder_and_solver = factory.Create(model.solver.solver.builder_and_solver)
+        model.solver.solver.builder_and_solver.SetProjectionOperator(Phi)
+        decouple_build_and_solve = model.analysis_parameters['decouple_build_and_solve']
+        if decouple_build_and_solve:
+            raise Exception("decouple_build_and_solve == True is not supported")
     elif pod == "load-ecsw":
         # POD with hyper reduction
         Phi = pod_utils.ReadMat("Gb.mat", 'Phi')
@@ -70,6 +81,26 @@ def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=
             model.solver.solver.linear_solver = pod_process
             # this must be set if decouple_build_and_solve == True
             # since pod_process is also a linear solver, this is usable and necessary
+    elif pod == "load-ecsw-v2":
+        # POD with hyper reduction
+        Phi = pod_utils.ReadMat("Gb.mat", 'Phi')
+        eid = pod_utils.ReadIntVec("Gb.mat", 'eid')
+        ewi = pod_utils.ReadIntVec("Gb.mat", 'ewi')
+        pod_utils.ListVariables("ew.mat")
+        w = pod_utils.ReadVec("ew.mat", 'x')
+        model.solver.solver.time_scheme = ElementWeightingScheme(model.solver.solver.time_scheme)
+        for i in range(len(eid)):
+            model.solver.solver.time_scheme.SetElementWeight(eid[i], w[ewi[i]])
+        if check:
+            model.solver.solver.time_scheme.SetProjectionOperator(Phi)
+        model.solver.solver.time_scheme = RayleighRitzProjectionScheme(model.solver.solver.time_scheme)
+        model.solver.solver.time_scheme.SetProjectionOperator(Phi)
+        factory = ProjectionBasedPodBuilderAndSolverFactory()
+        model.solver.solver.builder_and_solver = factory.Create(model.solver.solver.builder_and_solver)
+        model.solver.solver.builder_and_solver.SetProjectionOperator(Phi)
+        decouple_build_and_solve = model.analysis_parameters['decouple_build_and_solve']
+        if decouple_build_and_solve:
+            raise Exception("decouple_build_and_solve == True is not supported")
 
     ## boundary condition
     ymin = 0.0
@@ -222,10 +253,38 @@ def test3():
     print("Test 3 passed")
     # 43.60981249809265 s
 
+def test4():
+    model = main(output=False, logging=False, pod = "load-v2", dry_run=False, check=False)
+
+    ######### pytesting results #########
+    ref_reac = 2.1281790096153781e+01
+    reac = 0.0
+    for node in model.prescribed_nodes:
+        reac += node.GetSolutionStepValue(REACTION_Y)*4
+    print("reac: %.16e" % (reac))
+    assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
+    #####################################
+    print("Test 4 passed")
+
+def test5():
+    model = main(output=False, logging=False, pod = "load-ecsw-v2", dry_run=False, check=False)
+
+    ######### pytesting results #########
+    ref_reac = 2.1303193960156324e+01
+    reac = 0.0
+    for node in model.prescribed_nodes:
+        reac += node.GetSolutionStepValue(REACTION_Y)*4
+    print("reac: %.16e" % (reac))
+    assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
+    #####################################
+    print("Test 5 passed")
+
 def test():
     test1()
     test2()
     test3()
+    test4()
+    test5()
     print("All local tests passed")
 
 def tag():

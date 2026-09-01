@@ -36,7 +36,7 @@ class Model:
         self.analysis_parameters['print_sparsity_info_flag'] = False
         self.analysis_parameters['analysis_type'] = 0
         self.analysis_parameters['dissipation_radius'] =          0.1
-        self.analysis_parameters['decouple_build_and_solve'] = True
+        self.analysis_parameters['decouple_build_and_solve'] = False
         self.analysis_parameters['solving_scheme'] = 'monolithic'
         self.analysis_parameters['stop_Newton_Raphson_if_not_converge'] = True
         self.analysis_parameters['number_of_iterations_for_divergence_check'] = 10
