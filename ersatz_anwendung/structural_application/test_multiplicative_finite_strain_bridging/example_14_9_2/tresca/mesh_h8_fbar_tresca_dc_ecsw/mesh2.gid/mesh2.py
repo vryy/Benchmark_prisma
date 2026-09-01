@@ -30,12 +30,12 @@ def WriteLog(ifile, disp, nodes):
 
 def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=False, check=False, load_option=1):
 
-    model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging)
-    model.InitializeModel()
-
     pod_utils = POD_Utils()
 
     if pod == "save":
+        model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging)
+        model.InitializeModel()
+        #
         pod_process = EcswSnapshotCollectingProcess(model.solver.solver.linear_solver)
         pod_process.SetForceTolerance(1.0)
         pod_process.SetNormalize(False)
@@ -43,6 +43,9 @@ def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=
         model.solver.solver.linear_solver = pod_process
     elif pod == "load":
         # POD without hyper reduction
+        model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging)
+        model.InitializeModel()
+        #
         Phi = pod_utils.ReadMat("Gb.mat", 'Phi')
         pod_process = RayleighRitzProjectionProcess(Phi)
         model.solver.solver.builder_and_solver.SetPodProcess(pod_process)
@@ -53,6 +56,10 @@ def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=
             # since pod_process is also a linear solver, this is usable and necessary
     elif pod == "load-v2":
         # POD without hyper reduction
+        model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging, \
+                    convergence_criteria="multiphase pod")
+        model.InitializeModel()
+        #
         Phi = pod_utils.ReadMat("Gb.mat", 'Phi')
         model.solver.solver.time_scheme = RayleighRitzProjectionScheme(model.solver.solver.time_scheme)
         model.solver.solver.time_scheme.SetProjectionOperator(Phi)
@@ -64,6 +71,9 @@ def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=
             raise Exception("decouple_build_and_solve == True is not supported")
     elif pod == "load-ecsw":
         # POD with hyper reduction
+        model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging)
+        model.InitializeModel()
+        #
         Phi = pod_utils.ReadMat("Gb.mat", 'Phi')
         eid = pod_utils.ReadIntVec("Gb.mat", 'eid')
         ewi = pod_utils.ReadIntVec("Gb.mat", 'ewi')
@@ -82,6 +92,10 @@ def main(output=True, logging=True, pod="load", number_of_pod_modes=12, dry_run=
             # this must be set if decouple_build_and_solve == True
             # since pod_process is also a linear solver, this is usable and necessary
     elif pod == "load-ecsw-v2":
+        model = simulation_include.Model(model_name_,current_dir_,current_dir_,logging=logging, \
+                    convergence_criteria="multiphase pod")
+        model.InitializeModel()
+        #
         # POD with hyper reduction
         Phi = pod_utils.ReadMat("Gb.mat", 'Phi')
         eid = pod_utils.ReadIntVec("Gb.mat", 'eid')

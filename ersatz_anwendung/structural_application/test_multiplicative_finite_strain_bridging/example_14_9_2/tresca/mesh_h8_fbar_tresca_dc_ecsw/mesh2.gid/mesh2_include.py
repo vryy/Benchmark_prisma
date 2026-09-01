@@ -18,7 +18,7 @@ kernel = Kernel()   #defining kernel
 ##################################################################
 ##################################################################
 class Model:
-    def __init__( self, problem_name, path, results_path, logging=True ):
+    def __init__( self, problem_name, path, results_path, logging=True, convergence_criteria="multiphase"):
         #setting the domain size for the problem to be solved
         ##################################################################
         ## DEFINE MODELPART ##############################################
@@ -45,6 +45,12 @@ class Model:
 
         self.abs_tol =        1e-10
         self.rel_tol =        1e-10
+
+        if convergence_criteria == "multiphase pod":
+            self.analysis_parameters['convergence_criteria'] = "custom criteria"
+            self.analysis_parameters['custom_convergence_criteria'] = MultiPhaseFlowPodCriteria(self.rel_tol, self.abs_tol)
+        else:
+            self.analysis_parameters['convergence_criteria'] = convergence_criteria
 
         ## generating solver
         import structural_solver_advanced
