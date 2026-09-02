@@ -10,7 +10,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TEST_IMAGE: vryy/kratos_bcn2-cutiga:2026_09_02
   HOST_DIR: ${{ github.workspace }}
   NUM_THREADS: 1
   SIMULATION_DIR: ""
@@ -24,8 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Set Docker image
+        run: echo "TEST_IMAGE=vryy/kratos_bcn2-cutiga:$(date +%Y_%m_%d)" >> "$GITHUB_ENV"
+
       - name: Pull test image
-        run: docker pull ${{ env.TEST_IMAGE }}
+        run: |
+          echo "Pulling ${{ env.TEST_IMAGE }}"
+          docker pull "${{ env.TEST_IMAGE }}"
 
       - name: Run tests
         run: |
