@@ -1,0 +1,38 @@
+name: Nightly test
+on:
+  schedule:
+    - cron: 0 23 * * *
+      timezone: "Europe/Berlin"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TEST_IMAGE: vryy/kratos_bcn2-cutiga:2026_09_02
+  HOST_DIR: ${{ github.workspace }}
+  NUM_THREADS: 1
+  SIMULATION_DIR: ""
+  PY_COMMAND: "python3"
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Pull test image
+        run: docker pull ${{ env.TEST_IMAGE }}
+
+      - name: Run tests
+        run: |
+          docker run --rm \
+            -v ${HOST_DIR}:/root \
+            -e OMP_NUM_THREADS=${{ env.NUM_THREADS }} \
+            -e "BENCHMARK_PRISMA=/root" \
+            -e "OMPI_ALLOW_RUN_AS_ROOT=1" \
+            -e "OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1" \
+            ${{ env.TEST_IMAGE }} /bin/sh -c ". /opt/intel/oneapi/setvars.sh; cd ${{ env.SIMULATION_DIR }}; python3 run_tests_parallel.py ${{ env.PY_COMMAND }} --numcores=10"

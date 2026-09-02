@@ -132,6 +132,11 @@ def main(params):
             test_subject += (f" runner: {runner} |")
         send_email(recipient, test_subject, test_message)
 
+    if len(result) == len(all_test_files) and len(all_test_files) > 0:
+        return 0
+    else:
+        return 1
+
 if __name__ == "__main__":
     tags        = []
     verbose     = 0
@@ -190,4 +195,4 @@ if __name__ == "__main__":
 
     ######
 
-    main(params)
+    sys.exit(main(params))
