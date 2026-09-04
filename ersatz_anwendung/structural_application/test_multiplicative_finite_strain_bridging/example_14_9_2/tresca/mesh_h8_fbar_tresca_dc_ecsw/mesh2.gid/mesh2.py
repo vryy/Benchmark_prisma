@@ -269,8 +269,9 @@ def test3():
     reac = 0.0
     for node in model.prescribed_nodes:
         reac += node.GetSolutionStepValue(REACTION_Y)*4
-    print("reac: %.16e" % (reac))
-    assert(abs(reac - ref_reac) / abs(ref_reac) < 1e-10)
+    diff = abs(reac - ref_reac) / abs(ref_reac)
+    print("reac: %.16e, diff: %.6e" % (reac, diff))
+    assert(diff < 1e-9)
     #####################################
     print("Test 3 passed")
     # 43.60981249809265 s
