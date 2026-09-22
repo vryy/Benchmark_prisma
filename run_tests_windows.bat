@@ -19,13 +19,13 @@ if "%~1"=="" (
     echo Run all tests
     set "OUTPUT=ztest_logs\%USERNAME%_%COMPUTERNAME%_%DATE_STR%.log"
     echo Logging to !OUTPUT!
-    %PY_COMMAND% run_tests.py %PY_COMMAND% > "!OUTPUT!" 2>&1
+    %PY_COMMAND% run_tests_parallel.py %PY_COMMAND% --numcores=10 > "!OUTPUT!" 2>&1
     type "!OUTPUT!"
 ) else (
     echo Run tests with arguments: %*
     set "OUTPUT=ztest_logs\%USERNAME%_%COMPUTERNAME%_%DATE_STR%-%1.log"
     echo Logging to !OUTPUT!
-    %PY_COMMAND% run_tests.py %PY_COMMAND% %* > "!OUTPUT!" 2>&1
+    %PY_COMMAND% run_tests_parallel.py %PY_COMMAND% --numcores=10 %* > "!OUTPUT!" 2>&1
     type "!OUTPUT!"
 )
 
