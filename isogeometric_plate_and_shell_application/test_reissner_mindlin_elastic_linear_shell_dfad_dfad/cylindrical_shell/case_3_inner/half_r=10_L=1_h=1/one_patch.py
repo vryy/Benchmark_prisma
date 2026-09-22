@@ -7,7 +7,7 @@ import simulation_include
 import KratosMultiphysics
 from KratosMultiphysics.MKLSolversApplication import *
 
-sys.path.append(os.environ['HOME'] + "/kratos_bundle/Benchmark_kratos/python3/plate_and_shell_application/test_reissner_mindlin_elastic_linear_shell_dfad_dfad/cylindrical_shell")
+sys.path.append(os.environ['BENCHMARK_PRISMA'] + "/plate_and_shell_application/test_reissner_mindlin_elastic_linear_shell_dfad_dfad/cylindrical_shell")
 import analytical_solution
 
 E = 2.6

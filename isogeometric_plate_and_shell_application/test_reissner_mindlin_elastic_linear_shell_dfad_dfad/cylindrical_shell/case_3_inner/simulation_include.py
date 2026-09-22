@@ -1,7 +1,6 @@
 import sys
 import os
 import math
-kratos_root_path=os.environ['KRATOS_ROOT_PATH']
 
 #importing Kratos modules
 from KratosMultiphysics import *
