@@ -6,7 +6,11 @@ import time as time_module
 ##################################################################
 ##################################################################
 import beam_include
-from beam_include import *
+try:
+    from beam_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
@@ -110,6 +114,8 @@ def test():
 
 def tag():
     tags = "mfem"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
     return tags
 
 def print_tag():

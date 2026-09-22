@@ -6,7 +6,11 @@ import time as time_module
 ##################################################################
 ##################################################################
 import two_cubes_32_hex8_include
-from two_cubes_32_hex8_include import *
+try:
+    from two_cubes_32_hex8_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
@@ -209,6 +213,8 @@ def test():
 
 def tag():
     tags = "thermal-contact"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
     return tags
 
 def print_tag():

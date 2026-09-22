@@ -6,7 +6,11 @@ import time as time_module
 ##################################################################
 ##################################################################
 import cube_include
-from cube_include import *
+try:
+    from cube_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
@@ -116,6 +120,8 @@ def t2():
 
 def tag():
     tags = "mfem"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
     return tags
 
 def print_tag():

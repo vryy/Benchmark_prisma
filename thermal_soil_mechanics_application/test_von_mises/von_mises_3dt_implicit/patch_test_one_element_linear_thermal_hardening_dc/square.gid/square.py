@@ -4,7 +4,11 @@ import os
 import math
 ##################################################################
 import square_include
-from square_include import *
+try:
+    from square_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
@@ -92,6 +96,8 @@ def test():
 
 def tag():
     tags = "thermal-soil"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
     return tags
 
 def print_tag():

@@ -4,7 +4,11 @@ import os
 import math
 ##################################################################
 import square10x10_include
-from square10x10_include import *
+try:
+    from square10x10_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
@@ -76,6 +80,8 @@ def test():
 
 def tag():
     tags = "thermal"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
     return tags
 
 def print_tag():

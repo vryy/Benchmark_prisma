@@ -6,7 +6,11 @@ import time
 ##################################################################
 ##################################################################
 import mesh_40x80_include
-from mesh_40x80_include import *
+try:
+    from mesh_40x80_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 ##################################################################
@@ -89,6 +93,8 @@ def test():
 
 def tag():
     tags = "Neo-Hookean,Total-Lagrangian"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
     return tags
 
 def print_tag():

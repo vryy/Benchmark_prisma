@@ -3,12 +3,12 @@ try:
     from KratosMultiphysics import *
     from KratosMultiphysics.mpi import *
     from KratosMultiphysics.FourCApplication import *
-    four_c_application_is_available = True
+    all_modules_are_imported_successfully = True
 except Exception as e:
-    four_c_application_is_available = False
+    all_modules_are_imported_successfully = False
 
 def main():
-    if not four_c_application_is_available:
+    if not all_modules_are_imported_successfully:
         sys.exit(1)
 
     # create 4C model
@@ -38,9 +38,8 @@ def test():
     main()
     print("Test passed")
 
-
 def tag():
-    if four_c_application_is_available:
+    if all_modules_are_imported_successfully:
         return "4C"
     else:
         return "4C,untested"

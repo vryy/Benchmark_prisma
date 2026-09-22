@@ -6,7 +6,11 @@ import time as time_module
 ##################################################################
 ##################################################################
 import mesh2_include
-from mesh2_include import *
+try:
+    from mesh2_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
@@ -121,6 +125,8 @@ def test():
 
 def tag():
     tags = "thermal-mechanical"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
     return tags
 
 def print_tag():

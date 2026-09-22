@@ -5,7 +5,11 @@ import math
 import time as time_module
 ##################################################################
 import beam_h8_include
-from beam_h8_include import *
+try:
+    from beam_h8_include import *
+    all_modules_are_imported_successfully = True
+except Exception as e:
+    all_modules_are_imported_successfully = False
 ##################################################################
 ###  SIMULATION  #################################################
 start_time = time_module.time()
@@ -67,6 +71,8 @@ def test():
 
 def tag():
     tags = "ssd"
+    if not all_modules_are_imported_successfully:
+        tags += ",untested"
     return tags
 
 def print_tag():
