@@ -79,9 +79,6 @@ def main(output=True, logging=True):
         if logging:
             WriteLog(ifile, disp, prescribed_nodes)
 
-        print("Displacement")
-        for node in model.model_part.Nodes:
-            print("%d  %.16e   %.16e" % (node.Id, node.GetSolutionStepValue(DISPLACEMENT_X), node.GetSolutionStepValue(DISPLACEMENT_Y)))
 
     if logging:
         ifile.close()

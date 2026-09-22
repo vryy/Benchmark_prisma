@@ -1,16 +1,4 @@
 ##################################################################
-##### ekate - Enhanced KRATOS for Advanced Tunnel Enineering #####
-#####  copyright (c) (2009, 2010, 2011, 2012, 2013)          #####
-#####   by CIMNE, Barcelona, Spain and Janosch Stascheit     #####
-#####           for TUNCONSTRUCT                             #####
-#####  and (c) 2014-2022 by Hoang-Giang Bui (SFB837)         #####
-#####          2023-2024 by Hoang-Giang Bui (Hereon)         #####
-#####          2025 by Hoang-Giang Bui (UoB)                 #####
-#####          2026 by Hoang-Giang Bui (DU)                  #####
-##### all rights reserved                                    #####
-##################################################################
-## This file is generated on (date)
-##################################################################
 import sys
 import os
 import math

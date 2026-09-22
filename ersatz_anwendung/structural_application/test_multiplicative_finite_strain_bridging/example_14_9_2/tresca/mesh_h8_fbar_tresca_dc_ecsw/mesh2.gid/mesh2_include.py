@@ -16,10 +16,10 @@ from KratosMultiphysics.LayerApplication import *
 from KratosMultiphysics.ErsatzAnwendung import *
 kernel = Kernel()   #defining kernel
 ##################################################################
+import structural_solver_advanced
 ##################################################################
 class Model:
     def __init__( self, problem_name, path, results_path, logging=True, convergence_criteria="multiphase"):
-        #setting the domain size for the problem to be solved
         ##################################################################
         ## DEFINE MODELPART ##############################################
         ##################################################################
@@ -53,7 +53,6 @@ class Model:
             self.analysis_parameters['convergence_criteria'] = convergence_criteria
 
         ## generating solver
-        import structural_solver_advanced
         self.solver = structural_solver_advanced.SolverAdvanced( self.model_part, self.analysis_parameters, self.abs_tol, self.rel_tol )
         self.AddVariables( self.model_part )
         ##################################################################
@@ -116,28 +115,23 @@ class Model:
         #restart_utility= RestartUtility( self.problem_name )
 
     def AddDofsForNodes(self, nodes):
-        import structural_solver_advanced
         structural_solver_advanced.AddDofsForNodes( nodes )
 
     def AddDofs(self, model_part):
-        import structural_solver_advanced
         structural_solver_advanced.AddDofs( model_part )
 
     def AddDofsForNode(self, node):
-        import structural_solver_advanced
         structural_solver_advanced.AddDofsForNode( node )
 
     def AddVariables(self, model_part):
-        import structural_solver_advanced
         structural_solver_advanced.AddVariables( model_part )
 
     def SetModelPart(self, model_part):
         self.model_part = model_part
 
         ## generating solver
-        import structural_solver_advanced
         self.solver = structural_solver_advanced.SolverAdvanced( self.model_part, self.analysis_parameters, self.abs_tol, self.rel_tol )
-        (self.solver).CalculateReactionFlag = False
+        (self.solver).CalculateReactionFlag = True
         ##################################################################
         ## ADD DOFS ######################################################
         ##################################################################
@@ -158,7 +152,6 @@ class Model:
     def SetOutputPath(self, path):
         self.results_path = path
         self.gid_io = SDGidPostIO( self.results_path+self.problem_name, self.post_mode, self.multi_file_flag, self.write_deformed_flag, self.write_elements )
-
 
     def WriteOutput( self, time ):
         self.gid_io.InitializeMesh( time )
