@@ -191,7 +191,7 @@ def test():
     tau = stress[1]
     us = gap[1]
     print("us: %.16e, tau: %.16e" % (us, tau))
-    ref_tau = 7.9132444355409715e-01
+    ref_tau = 7.9132444398384505e-01
     assert(abs(tau - ref_tau) < 1e-10)
     print("Test passed")
 

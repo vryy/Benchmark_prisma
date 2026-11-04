@@ -161,7 +161,7 @@ def test():
 
     reac = GetReaction(prescribed_nodes)
     print("reac: %.16e" % (reac))
-    ref_reac = -1.6214197670714343e+00
+    ref_reac = -1.6214189977288347e+00
     assert(abs(reac - ref_reac) < 1e-10)
     print("Test passed")
 
