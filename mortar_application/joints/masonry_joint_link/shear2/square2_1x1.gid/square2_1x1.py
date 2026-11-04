@@ -93,6 +93,7 @@ def main(logging=True, output=True):
     mat_params[14] = 0.09
     mat_params[15] = 0.49
     model.model_part.Properties[2].SetValue(MATERIAL_PARAMETERS, mat_params)
+    model.model_part.Properties[2].SetValue(THICKNESS, 1.0)
 
     ## boundary conditions
     tol = 1e-6
