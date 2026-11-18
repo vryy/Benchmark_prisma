@@ -15,9 +15,8 @@ import time as time_module
 current_dir_ = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_dir_ + "/../")
 import simulation_include
-from simulation_include import *
 try:
-    from mesh_t3_n30_include import *
+    from simulation_include import *
     all_modules_are_imported_successfully = True
 except Exception as e:
     all_modules_are_imported_successfully = False
