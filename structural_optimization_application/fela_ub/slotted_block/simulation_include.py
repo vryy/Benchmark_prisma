@@ -23,15 +23,15 @@ import structural_optim_solver
 class ConicSolver(structural_optim_solver.ConicSolver):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.sigma_0 = math.sqrt(3.0)
-        self.sigma_Y = 2.0 / math.sqrt(3.0) * self.sigma_0
+        self.sigma_0 = math.sqrt(3.0) # tensile strength
+        self.k = 1.0 / math.sqrt(3.0) * self.sigma_0
 
     def CreateConstraint(self, sxx, syy, szz, sxy, syz, sxz):
-        return structural_optim_solver.CreateVm2dConstraint(sxx, syy, sxy, self.sigma_Y)
+        return structural_optim_solver.CreateVm2dConstraint(sxx, syy, sxy, self.k)
 
     def ValidateConstraint(self, sxx, syy, szz, sxy, syz, sxz):
         vm_stress = math.sqrt((sxx-syy)**2 + (2*sxy)**2)
-        return max(0.0, vm_stress - self.sigma_Y)
+        return max(0.0, vm_stress - 2*self.k)
 
 ##################################################################
 class Model:
