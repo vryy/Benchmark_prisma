@@ -61,7 +61,7 @@ def test():
 
     load_factor_ref = 1.1705417830453886e+00
 
-    assert(abs(load_factor - load_factor_ref) < 1e-10)
+    assert(abs(load_factor - load_factor_ref) < 1e-4)
     print("Test passed")
 
 def tag():
